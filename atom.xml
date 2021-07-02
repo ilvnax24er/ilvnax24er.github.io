@@ -8,14 +8,23 @@
     
       
       <item>
-        <title>Python 강좌(2) - Python 제어문</title>
+        <title>Convolution Neural Network</title>
         
-          <description>&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Python 강좌는 여러 절로 구성되어 있습니다. &lt;/span&gt;&lt;/p&gt;
-&lt;ul class=&quot;table-of-contents-list&quot;&gt;
-    &lt;li&gt;&lt;a href=&quot;./pytorch-tutorial&quot;&gt;Pytorch-Tutorial&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href=&quot;./python-control-statement&quot;&gt;Python 강좌(2) - Python 제어문&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
+          <description>&lt;h1 id=&quot;convolution-neural-network&quot;&gt;Convolution Neural Network&lt;/h1&gt;
+</description>
+        
+        <pubDate>Wed, 30 Jun 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/deeplearning-tutorial</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/deeplearning-tutorial</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Pytorch - Tutorial(1)</title>
+        
+          <description>
 </description>
         
         <pubDate>Tue, 29 Jun 2021 00:00:00 +0900</pubDate>
@@ -27,35 +36,32 @@
     
       
       <item>
-        <title>Pytorch Tutorial</title>
+        <title>심층학습-Deep Feedforward Neural Network(2)</title>
         
-          <description>&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Python 강좌는 여러 절로 구성되어 있습니다. &lt;/span&gt;&lt;/p&gt;
-&lt;ul class=&quot;table-of-contents-list&quot;&gt;
-    &lt;li&gt;&lt;a href=&quot;./pytorch-tutorial&quot;&gt;Pytorch-Tutorial&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href=&quot;./python-control-statement&quot;&gt;Python 강좌(2) - Python 제어문&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+          <description>&lt;h3 id=&quot;기울기-기반-학습&quot;&gt;기울기 기반 학습&lt;/h3&gt;
+&lt;p&gt;신경망은 비선형성이기 때문에 볼록함수를 손실함수로 사용하기가 적합하지 않ㅇ르 때가 많은것이 선형모형과 신경망의 가장 큰 차이점이다. 일반적으로 신경망에는 선형회귀 모형의 훈련에 쓰이는 연립방정식 해법이나 로지스틱 회귀 또는 SVM의 훈련에 쓰이는 전역 수렴을 보장하는 볼록함수 최적화 알고리즘 대신, 비용함수를 아주 낮은 값으로 이끄는 역할만 하는 반복적인 기울기 기반 최적화 절차를 사용한다. 볼록함수 최적화는 이론적으로 임의의 초기 매개변수들에서 시작해서 반드시 수렴한다. 비볼록 손실함수에 확률적 경사하강법을 적용할 때는 그러한 수렴이 보장되지 않으며, 결과가 초기 매개변수들에 민감하게 변한다. 순방향 신경망에서는 모든 가중치를 작은 난수들로 초기화하는 것이 중요하다.&lt;/p&gt;
 
 </description>
         
-        <pubDate>Mon, 28 Jun 2021 00:00:00 +0900</pubDate>
+        <pubDate>Tue, 29 Jun 2021 00:00:00 +0900</pubDate>
         <link>
-        https://ilvnax24er.github.io/pytorch-tutorial</link>
-        <guid isPermaLink="true">https://ilvnax24er.github.io/pytorch-tutorial</guid>
+        https://ilvnax24er.github.io/gradient-decent</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/gradient-decent</guid>
       </item>
       
     
       
       <item>
-        <title>deeplearning</title>
+        <title>심층학습-Deep Feedforward Neural Network(1)</title>
         
-          <description>&lt;p&gt;Test!&lt;/p&gt;
+          <description>&lt;h3 id=&quot;deep-feedforward-neural-network&quot;&gt;Deep Feedforward Neural Network&lt;/h3&gt;
 
 </description>
         
         <pubDate>Mon, 28 Jun 2021 00:00:00 +0900</pubDate>
         <link>
-        https://ilvnax24er.github.io/deeplearning</link>
-        <guid isPermaLink="true">https://ilvnax24er.github.io/deeplearning</guid>
+        https://ilvnax24er.github.io/deeplearning-tutorial</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/deeplearning-tutorial</guid>
       </item>
       
     
