@@ -8,9 +8,33 @@
     
       
       <item>
+        <title>Python 강좌(2) - Python 제어문</title>
+        
+          <description>&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Python 강좌는 여러 절로 구성되어 있습니다. &lt;/span&gt;&lt;/p&gt;
+&lt;ul class=&quot;table-of-contents-list&quot;&gt;
+    &lt;li&gt;&lt;a href=&quot;./pytorch-tutorial&quot;&gt;Pytorch-Tutorial&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;./python-control-statement&quot;&gt;Python 강좌(2) - Python 제어문&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        
+        <pubDate>Tue, 29 Jun 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/python-control-statement</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/python-control-statement</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Pytorch Tutorial</title>
         
-          <description>
+          <description>&lt;p&gt;&lt;span class=&quot;table-of-contents-list&quot;&gt;Python 강좌는 여러 절로 구성되어 있습니다. &lt;/span&gt;&lt;/p&gt;
+&lt;ul class=&quot;table-of-contents-list&quot;&gt;
+    &lt;li&gt;&lt;a href=&quot;./pytorch-tutorial&quot;&gt;Pytorch-Tutorial&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;./python-control-statement&quot;&gt;Python 강좌(2) - Python 제어문&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
 </description>
         
         <pubDate>Mon, 28 Jun 2021 00:00:00 +0900</pubDate>
@@ -22,15 +46,16 @@
     
       
       <item>
-        <title>Pytorch Tutorial</title>
+        <title>deeplearning</title>
         
           <description>&lt;p&gt;Test!&lt;/p&gt;
+
 </description>
         
         <pubDate>Mon, 28 Jun 2021 00:00:00 +0900</pubDate>
         <link>
-        https://ilvnax24er.github.io/pytorch-tutorial</link>
-        <guid isPermaLink="true">https://ilvnax24er.github.io/pytorch-tutorial</guid>
+        https://ilvnax24er.github.io/deeplearning</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/deeplearning</guid>
       </item>
       
     
