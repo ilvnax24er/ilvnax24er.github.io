@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://ilvnax24er.github.io/tag/deeplearning/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" />
-  <updated>2021-07-03T02:19:16+09:00</updated>
+  <updated>2021-07-03T05:45:39+09:00</updated>
   <id>https://ilvnax24er.github.io/tag/deeplearning/feed.xml</id>
 
   
@@ -32,12 +32,68 @@
 
   
     <entry>
-      <title type="html">Convolution Neural Network</title>
-      <link href="https://ilvnax24er.github.io/deeplearning-tutorial" rel="alternate" type="text/html" title="Convolution Neural Network" />
+      <title type="html">Convolutional Neural Network(1)</title>
+      <link href="https://ilvnax24er.github.io/CNN" rel="alternate" type="text/html" title="Convolutional Neural Network(1)" />
       <published>2021-06-30T00:00:00+09:00</published>
       <updated>2021-06-30T00:00:00+09:00</updated>
-      <id>https://ilvnax24er.github.io/deeplearning-tutorial</id>
-      <content type="html" xml:base="https://ilvnax24er.github.io/deeplearning-tutorial">&lt;h1 id=&quot;convolution-neural-network&quot;&gt;Convolution Neural Network&lt;/h1&gt;</content>
+      <id>https://ilvnax24er.github.io/CNN</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/CNN">&lt;h1 id=&quot;convolutional-neural-network&quot;&gt;Convolutional Neural Network&lt;/h1&gt;
+
+&lt;h3 id=&quot;intro&quot;&gt;Intro&lt;/h3&gt;
+
+&lt;p&gt;정해진 격자 형태로 배열된 자료를 처리하는데 특화된 신경망이다. 이 신경망이 합성곱(convolution)연산을 사용하기 때문에 붙은 이름이다. 적어도 하나의 층에서 일반적인 행렬 곱셈 대신 합성곱을 사용하는 신경망이면 합성곱 신경망이라고 할 수 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;합성곱-연산&quot;&gt;합성곱 연산&lt;/h3&gt;
+
+&lt;p&gt;합성곱은 실숫값을 받는 두 함수에 관한 연산이다.&lt;/p&gt;
+
+&lt;p&gt;일반적으로 $s(t) = (x \ast \omega)(t)$ 로 표기한다.&lt;/p&gt;
+
+&lt;p&gt;합성곱은 첫 인수를 input이라고 부르며, 두번째 인수를 kernel이라고 부른다. 그리고 합성곱의 출력을 feature map이라고 부른다.&lt;/p&gt;
+
+&lt;p&gt;$x$와 $\omega$가 오직 정수 $t$에 대해서만 정의된다고 가정하고, 이산적인 합성곱 연산을 정의할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;$s(t) = (x \ast \omega)(t) = \sum_{a=-\infty}^{\infty} x(a)\omega(t-a)$&lt;/p&gt;
+
+&lt;p&gt;종종 합성곱을 한 번에 여러 축에 적용할 때, 2차원 이미지 $I$를 입력으로 사용할 때는 다음과 같이 2차원 kernel $K$를 적용한다.&lt;/p&gt;
+
+&lt;p&gt;$s(i,j) = (I \ast K)(i,j) = \sum_{m} \sum_{n} I(m,n)K(i-m,j-n)$&lt;/p&gt;
+
+&lt;p&gt;이산 합성곱은 일부 성분들이 다른 성분들과 같아야 한다는 제약이 있는 행렬을 곱하는 연산에 해당한다. 단변량 이산 합성곱에서 행렬의 각 행은 반드시 그 위 행의 성분들을 한 자리 이동한 것과 같아야 한다. 이러한 조건을 만족하는 행렬을 퇴플리츠 행렬(Toeplitz matrix)라고 부른다. 2차원의 경우에는 double block circulant matrix가 합성곱에 해당한다.&lt;/p&gt;
+
+&lt;p&gt;합성곱 신경망은 세가지 중요한 개념을 활용한다&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;sparse interaction, sparse weights, sparse connectivity&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;전통적인 신경망의 층들은 매개변수들의 행렬을 곱하는 연산을 수행한다. 이때 각 매개변수는 각 입력 단위와 각 출력 단위의 상호작용을 나타낸다. 결과적으로, 모든 출력 단위는 모든 입력단위와 상호작용한다. 그런데 보통의 경우 합성곱 신경망에는 sparse interaction이라는 성질이 있다. 이것은 kernel이 input보다 작기 때문에 생긴 성질인데, 윤곽선 같은 작고 의미 있는 특징들을 kernel로 검출할 수 있다. 따라서 상대적으로 적은 수의 매개변수들만 저장해도 되며, 결과적으로 효율성이 높아진다. 또한 출력을 계산하는데 필요한 연산의 수도 줄어든다.&lt;/p&gt;
+
+&lt;p&gt;이처럼 희소한 상호작용만 서술하는 간단한 구성요소들 사이의 상호작용을 구축함으로써 여러 변수 사이의 복잡한 상호작용을 효율적으로 서술한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;parameter sharing&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;모형의 둘 이상의 함수에 같은 매개변수를 사용하는것을 말한다. 전통적인 신경망에서는 한 층의 출력을 계산할 때 가중치 행렬의 각 성분은 딱 한번만 사용된다. 합성곱 신경망에서 핵의 각 성분은 입력의 모든 곳에 쓰인다. 모든 위치에 대해 개별적인 매개변수 집합을 학습하는 것이 아니라 하나의 집합만 학습하는것에 해당한다. 이는 모형이 저장해야하는 매개변수 개수를 줄여 효율적이다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;equivariance representation&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;합성곱의 경우, 매개변수 공유의 특정한 형태 때문에 신경망 층에는 이동에 대한 등변성이라는 성질이 생긴다. 함수 $f(x)$와 $g$가 있을 때 만일 $f(g(x)) = g(f(x))$ 이면 $f(x)$는 $g$에 대해 등변이다. 합송곱의 경우, 만일 $g$가 입력을 이동하는 함수이면 합성곱 함수는 $g$에 대해 등변이다. 즉 input에서 어떤 대상을 이동하면 output에서도 해당 표현이 같은 양으로 이동한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;pooling&quot;&gt;pooling&lt;/h3&gt;
+
+&lt;p&gt;합성곱 신경망의 한 층은 세단계로 작동한다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;다수의 합성곱을 병렬로 수행해서 선형 활성화 값들을 산출한다.&lt;/li&gt;
+  &lt;li&gt;각 선형 활성화 값이 정류 선형 활성화 함수같은 비선형 활성화 함수를 거치게 된다. 이 단계를 detector stage라고 부른다.&lt;/li&gt;
+  &lt;li&gt;pooling function을 이용해서 그 층의 출력을 좀 더 수정한다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;pooling function은 특정 위치에서의 신경망의 출력을 근처 출력들의 요약통계량(summary statistics)으로 대체한다. pooling은 표현이 입력의 작은 이동에 대해 근사적으로 불변이 되게하는데 도움을 준다. 이동에 대한 불변성이란, 입력을 조금 이동해도 풀링된 출력들의 값들은 대부분 변하지 않는것을 말한다. &lt;strong&gt;어떤 특징의 구체적인 위치가 아니라 특징의 존재 여부 자체가 더 중요할 때는 국소 이동에 대한 불변성이 유용할 수 있다.&lt;/strong&gt;&lt;/p&gt;</content>
 
       
       
@@ -58,7 +114,7 @@
       
 
       
-        <summary type="html">Convolution Neural Network</summary>
+        <summary type="html">Convolutional Neural Network</summary>
       
 
       
@@ -72,6 +128,7 @@
       <updated>2021-06-29T00:00:00+09:00</updated>
       <id>https://ilvnax24er.github.io/gradient-decent</id>
       <content type="html" xml:base="https://ilvnax24er.github.io/gradient-decent">&lt;h3 id=&quot;기울기-기반-학습&quot;&gt;기울기 기반 학습&lt;/h3&gt;
+
 &lt;p&gt;신경망은 비선형성이기 때문에 볼록함수를 손실함수로 사용하기가 적합하지 않ㅇ르 때가 많은것이 선형모형과 신경망의 가장 큰 차이점이다. 일반적으로 신경망에는 선형회귀 모형의 훈련에 쓰이는 연립방정식 해법이나 로지스틱 회귀 또는 SVM의 훈련에 쓰이는 전역 수렴을 보장하는 볼록함수 최적화 알고리즘 대신, 비용함수를 아주 낮은 값으로 이끄는 역할만 하는 반복적인 기울기 기반 최적화 절차를 사용한다. 볼록함수 최적화는 이론적으로 임의의 초기 매개변수들에서 시작해서 반드시 수렴한다. 비볼록 손실함수에 확률적 경사하강법을 적용할 때는 그러한 수렴이 보장되지 않으며, 결과가 초기 매개변수들에 민감하게 변한다. 순방향 신경망에서는 모든 가중치를 작은 난수들로 초기화하는 것이 중요하다.&lt;/p&gt;
 
 &lt;h4 id=&quot;cost-function&quot;&gt;Cost Function&lt;/h4&gt;
@@ -86,14 +143,7 @@
 &lt;center&gt;$J(\theta) = -E_{x,y \sim \hat{p}자료}\log p_{모형}(y|x)$&lt;/center&gt;
 &lt;p&gt;이다. 
 비용함수의 구체적인 형태는 모형마다 다르며, 특히 $\log p_{모형}$의 구체적인 형태에 의존한다. 최대가능도에서 비용함수를 유도하는 방식의 장점은, 모형마다 매번 비용함수를 설계하는 부담이 없다는 것이다. 모형 $p(y|x)$를 결정하기만 하면 비용함수 $\log p(y|x)$가 자동으로 결정된다. 
-최대가능도 추정을 수행하는 데 쓰이는 교차 엔트로피 비용함수의 한 가지 독특한 성질은, 실제 응용에 흔히 쓰이는 모형들에서 이 함수에 최솟값이 없을 때가 많다는 것이다. 이산 출력 변수의 경우, 대부분의 모형은 정확히 확률값 0과 1을 표현하지 못하며 그 두 극단에 얼마든지 가까워질 수 있는 방식으로 매개변수화 된다. 실숫값 출력 변수의 경우에는, 만일 모형이 출력 분포의 밀도를 제어할 수 있다면, 정확한 훈련 집합 출력들에 극도로 높은 밀도를 배정할 여지가 생간다. 그러면 교차 엔트로피는 음의 무한대에 접근하게 된다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;조건부 통계량의 학습&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;모형이 전체 확률분포 $p(y|x;\theta)$를 학습하는것이 아니라 
-$x$가 주어졌을 때의 $y$의 한 조건부 통계량만 학습하면 되는 경우도 있다.&lt;/p&gt;</content>
+최대가능도 추정을 수행하는 데 쓰이는 교차 엔트로피 비용함수의 한 가지 독특한 성질은, 실제 응용에 흔히 쓰이는 모형들에서 이 함수에 최솟값이 없을 때가 많다는 것이다. 이산 출력 변수의 경우, 대부분의 모형은 정확히 확률값 0과 1을 표현하지 못하며 그 두 극단에 얼마든지 가까워질 수 있는 방식으로 매개변수화 된다. 실숫값 출력 변수의 경우에는, 만일 모형이 출력 분포의 밀도를 제어할 수 있다면, 정확한 훈련 집합 출력들에 극도로 높은 밀도를 배정할 여지가 생간다. 그러면 교차 엔트로피는 음의 무한대에 접근하게 된다.&lt;/p&gt;</content>
 
       
       
@@ -114,7 +164,7 @@ $x$가 주어졌을 때의 $y$의 한 조건부 통계량만 학습하면 되는
       
 
       
-        <summary type="html">기울기 기반 학습 신경망은 비선형성이기 때문에 볼록함수를 손실함수로 사용하기가 적합하지 않ㅇ르 때가 많은것이 선형모형과 신경망의 가장 큰 차이점이다. 일반적으로 신경망에는 선형회귀 모형의 훈련에 쓰이는 연립방정식 해법이나 로지스틱 회귀 또는 SVM의 훈련에 쓰이는 전역 수렴을 보장하는 볼록함수 최적화 알고리즘 대신, 비용함수를 아주 낮은 값으로 이끄는 역할만 하는 반복적인 기울기 기반 최적화 절차를 사용한다. 볼록함수 최적화는 이론적으로 임의의 초기 매개변수들에서 시작해서 반드시 수렴한다. 비볼록 손실함수에 확률적 경사하강법을 적용할 때는 그러한 수렴이 보장되지 않으며, 결과가 초기 매개변수들에 민감하게 변한다. 순방향 신경망에서는 모든 가중치를 작은 난수들로 초기화하는 것이 중요하다.</summary>
+        <summary type="html">기울기 기반 학습</summary>
       
 
       
