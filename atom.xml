@@ -23,7 +23,37 @@
     
       
       <item>
-        <title>Convolutional Neural Network(1)</title>
+        <title>Recurrent Neural Network</title>
+        
+          <description>&lt;h1 id=&quot;recurrent-neural-network&quot;&gt;Recurrent Neural Network&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Thu, 01 Jul 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/RNN</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/RNN</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>심층학습-Deep Feedforward Neural Network(3)</title>
+        
+          <description>&lt;h3 id=&quot;hidden-unit&quot;&gt;Hidden Unit&lt;/h3&gt;
+
+</description>
+        
+        <pubDate>Wed, 30 Jun 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/deeplearning-hiddenunit</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/deeplearning-hiddenunit</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Convolutional Neural Network</title>
         
           <description>&lt;h1 id=&quot;convolutional-neural-network&quot;&gt;Convolutional Neural Network&lt;/h1&gt;
 

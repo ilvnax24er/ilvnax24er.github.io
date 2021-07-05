@@ -11,7 +11,7 @@
 
 
 
-    <title>Convolutional Neural Network(1)</title>
+    <title>Convolutional Neural Network</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -72,7 +72,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Archive" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Convolutional Neural Network(1)" />
+    <meta property="og:title" content="Convolutional Neural Network" />
     <meta property="og:description" content="Convolutional Neural Network Intro 정해진 격자 형태로 배열된 자료를 처리하는데 특화된 신경망이다. 이 신경망이 합성곱(convolution)연산을 사용하기 때문에 붙은 이름이다. 적어도 하나의 층에서 일반적인 행렬 곱셈 대신 합성곱을 사용하는 신경망이면 합성곱 신경망이라고 할 수 있다. 합성곱 연산 합성곱은 실숫값을 받는 두 함수에 관한 연산이다. 일반적으로 $s(t) = (x \ast \omega)(t)$ 로" />
     <meta property="og:url" content="https://ilvnax24er.github.io/CNN" />
     <meta property="og:image" content="https://ilvnax24er.github.io/assets/built/images/deeplearning-cover.jpg" />
@@ -82,7 +82,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     <meta property="article:modified_time" content="2021-06-30T00:00:00+09:00" />
     <meta property="article:tag" content="Deeplearning" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Convolutional Neural Network(1)" />
+    <meta name="twitter:title" content="Convolutional Neural Network" />
     <meta name="twitter:description" content="Convolutional Neural Network Intro 정해진 격자 형태로 배열된 자료를 처리하는데 특화된 신경망이다. 이 신경망이 합성곱(convolution)연산을 사용하기 때문에 붙은 이름이다. 적어도 하나의 층에서 일반적인 행렬 곱셈 대신 합성곱을 사용하는 신경망이면 합성곱 신경망이라고 할 수 있다. 합성곱 연산 합성곱은 실숫값을 받는 두 함수에 관한 연산이다. 일반적으로 $s(t) = (x \ast \omega)(t)$ 로" />
     <meta name="twitter:url" content="https://ilvnax24er.github.io/" />
     <meta name="twitter:image" content="https://ilvnax24er.github.io/assets/built/images/deeplearning-cover.jpg" />
@@ -128,7 +128,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="Convolutional Neural Network(1)" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Convolutional Neural Network" href="/feed.xml" />
 
 
 </head>
@@ -199,7 +199,7 @@ into the {body} of the default.hbs template -->
                         
                     
                 </section>
-                <h1 class="post-full-title">Convolutional Neural Network(1)</h1>
+                <h1 class="post-full-title">Convolutional Neural Network</h1>
             </header>
 
             <!-- cover on/off
@@ -271,6 +271,9 @@ into the {body} of the default.hbs template -->
 
 <p>pooling function은 특정 위치에서의 신경망의 출력을 근처 출력들의 요약통계량(summary statistics)으로 대체한다. pooling은 표현이 입력의 작은 이동에 대해 근사적으로 불변이 되게하는데 도움을 준다. 이동에 대한 불변성이란, 입력을 조금 이동해도 풀링된 출력들의 값들은 대부분 변하지 않는것을 말한다. <strong>어떤 특징의 구체적인 위치가 아니라 특징의 존재 여부 자체가 더 중요할 때는 국소 이동에 대한 불변성이 유용할 수 있다.</strong></p>
 
+<blockquote>
+  <p>참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, <strong>『</strong>심층학습<strong>』</strong>, Jpub(2018), p368-408</p>
+</blockquote>
 
                 </div>
             </section>
@@ -361,6 +364,24 @@ into the {body} of the default.hbs template -->
                                 
                                   
                                     
+                                        
+                                        
+                                            <li><a href="/RNN">Recurrent Neural Network</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/deeplearning-hiddenunit">심층학습-Deep Feedforward Neural Network(3)</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
                                   
                                 
                                   
@@ -378,8 +399,6 @@ into the {body} of the default.hbs template -->
                                     
                                         
                                         
-                                            <li><a href="/deeplearning-tutorial">심층학습-Deep Feedforward Neural Network(1)</a></li>
-                                        
                                     
                                   
                                 
@@ -388,7 +407,7 @@ into the {body} of the default.hbs template -->
                         <footer class="read-next-card-footer">
                             <a href="/tag/deeplearning/">
                                 
-                                    See all 2 posts  →
+                                    See all 4 posts  →
                                 
                             </a>
                         </footer>
@@ -402,26 +421,26 @@ into the {body} of the default.hbs template -->
 
     <article class="post-card post-template">
         
-            <a class="post-card-image-link" href="/CNN-MNIST">
-                <div class="post-card-image" style="background-image: url(/assets/built/images/deeplearning-cover.jpg)"></div>
+            <a class="post-card-image-link" href="/deeplearning-hiddenunit">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/deeplearning-book.jpg)"></div>
             </a>
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/CNN-MNIST">
+            <a class="post-card-content-link" href="/deeplearning-hiddenunit">
                 <header class="post-card-header">
                     
                         
                             
-                                <span class="post-card-tags">Pytorch</span>
+                                <span class="post-card-tags">Deeplearning</span>
                             
                         
                     
 
-                    <h2 class="post-card-title">pytorch - MNIST</h2>
+                    <h2 class="post-card-title">심층학습-Deep Feedforward Neural Network(3)</h2>
                 </header>
                 <section class="post-card-excerpt">
                     
-                        <p>MNIST
+                        <p>Hidden Unit
 
 </p>
                     
@@ -441,7 +460,7 @@ into the {body} of the default.hbs template -->
                 <span class="reading-time">
                     
                     
-                      3 min read
+                      1 min read
                     
                 </span>
             </footer>
@@ -457,7 +476,7 @@ into the {body} of the default.hbs template -->
     <article class="post-card post-template">
         
             <a class="post-card-image-link" href="/pytorch-tutorial">
-                <div class="post-card-image" style="background-image: url(/assets/built/images/pytorch-cover2.png)"></div>
+                <div class="post-card-image" style="background-image: url(/assets/built/images/pytorch-white.png)"></div>
             </a>
         
         <div class="post-card-content">
@@ -516,13 +535,13 @@ into the {body} of the default.hbs template -->
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">Convolutional Neural Network(1)</div>
+    <div class="floating-header-title">Convolutional Neural Network</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Convolutional+Neural+Network%281%29&amp;url=https://ilvnax24er.github.io/CNN"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Convolutional+Neural+Network&amp;url=https://ilvnax24er.github.io/CNN"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 

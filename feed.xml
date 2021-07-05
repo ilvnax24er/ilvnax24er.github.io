@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://ilvnax24er.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" /><updated>2021-07-04T20:44:13+09:00</updated><id>https://ilvnax24er.github.io/feed.xml</id><title type="html">Archive</title><subtitle>Deeplearning Archive</subtitle><entry><title type="html">pytorch - MNIST</title><link href="https://ilvnax24er.github.io/CNN-MNIST" rel="alternate" type="text/html" title="pytorch - MNIST" /><published>2021-07-01T00:00:00+09:00</published><updated>2021-07-01T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/CNN-MNIST</id><content type="html" xml:base="https://ilvnax24er.github.io/CNN-MNIST">&lt;h1 id=&quot;mnist&quot;&gt;MNIST&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://ilvnax24er.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" /><updated>2021-07-05T19:07:36+09:00</updated><id>https://ilvnax24er.github.io/feed.xml</id><title type="html">Archive</title><subtitle>Deeplearning Archive</subtitle><entry><title type="html">pytorch - MNIST</title><link href="https://ilvnax24er.github.io/CNN-MNIST" rel="alternate" type="text/html" title="pytorch - MNIST" /><published>2021-07-01T00:00:00+09:00</published><updated>2021-07-01T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/CNN-MNIST</id><content type="html" xml:base="https://ilvnax24er.github.io/CNN-MNIST">&lt;h1 id=&quot;mnist&quot;&gt;MNIST&lt;/h1&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch.nn&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;
@@ -243,7 +243,64 @@ tensor([[[ 0.3372, -0.4791,  0.2125]]], requires_grad=True)
 &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\2021-07-01-CNN-MNIST\output_27_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name>ilvnax24er</name></author><category term="pytorch" /><summary type="html">MNIST</summary></entry><entry><title type="html">Convolutional Neural Network(1)</title><link href="https://ilvnax24er.github.io/CNN" rel="alternate" type="text/html" title="Convolutional Neural Network(1)" /><published>2021-06-30T00:00:00+09:00</published><updated>2021-06-30T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/CNN</id><content type="html" xml:base="https://ilvnax24er.github.io/CNN">&lt;h1 id=&quot;convolutional-neural-network&quot;&gt;Convolutional Neural Network&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\2021-07-01-CNN-MNIST\output_27_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name>ilvnax24er</name></author><category term="pytorch" /><summary type="html">MNIST</summary></entry><entry><title type="html">Recurrent Neural Network</title><link href="https://ilvnax24er.github.io/RNN" rel="alternate" type="text/html" title="Recurrent Neural Network" /><published>2021-07-01T00:00:00+09:00</published><updated>2021-07-01T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/RNN</id><content type="html" xml:base="https://ilvnax24er.github.io/RNN">&lt;h1 id=&quot;recurrent-neural-network&quot;&gt;Recurrent Neural Network&lt;/h1&gt;
+
+&lt;h3 id=&quot;intro&quot;&gt;Intro&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p368-408&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Recurrent Neural Network</summary></entry><entry><title type="html">심층학습-Deep Feedforward Neural Network(3)</title><link href="https://ilvnax24er.github.io/deeplearning-hiddenunit" rel="alternate" type="text/html" title="심층학습-Deep Feedforward Neural Network(3)" /><published>2021-06-30T00:00:00+09:00</published><updated>2021-06-30T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/deeplearning-hiddenunit</id><content type="html" xml:base="https://ilvnax24er.github.io/deeplearning-hiddenunit">&lt;h3 id=&quot;hidden-unit&quot;&gt;Hidden Unit&lt;/h3&gt;
+
+&lt;p&gt;출력단위 중에는 모든 입력 점에서 미분가능이 아닌것이 있다. 예를 들어 rectifeied linear unit $g(z) = \max{0,z}$는 $z =0$에서 미분이 불가능하다. 원칙적으로 $g$는 기울기 기반 학습에 사용할 수 없지만 비용함수의 극소점에 실제로 도달하기보다는 비용이 충분히 낮은 점에 도달할 때가 많이 때문에 경사 하강법이 충분히 잘 작동한다.&lt;/p&gt;
+
+&lt;p&gt;대부분의 hidden unit은 하나의 벡터 $x$를 입력받아서 affine transformation $z = W^{T}x + b$를 계산하고, 성분별 비선형 함수 $g(z)$를 적용한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;relu&quot;&gt;ReLU&lt;/h4&gt;
+
+&lt;p&gt;ReLU는 활성화 함수 $g(z) = \max{0, z}$를 사용한다. 선형 단위와 아주 비슷하기 때문에 최적화하기 쉽다. 차이점은, 정류 선형 단위는 정의역의 절반에 대해 0을 출력한다. 이덕분에 단위가 활성일 때면 항상 ReLU의 미분들이 큰 값을 유지한다. 이 기울기들은 크기가 클 뿐만 아니라 일치성 조건까지 만족한다. 이차도함수는 거의 모든 점에서 0으로 평가되며, 도함수는 단위가 활성화된 모든 점에서 1로 평가된다. 때문에 기울기 방향이 2차 효과들을 도입하는 활성화 함수의 경우보다 학습에 훨씬 유용하다.&lt;/p&gt;
+
+&lt;center&gt;$h = g(W^{T}x + b)$&lt;/center&gt;
+
+&lt;p&gt;매개변수들을 초기화할 때는 b의 모든 성분을 0.1 같은 작은 양수로 설정하는것이 바람직하다. 그러면 훈련 집합의 모든 입력에 대해 처음부터 활성화되어서 해당 미분들이 다음 층으로 전달될 가능성이 아주 커진다. ReLU의 단점은 활성화가 0인 견본들로는 기울기 기반 방법으로 학습할 수 없다는 것이다. 이러한 단점을 극복하고 모든 점에서 반드시 기울기가 산출되도록 개선한 일반화들이 존재한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;absolute value rectification&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;center&gt;$h_{i} = g(z,\alpha)_{i} = max(0, z_{i}) + \alpha_{i}min(o, z_{i})$&lt;/center&gt;
+&lt;p&gt;$\alpha_{i} = -1$로 고정해서 $g(z) = |z|$가 되게 한다. 이 단위는 이미지에서 물체를 인식하는 신경망에 쓰인다. 입력 조명의 극성이 반전되어도 변하지 않는 특성들을 찾아야 하므로 절댓값 정류 단위가 적합하다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;leaky ReLU&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;$\alpha_{i}$를 0.01 같은 작은 값으로 고정한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;parametric ReLU, PReLU&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;$\alpha_{i}$를 학습 가능한 매개변수로 둔다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;maxout unit&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;입력 $z$를 $k$개의 값으로 이루어진 그룹들로 분할한다. 그렇다면 각 maxout단위는 각 그룹의 최대 성분을 출력한다.&lt;/p&gt;
+
+&lt;center&gt;$g(z)_{i} = max_{j \subseteq G^{i}} z_{j}$&lt;/center&gt;
+
+&lt;p&gt;maxout 단위들로 구성된 은닉층은 최대 k개인 조각별 선형 블록함수를 학습할 수 있다. 따라서 maxout 층은 단위들 사이의 관계를 학습하는것이 아니라 활성화 함수 자체를 학습하는 수단이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;tanh&quot;&gt;tanh&lt;/h4&gt;
+
+&lt;center&gt;$g(z) = \tanh(z)$&lt;/center&gt;
+
+&lt;p&gt;tanh는 0근처에서 항등함수와 비슷하다. 심층 신경망 $\hat{y} = \omega^{T} tanh (U^{T} tanh (V^{T} x))$의 훈련은 활성 값들을 작게 유지할 수만 있다면 선형 모형 $\hat{y} = \omega^{T}U^{T}V^{T}x$의 훈련과 비슷하다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p211-216&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Hidden Unit</summary></entry><entry><title type="html">Convolutional Neural Network</title><link href="https://ilvnax24er.github.io/CNN" rel="alternate" type="text/html" title="Convolutional Neural Network" /><published>2021-06-30T00:00:00+09:00</published><updated>2021-06-30T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/CNN</id><content type="html" xml:base="https://ilvnax24er.github.io/CNN">&lt;h1 id=&quot;convolutional-neural-network&quot;&gt;Convolutional Neural Network&lt;/h1&gt;
 
 &lt;h3 id=&quot;intro&quot;&gt;Intro&lt;/h3&gt;
 
@@ -299,7 +356,11 @@ tensor([[[ 0.3372, -0.4791,  0.2125]]], requires_grad=True)
   &lt;li&gt;pooling function을 이용해서 그 층의 출력을 좀 더 수정한다.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;pooling function은 특정 위치에서의 신경망의 출력을 근처 출력들의 요약통계량(summary statistics)으로 대체한다. pooling은 표현이 입력의 작은 이동에 대해 근사적으로 불변이 되게하는데 도움을 준다. 이동에 대한 불변성이란, 입력을 조금 이동해도 풀링된 출력들의 값들은 대부분 변하지 않는것을 말한다. &lt;strong&gt;어떤 특징의 구체적인 위치가 아니라 특징의 존재 여부 자체가 더 중요할 때는 국소 이동에 대한 불변성이 유용할 수 있다.&lt;/strong&gt;&lt;/p&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Convolutional Neural Network</summary></entry><entry><title type="html">심층학습-Deep Feedforward Neural Network(2)</title><link href="https://ilvnax24er.github.io/gradient-decent" rel="alternate" type="text/html" title="심층학습-Deep Feedforward Neural Network(2)" /><published>2021-06-29T00:00:00+09:00</published><updated>2021-06-29T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/gradient-decent</id><content type="html" xml:base="https://ilvnax24er.github.io/gradient-decent">&lt;h3 id=&quot;기울기-기반-학습&quot;&gt;기울기 기반 학습&lt;/h3&gt;
+&lt;p&gt;pooling function은 특정 위치에서의 신경망의 출력을 근처 출력들의 요약통계량(summary statistics)으로 대체한다. pooling은 표현이 입력의 작은 이동에 대해 근사적으로 불변이 되게하는데 도움을 준다. 이동에 대한 불변성이란, 입력을 조금 이동해도 풀링된 출력들의 값들은 대부분 변하지 않는것을 말한다. &lt;strong&gt;어떤 특징의 구체적인 위치가 아니라 특징의 존재 여부 자체가 더 중요할 때는 국소 이동에 대한 불변성이 유용할 수 있다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p368-408&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Convolutional Neural Network</summary></entry><entry><title type="html">심층학습-Deep Feedforward Neural Network(2)</title><link href="https://ilvnax24er.github.io/gradient-decent" rel="alternate" type="text/html" title="심층학습-Deep Feedforward Neural Network(2)" /><published>2021-06-29T00:00:00+09:00</published><updated>2021-06-29T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/gradient-decent</id><content type="html" xml:base="https://ilvnax24er.github.io/gradient-decent">&lt;h3 id=&quot;기울기-기반-학습&quot;&gt;기울기 기반 학습&lt;/h3&gt;
 
 &lt;p&gt;신경망은 비선형성이기 때문에 볼록함수를 손실함수로 사용하기가 적합하지 않ㅇ르 때가 많은것이 선형모형과 신경망의 가장 큰 차이점이다. 일반적으로 신경망에는 선형회귀 모형의 훈련에 쓰이는 연립방정식 해법이나 로지스틱 회귀 또는 SVM의 훈련에 쓰이는 전역 수렴을 보장하는 볼록함수 최적화 알고리즘 대신, 비용함수를 아주 낮은 값으로 이끄는 역할만 하는 반복적인 기울기 기반 최적화 절차를 사용한다. 볼록함수 최적화는 이론적으로 임의의 초기 매개변수들에서 시작해서 반드시 수렴한다. 비볼록 손실함수에 확률적 경사하강법을 적용할 때는 그러한 수렴이 보장되지 않으며, 결과가 초기 매개변수들에 민감하게 변한다. 순방향 신경망에서는 모든 가중치를 작은 난수들로 초기화하는 것이 중요하다.&lt;/p&gt;
 
@@ -315,7 +376,11 @@ tensor([[[ 0.3372, -0.4791,  0.2125]]], requires_grad=True)
 &lt;center&gt;$J(\theta) = -E_{x,y \sim \hat{p}자료}\log p_{모형}(y|x)$&lt;/center&gt;
 &lt;p&gt;이다. 
 비용함수의 구체적인 형태는 모형마다 다르며, 특히 $\log p_{모형}$의 구체적인 형태에 의존한다. 최대가능도에서 비용함수를 유도하는 방식의 장점은, 모형마다 매번 비용함수를 설계하는 부담이 없다는 것이다. 모형 $p(y|x)$를 결정하기만 하면 비용함수 $\log p(y|x)$가 자동으로 결정된다. 
-최대가능도 추정을 수행하는 데 쓰이는 교차 엔트로피 비용함수의 한 가지 독특한 성질은, 실제 응용에 흔히 쓰이는 모형들에서 이 함수에 최솟값이 없을 때가 많다는 것이다. 이산 출력 변수의 경우, 대부분의 모형은 정확히 확률값 0과 1을 표현하지 못하며 그 두 극단에 얼마든지 가까워질 수 있는 방식으로 매개변수화 된다. 실숫값 출력 변수의 경우에는, 만일 모형이 출력 분포의 밀도를 제어할 수 있다면, 정확한 훈련 집합 출력들에 극도로 높은 밀도를 배정할 여지가 생간다. 그러면 교차 엔트로피는 음의 무한대에 접근하게 된다.&lt;/p&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">기울기 기반 학습</summary></entry><entry><title type="html">Pytorch - Tutorial(1)</title><link href="https://ilvnax24er.github.io/pytorch-tutorial" rel="alternate" type="text/html" title="Pytorch - Tutorial(1)" /><published>2021-06-29T00:00:00+09:00</published><updated>2021-06-29T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/pytorch-tutorial</id><content type="html" xml:base="https://ilvnax24er.github.io/pytorch-tutorial"></content><author><name>ilvnax24er</name></author><category term="pytorch" /><summary type="html"></summary></entry><entry><title type="html">심층학습-Deep Feedforward Neural Network(1)</title><link href="https://ilvnax24er.github.io/deeplearning-tutorial" rel="alternate" type="text/html" title="심층학습-Deep Feedforward Neural Network(1)" /><published>2021-06-28T00:00:00+09:00</published><updated>2021-06-28T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/deeplearning-tutorial</id><content type="html" xml:base="https://ilvnax24er.github.io/deeplearning-tutorial">&lt;h3 id=&quot;deep-feedforward-neural-network&quot;&gt;Deep Feedforward Neural Network&lt;/h3&gt;
+최대가능도 추정을 수행하는 데 쓰이는 교차 엔트로피 비용함수의 한 가지 독특한 성질은, 실제 응용에 흔히 쓰이는 모형들에서 이 함수에 최솟값이 없을 때가 많다는 것이다. 이산 출력 변수의 경우, 대부분의 모형은 정확히 확률값 0과 1을 표현하지 못하며 그 두 극단에 얼마든지 가까워질 수 있는 방식으로 매개변수화 된다. 실숫값 출력 변수의 경우에는, 만일 모형이 출력 분포의 밀도를 제어할 수 있다면, 정확한 훈련 집합 출력들에 극도로 높은 밀도를 배정할 여지가 생간다. 그러면 교차 엔트로피는 음의 무한대에 접근하게 된다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p194-210&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">기울기 기반 학습</summary></entry><entry><title type="html">Pytorch - Tutorial(1)</title><link href="https://ilvnax24er.github.io/pytorch-tutorial" rel="alternate" type="text/html" title="Pytorch - Tutorial(1)" /><published>2021-06-29T00:00:00+09:00</published><updated>2021-06-29T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/pytorch-tutorial</id><content type="html" xml:base="https://ilvnax24er.github.io/pytorch-tutorial"></content><author><name>ilvnax24er</name></author><category term="pytorch" /><summary type="html"></summary></entry><entry><title type="html">심층학습-Deep Feedforward Neural Network(1)</title><link href="https://ilvnax24er.github.io/deeplearning-tutorial" rel="alternate" type="text/html" title="심층학습-Deep Feedforward Neural Network(1)" /><published>2021-06-28T00:00:00+09:00</published><updated>2021-06-28T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/deeplearning-tutorial</id><content type="html" xml:base="https://ilvnax24er.github.io/deeplearning-tutorial">&lt;h3 id=&quot;deep-feedforward-neural-network&quot;&gt;Deep Feedforward Neural Network&lt;/h3&gt;
 
 &lt;p&gt;순방향 신경망의 목표는 어떤 함수 $f^{*}$를 근사하는 것이다.&lt;/p&gt;
 
@@ -443,4 +508,8 @@ $x_{2}$의 계수를 변경하지는 못하기 때문이 이 문제를 풀 수 �
 &lt;p&gt;그러나 실제 응용에서는 모형 매개변수 개수와 훈련 견본 개수가 수십억 규모라서 지금처럼 해를 바로 도출하지 못할 수 있다.
 그런 상황에서는 기울기 기반 최적화 알고리즘을 이용해서 오차가 아주 작은 매개변수들을 찾는 것이 한 방법이다.
 XOR문제의 해는 손실함수의 한 전역 최소점에 해당하므로, 경사 하강법을 이용해서 그 점으로 수렴하는 것이 가능하다.
-XOR문제의 다른 동등한 해들도 경사 하강법으로 구할 수 있다. 경사 하강의 수렴점은 매개변수들의 초깃값에 의존한다.&lt;/p&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Deep Feedforward Neural Network</summary></entry></feed>
+XOR문제의 다른 동등한 해들도 경사 하강법으로 구할 수 있다. 경사 하강의 수렴점은 매개변수들의 초깃값에 의존한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p185-194&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Deep Feedforward Neural Network</summary></entry></feed>
