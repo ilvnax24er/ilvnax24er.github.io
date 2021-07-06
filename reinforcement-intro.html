@@ -11,7 +11,7 @@
 
 
 
-    <title>심층학습-Deep Feedforward Neural Network(3)</title>
+    <title>Reinforcement - Intro</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -66,30 +66,30 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     <!-- This tag outputs SEO meta+structured data and other important settings -->
     <meta name="description" content="Deeplearning Archive" />
     <link rel="shortcut icon" href="https://ilvnax24er.github.io/" type="image/png" />
-    <link rel="canonical" href="https://ilvnax24er.github.io/deeplearning-hiddenunit" />
+    <link rel="canonical" href="https://ilvnax24er.github.io/reinforcement-intro" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Archive" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="심층학습-Deep Feedforward Neural Network(3)" />
-    <meta property="og:description" content="Hidden Unit 출력단위 중에는 모든 입력 점에서 미분가능이 아닌것이 있다. 예를 들어 rectifeied linear unit $g(z) = \max{0,z}$는 $z =0$에서 미분이 불가능하다. 원칙적으로 $g$는 기울기 기반 학습에 사용할 수 없지만 비용함수의 극소점에 실제로 도달하기보다는 비용이 충분히 낮은 점에 도달할 때가 많이 때문에 경사 하강법이 충분히 잘 작동한다. 대부분의 hidden unit은" />
-    <meta property="og:url" content="https://ilvnax24er.github.io/deeplearning-hiddenunit" />
-    <meta property="og:image" content="https://ilvnax24er.github.io/assets/built/images/deeplearning-book.jpg" />
+    <meta property="og:title" content="Reinforcement - Intro" />
+    <meta property="og:description" content="Intro 강화학습이란? AI의 한 형태지만 환경과 상호작용하는 절차가 AI 관점에서 재현되고 인간 지능을 모방하려는 형태의 인공지능. 5가지 원칙 입출력 시스템 모든 AI 모델은 입력과 출력의 보편적인 원칠에 기반한다. 강화학습에서 입력은 state(상태) 또는 input state(입력 상태)라고 부른다. 출력은 AI가 수행하는 action(행동)이다. 그 사이에는 state를 input으로 취하고 action을 output으로 반환하는 함수만 있다." />
+    <meta property="og:url" content="https://ilvnax24er.github.io/reinforcement-intro" />
+    <meta property="og:image" content="https://ilvnax24er.github.io/assets/built/images/reinforce-book-cover.jpg" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2021-06-30T00:00:00+09:00" />
-    <meta property="article:modified_time" content="2021-06-30T00:00:00+09:00" />
-    <meta property="article:tag" content="Deeplearning" />
+    <meta property="article:published_time" content="2021-07-05T00:00:00+09:00" />
+    <meta property="article:modified_time" content="2021-07-05T00:00:00+09:00" />
+    <meta property="article:tag" content="Reinforcement" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="심층학습-Deep Feedforward Neural Network(3)" />
-    <meta name="twitter:description" content="Hidden Unit 출력단위 중에는 모든 입력 점에서 미분가능이 아닌것이 있다. 예를 들어 rectifeied linear unit $g(z) = \max{0,z}$는 $z =0$에서 미분이 불가능하다. 원칙적으로 $g$는 기울기 기반 학습에 사용할 수 없지만 비용함수의 극소점에 실제로 도달하기보다는 비용이 충분히 낮은 점에 도달할 때가 많이 때문에 경사 하강법이 충분히 잘 작동한다. 대부분의 hidden unit은" />
+    <meta name="twitter:title" content="Reinforcement - Intro" />
+    <meta name="twitter:description" content="Intro 강화학습이란? AI의 한 형태지만 환경과 상호작용하는 절차가 AI 관점에서 재현되고 인간 지능을 모방하려는 형태의 인공지능. 5가지 원칙 입출력 시스템 모든 AI 모델은 입력과 출력의 보편적인 원칠에 기반한다. 강화학습에서 입력은 state(상태) 또는 input state(입력 상태)라고 부른다. 출력은 AI가 수행하는 action(행동)이다. 그 사이에는 state를 input으로 취하고 action을 output으로 반환하는 함수만 있다." />
     <meta name="twitter:url" content="https://ilvnax24er.github.io/" />
-    <meta name="twitter:image" content="https://ilvnax24er.github.io/assets/built/images/deeplearning-book.jpg" />
+    <meta name="twitter:image" content="https://ilvnax24er.github.io/assets/built/images/reinforce-book-cover.jpg" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Archive" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="Deeplearning" />
+    <meta name="twitter:data2" content="Reinforcement" />
     <meta name="twitter:site" content="@" />
     <meta name="twitter:creator" content="@" />
     <meta property="og:image:width" content="1400" />
@@ -104,18 +104,18 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
         "name": "Archive",
         "logo": "https://ilvnax24er.github.io/"
     },
-    "url": "https://ilvnax24er.github.io/deeplearning-hiddenunit",
+    "url": "https://ilvnax24er.github.io/reinforcement-intro",
     "image": {
         "@type": "ImageObject",
-        "url": "https://ilvnax24er.github.io/assets/built/images/deeplearning-book.jpg",
+        "url": "https://ilvnax24er.github.io/assets/built/images/reinforce-book-cover.jpg",
         "width": 2000,
         "height": 666
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://ilvnax24er.github.io/deeplearning-hiddenunit"
+        "@id": "https://ilvnax24er.github.io/reinforcement-intro"
     },
-    "description": "Hidden Unit 출력단위 중에는 모든 입력 점에서 미분가능이 아닌것이 있다. 예를 들어 rectifeied linear unit $g(z) = \max{0,z}$는 $z =0$에서 미분이 불가능하다. 원칙적으로 $g$는 기울기 기반 학습에 사용할 수 없지만 비용함수의 극소점에 실제로 도달하기보다는 비용이 충분히 낮은 점에 도달할 때가 많이 때문에 경사 하강법이 충분히 잘 작동한다. 대부분의 hidden unit은"
+    "description": "Intro 강화학습이란? AI의 한 형태지만 환경과 상호작용하는 절차가 AI 관점에서 재현되고 인간 지능을 모방하려는 형태의 인공지능. 5가지 원칙 입출력 시스템 모든 AI 모델은 입력과 출력의 보편적인 원칠에 기반한다. 강화학습에서 입력은 state(상태) 또는 input state(입력 상태)라고 부른다. 출력은 AI가 수행하는 action(행동)이다. 그 사이에는 state를 input으로 취하고 action을 output으로 반환하는 함수만 있다."
 }
     </script>
 
@@ -128,7 +128,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="심층학습-Deep Feedforward Neural Network(3)" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Reinforcement - Intro" href="/feed.xml" />
 
 
 </head>
@@ -186,26 +186,26 @@ into the {body} of the default.hbs template -->
 <main id="site-main" class="site-main outer" role="main">
     <div class="inner">
 
-        <article class="post-full  tag-deeplearning post tag-deeplearning ">
+        <article class="post-full  tag-reinforcement post tag-reinforcement ">
 
             <header class="post-full-header">
                 <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime="30 June 2021">30 June 2021</time>
+                    <time class="post-full-meta-date" datetime=" 5 July 2021"> 5 July 2021</time>
                     
                         <span class="date-divider">/</span>
                         
                             
-                               <a href='/tag/deeplearning/'>DEEPLEARNING</a>
+                               <a href='/tag/reinforcement/'>REINFORCEMENT</a>
                             
                         
                     
                 </section>
-                <h1 class="post-full-title">심층학습-Deep Feedforward Neural Network(3)</h1>
+                <h1 class="post-full-title">Reinforcement - Intro</h1>
             </header>
 
             <!-- cover on/off
                         
-            <figure class="post-full-image" style="background-image: url(/assets/built/images/deeplearning-book.jpg)">
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/reinforce-book-cover.jpg)">
             </figure>
             
             -->
@@ -214,57 +214,66 @@ into the {body} of the default.hbs template -->
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <h3 id="hidden-unit">Hidden Unit</h3>
+                    <h2 id="intro">Intro</h2>
 
-<p>출력단위 중에는 모든 입력 점에서 미분가능이 아닌것이 있다. 예를 들어 rectifeied linear unit $g(z) = \max{0,z}$는 $z =0$에서 미분이 불가능하다. 원칙적으로 $g$는 기울기 기반 학습에 사용할 수 없지만 비용함수의 극소점에 실제로 도달하기보다는 비용이 충분히 낮은 점에 도달할 때가 많이 때문에 경사 하강법이 충분히 잘 작동한다.</p>
+<h3 id="강화학습이란">강화학습이란?</h3>
 
-<p>대부분의 hidden unit은 하나의 벡터 $x$를 입력받아서 affine transformation $z = W^{T}x + b$를 계산하고, 성분별 비선형 함수 $g(z)$를 적용한다.</p>
+<p>AI의 한 형태지만 환경과 상호작용하는 절차가 AI 관점에서 재현되고 인간 지능을 모방하려는 형태의 인공지능.</p>
 
-<h4 id="relu">ReLU</h4>
-
-<p>ReLU는 활성화 함수 $g(z) = \max{0, z}$를 사용한다. 선형 단위와 아주 비슷하기 때문에 최적화하기 쉽다. 차이점은, 정류 선형 단위는 정의역의 절반에 대해 0을 출력한다. 이덕분에 단위가 활성일 때면 항상 ReLU의 미분들이 큰 값을 유지한다. 이 기울기들은 크기가 클 뿐만 아니라 일치성 조건까지 만족한다. 이차도함수는 거의 모든 점에서 0으로 평가되며, 도함수는 단위가 활성화된 모든 점에서 1로 평가된다. 때문에 기울기 방향이 2차 효과들을 도입하는 활성화 함수의 경우보다 학습에 훨씬 유용하다.</p>
-
-<center>$h = g(W^{T}x + b)$</center>
-
-<p>매개변수들을 초기화할 때는 b의 모든 성분을 0.1 같은 작은 양수로 설정하는것이 바람직하다. 그러면 훈련 집합의 모든 입력에 대해 처음부터 활성화되어서 해당 미분들이 다음 층으로 전달될 가능성이 아주 커진다. ReLU의 단점은 활성화가 0인 견본들로는 기울기 기반 방법으로 학습할 수 없다는 것이다. 이러한 단점을 극복하고 모든 점에서 반드시 기울기가 산출되도록 개선한 일반화들이 존재한다.</p>
+<h3 id="5가지-원칙">5가지 원칙</h3>
 
 <blockquote>
-  <p>absolute value rectification</p>
+  <p>입출력 시스템</p>
 </blockquote>
 
-<center>$h_{i} = g(z,\alpha)_{i} = max(0, z_{i}) + \alpha_{i}min(o, z_{i})$</center>
-<p>$\alpha_{i} = -1$로 고정해서 $g(z) = |z|$가 되게 한다. 이 단위는 이미지에서 물체를 인식하는 신경망에 쓰인다. 입력 조명의 극성이 반전되어도 변하지 않는 특성들을 찾아야 하므로 절댓값 정류 단위가 적합하다.</p>
+<p>모든 AI 모델은 입력과 출력의 보편적인 원칠에 기반한다. 강화학습에서 입력은 state(상태) 또는 input state(입력 상태)라고 부른다. 출력은 AI가 수행하는 action(행동)이다. 그 사이에는 state를 input으로 취하고 action을 output으로 반환하는 함수만 있다. 그 함수는 policy(정책)이라고 한다.</p>
 
 <blockquote>
-  <p>leaky ReLU</p>
+  <p>보상</p>
 </blockquote>
 
-<p>$\alpha_{i}$를 0.01 같은 작은 값으로 고정한다.</p>
+<p>모든 AI는 보상 시스템에 의해 그 성과가 측정된다. 보상은 단순히 AI가 시간이 지남에 따라 얼마나 잘하는지 알려주는 지표이다. AI의 궁극적인 목표는 시간이 지남에 따라 누적된 보상을 극대화하는 것이다.</p>
 
 <blockquote>
-  <p>parametric ReLU, PReLU</p>
+  <p>AI 환경</p>
 </blockquote>
 
-<p>$\alpha_{i}$를 학습 가능한 매개변수로 둔다.</p>
+<p>AI환경은 일정시간(t)마다 세가지를 정의하는 매우 단순한 프레임 워크이다. 입력(state), 출력(action), 보상으로 구성된 환경을 정의한다.</p>
 
 <blockquote>
-  <p>maxout unit</p>
+  <p>마르코프 결정 프로세스</p>
 </blockquote>
 
-<p>입력 $z$를 $k$개의 값으로 이루어진 그룹들로 분할한다. 그렇다면 각 maxout단위는 각 그룹의 최대 성분을 출력한다.</p>
+<p>마르코프 결정 프로세스는 시간이 지남에 따라 AI가 환경과 어떻게 상호작용하는지를 모델링하는 프로세스이다. 이 프로세스는 t=0에서 시작해 반복할 때마다 동일한 형태의 전이(transition)과정을 따른다.</p>
 
-<center>$g(z)_{i} = max_{j \subseteq G^{i}} z_{j}$</center>
+<ol>
+  <li>AI는 현재 상태 $s_{t}$를 관측한다.</li>
+  <li>AI는 행동 $a_{t}$를 수행한다.</li>
+  <li>AI는 보상 $r_{t} = R(s_{t}, a_{t})$을 받는다.</li>
+  <li>AI는 다음 상태 $S_{t+1}$에 들어간다.</li>
+</ol>
 
-<p>maxout 단위들로 구성된 은닉층은 최대 k개인 조각별 선형 블록함수를 학습할 수 있다. 따라서 maxout 층은 단위들 사이의 관계를 학습하는것이 아니라 활성화 함수 자체를 학습하는 수단이다.</p>
-
-<h4 id="tanh">tanh</h4>
-
-<center>$g(z) = \tanh(z)$</center>
-
-<p>tanh는 0근처에서 항등함수와 비슷하다. 심층 신경망 $\hat{y} = \omega^{T} tanh (U^{T} tanh (V^{T} x))$의 훈련은 활성 값들을 작게 유지할 수만 있다면 선형 모형 $\hat{y} = \omega^{T}U^{T}V^{T}x$의 훈련과 비슷하다.</p>
+<p>강화학습에서 AI의 목적은 $r_{t} = R(s_{t}, a_{t})$의 합을 극대화하는 것이다.</p>
 
 <blockquote>
-  <p>참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, <strong>『</strong>심층학습<strong>』</strong>, Jpub(2018), p211-216</p>
+  <p>훈련과 추론</p>
+</blockquote>
+
+<ul>
+  <li>
+    <p>훈련모드</p>
+
+    <p>AI가 훈련되는 기간을 훈련모드라고 한다. 그 기간동안 AI는 성공할 때까지 특정 목표를 반복해서 달성하려고 한다. 각 시도 후에는 다음 시도에서 더 잘 수행하도록 AI 모델의 매개변수가 수정된다.</p>
+  </li>
+  <li>
+    <p>추론모드</p>
+
+    <p>AI가 완전히 훈련되고 잘 수행할 준비가 된 후에 뒤따른다. AI가 훈련모드에서 이전에 달성하도록 훈련된 목표를 달성하기 위한 행동을 함으로써 환경과 상호작용하는것으로 구성된다. 추론모드에서는 각 에피소드가 끝날 때 매개변수가 조정되지 않는다.</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>참고 : 아들랑 드 폰테베 <strong>『</strong>강화학습/심층강화학습특강<strong>』</strong>, 위키북스(2021), p30-37</p>
 </blockquote>
 
                 </div>
@@ -335,132 +344,9 @@ into the {body} of the default.hbs template -->
                 
                 
                 
-                    <article class="read-next-card"
-                        
-                            style="background-image: url(/assets/built/images/cover.jpg)"
-                        
-                    >
-                        <header class="read-next-card-header">
-                            <small class="read-next-card-header-sitetitle">&mdash; Archive &mdash;</small>
-                            
-                                <h3 class="read-next-card-header-title"><a href="/tag/deeplearning/">Deeplearning</a></h3>
-                            
-                        </header>
-                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
-</div>
-                        <div class="read-next-card-content">
-                            <ul>
-                                
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                    
-                                        
-                                        
-                                            <li><a href="/RNN">Recurrent Neural Network</a></li>
-                                        
-                                    
-                                  
-                                
-                                  
-                                    
-                                  
-                                
-                                  
-                                    
-                                        
-                                        
-                                            <li><a href="/CNN">Convolutional Neural Network</a></li>
-                                        
-                                    
-                                  
-                                
-                                  
-                                
-                                  
-                                    
-                                        
-                                        
-                                            <li><a href="/gradient-decent">심층학습-Deep Feedforward Neural Network(2)</a></li>
-                                        
-                                    
-                                  
-                                
-                                  
-                                    
-                                        
-                                        
-                                    
-                                  
-                                
-                            </ul>
-                        </div>
-                        <footer class="read-next-card-footer">
-                            <a href="/tag/deeplearning/">
-                                
-                                    See all 4 posts  →
-                                
-                            </a>
-                        </footer>
-                    </article>
-                
             
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
-            
-                
-
-    <article class="post-card post-template">
-        
-            <a class="post-card-image-link" href="/RNN">
-                <div class="post-card-image" style="background-image: url(/assets/built/images/deeplearning-cover.jpg)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/RNN">
-                <header class="post-card-header">
-                    
-                        
-                            
-                                <span class="post-card-tags">Deeplearning</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">Recurrent Neural Network</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    
-                        <p>Recurrent Neural Network
-
-</p>
-                    
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/ilvnax24er/">ilvnax24er</a>
-                        </span>
-                    
-                
-                <span class="reading-time">
-                    
-                    
-                      1 min read
-                    
-                </span>
-            </footer>
-        </div>
-    </article>
-
             
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
@@ -469,26 +355,26 @@ into the {body} of the default.hbs template -->
 
     <article class="post-card post-template">
         
-            <a class="post-card-image-link" href="/CNN">
-                <div class="post-card-image" style="background-image: url(/assets/built/images/deeplearning-cover.jpg)"></div>
+            <a class="post-card-image-link" href="/CNN-MNIST">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/pytorch-white.png)"></div>
             </a>
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/CNN">
+            <a class="post-card-content-link" href="/CNN-MNIST">
                 <header class="post-card-header">
                     
                         
                             
-                                <span class="post-card-tags">Deeplearning</span>
+                                <span class="post-card-tags">Pytorch</span>
                             
                         
                     
 
-                    <h2 class="post-card-title">Convolutional Neural Network</h2>
+                    <h2 class="post-card-title">pytorch - MNIST</h2>
                 </header>
                 <section class="post-card-excerpt">
                     
-                        <p>Convolutional Neural Network
+                        <p>MNIST
 
 </p>
                     
@@ -530,18 +416,18 @@ into the {body} of the default.hbs template -->
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">심층학습-Deep Feedforward Neural Network(3)</div>
+    <div class="floating-header-title">Reinforcement - Intro</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=%EC%8B%AC%EC%B8%B5%ED%95%99%EC%8A%B5-Deep+Feedforward+Neural+Network%283%29&amp;url=https://ilvnax24er.github.io/deeplearning-hiddenunit"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Reinforcement+-+Intro&amp;url=https://ilvnax24er.github.io/reinforcement-intro"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
         </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://ilvnax24er.github.io/deeplearning-hiddenunit"
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://ilvnax24er.github.io/reinforcement-intro"
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 
