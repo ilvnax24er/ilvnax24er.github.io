@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://ilvnax24er.github.io/tag/deeplearning/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" />
-  <updated>2021-07-06T19:32:57+09:00</updated>
+  <updated>2021-07-08T13:42:07+09:00</updated>
   <id>https://ilvnax24er.github.io/tag/deeplearning/feed.xml</id>
 
   
@@ -30,6 +30,81 @@
   
   
 
+  
+    <entry>
+      <title type="html">심층학습-Deep Feedforward Neural Network(4)</title>
+      <link href="https://ilvnax24er.github.io/architecture-design" rel="alternate" type="text/html" title="심층학습-Deep Feedforward Neural Network(4)" />
+      <published>2021-07-04T00:00:00+09:00</published>
+      <updated>2021-07-04T00:00:00+09:00</updated>
+      <id>https://ilvnax24er.github.io/architecture-design</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/architecture-design">&lt;h2 id=&quot;architecture-설계&quot;&gt;Architecture 설계&lt;/h2&gt;
+
+&lt;p&gt;신경망의 핵심 고려사항중 하나는 아키텍처의 선택이다. 단위 개수나 단위들의 연결방식 등을 포괄하는 신경망의 전반적인 구조를 뜻한다. 대부분의 신경망은 layer라고 부르는 단위들의 묶음으로 조직화된다. 각 층이 그 이전 층의 함수로서 작용하는 형태의 사슬구조로 조직화한다. 첫번째 층을 정의하면&lt;/p&gt;
+
+&lt;center&gt;$h^{(1)} = g^{(1)}(W^{(1)T}x + b^{(1)})$&lt;/center&gt;
+
+&lt;p&gt;두번째 층은&lt;/p&gt;
+
+&lt;center&gt;$h^{(2)} = g^{(2)}(W^{(2)T}h^{(1)} + b^{(2)})$&lt;/center&gt;
+
+&lt;p&gt;로 정의된다.&lt;/p&gt;
+
+&lt;p&gt;이러한 사슬기반 아키텍처에서 신경망의 구조에 관한 주된 고려사항은 신경망의 깊이와 각 층의 너비를 선택하는 것이다. 층이 더 많은 신경망은 각 층의 단위와 매개변수가 훨씬 적고 시험 집합으로 일반화되는 경우가 많지만, 최적화가 어려운 경향이 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;보편-근사-정리와-신경망의-깊이&quot;&gt;보편 근사 정리와 신경망의 깊이&lt;/h3&gt;
+
+&lt;p&gt;보편근사정리(universal approximation theroem)에 따르면 선형 출력층이 있는, 그리고 임의의 squashing 활성화 함수(ex. 로그 S자형 활성화 함수)를 사용하는 은닉층이 적어도 하나이상 있는 순방향 신경망은 한 유한 차원 공간을 다른 유한차원 공간으로 사상하는 모든 보렐 가측함수(borel measurable function)를 우리가 원하는 정확도로 근사할 수 있다. 또한, 순방향 신경망의 미분들은 해당 함수의 미분들을 임의의 정확도로 잘 근사할 수 있다.(Hornik, 1990).&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;보렐 가측성&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;$R^{n}$의 닫힌 유계 집합에 대한 모든 연속 함수는 보렐 가측함수이며, 순방향 신경망으로 근사할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;즉 보편근사정리는 학습하고자 하는 함수가 어떤 것이든 큰 MLP로 그 함수를 표현할 수 있음을 뜻한다. 그러나 훈련 알고리즘이 그 함수를 학습할 수 있다는 보장은 없다. MLP가 함수를 표현할 수 있어도 그 함수를 학습하지 못하는 이유는, 첫째로, 훈련에 쓰이는 최적화 알고리즘이 원하는 함수에 해당하는 매개변수 값들을 찾아내지 못할 수 있다. 둘째로, 과대적합 때문에 훈련 알고리즘이 엉뚱한 함수를 선택할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;보편 근사 정리에 따르면, 주어진 함수를 우리가 원하는 정확도로 근사하기에 충분한 크기의 신경망이 존재한다. 그러나 그러한 신경망이 얼마나 큰지를 정리가 말해 주지는 않는다.&lt;/p&gt;
+
+&lt;p&gt;단층 순방향 신경망은 임의의 함수를 표현하기에 충분하지만, 그 층이 감당할 수 없을 정도로 크고 학습과 일반화가 제대로 일어나지 않을 가능성이 있다. 더 깊은 모형을 사용하면 원하는 함수를 표현하는 데 필요한 단위 개수가 줄어들고 일반화 오차의 양도 줄어든다.&lt;/p&gt;
+
+&lt;p&gt;입력이 $d$개이고 깊이가 $l$, 은닉층 당 단위가 $n$개인 심층 정류 신경망으로 얻을 수 있는 선형 영역들의 개수는&lt;/p&gt;
+
+&lt;center&gt;$\begin{pmatrix}
+\binom{n}{k}^{d(l-1)}
+&amp;amp; n^{d}
+\end{pmatrix}$&lt;/center&gt;
+
+&lt;p&gt;즉 깊이 $l$이 지수인 거듭제곱 규모이다. 단위당 필터가 $k$개인 맥스아웃 신경망의 경우 선형 영역의 개수는&lt;/p&gt;
+
+&lt;center&gt;$O(k^{l-1)+d})$&lt;/center&gt;
+
+&lt;p&gt;신경망 아키텍처 중에는 특정 과제에 맞게 개발된것들이 있다. CNN의 경우 Computer Vision에 RNN은 순방향 신경망을 순차열 처리에 맞게 일반화 한것이 예이다. 일반적으로 신경망의 층들이 반드시 사슬로 연결될 필요는 없다.&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>ilvnax24er</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="deeplearning" />
+      
+
+      
+        <summary type="html">Architecture 설계</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Recurrent Neural Network</title>
