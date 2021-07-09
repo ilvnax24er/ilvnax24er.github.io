@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://ilvnax24er.github.io/tag/reinforcement/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" />
-  <updated>2021-07-08T13:42:07+09:00</updated>
+  <updated>2021-07-09T16:22:52+09:00</updated>
   <id>https://ilvnax24er.github.io/tag/reinforcement/feed.xml</id>
 
   
@@ -32,130 +32,8 @@
 
   
     <entry>
-      <title type="html">Reinforcement Learning - Q-learning</title>
-      <link href="https://ilvnax24er.github.io/qlearning" rel="alternate" type="text/html" title="Reinforcement Learning - Q-learning" />
-      <published>2021-07-06T00:00:00+09:00</published>
-      <updated>2021-07-06T00:00:00+09:00</updated>
-      <id>https://ilvnax24er.github.io/qlearning</id>
-      <content type="html" xml:base="https://ilvnax24er.github.io/qlearning">&lt;h1 id=&quot;q-learning-basic&quot;&gt;Q-Learning Basic&lt;/h1&gt;
-
-&lt;p&gt;Q-Learning은 강화학습 모델이다. 입력(상태)과 출력(행동) 원칙에 따라 작동한다. 상태, 행동, 보상이 사전에 정의된 환경에서 작동하며, 마르코프 결정 프로세스에 의해 모델링된다. 또한 훈련 모드와 추론 모드를 사용하고 훈련 모드 동안 Q-Value라 부르는 매개변수를 학습한다. 또한 상태와 행동의 수는 유한하다.&lt;/p&gt;
-
-&lt;h3 id=&quot;미로&quot;&gt;미로&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\maze.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;출발점에서 도착점까지 갈 수 있는 AI를 구성해보자. 첫번째로 환경을 구성해야한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;환경&quot;&gt;환경&lt;/h4&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;상태&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;상태는 AI의 입력이다. 그리고 AI가 최종 목표로 이끌 행동을 취하기 충분한 정보를 담고 있어야 한다. 즉 특정 시간에 AI가 위치한 지점을 나타내는 A부터 L까지의 문자가 될것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;행동&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;행동은 AI가 한 위치에서 다음 위치로 이동하는 움직임이 될것이다. 예를들어 J에 위치한다면 다음에 수행할 수 있는 행동은 I, F, K로 이동하는것이다. AI가 수행할 수 없는 작업에 보상으로 0을 부여하고 수행 가능한 작업에 보상으로 1을 부여할 수 있다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;보상&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;구체적으로 상태 $s$와 행동 $a$를 입력으로 취하고 AI가 상태 $s$에서 작업 $a$를 수행해 얻을 수 있는 숫자 보상 $r$을 반환하는 함수 $R$을 정의해야한다.&lt;/p&gt;
-
-&lt;center&gt;$R:(s,a) \rightarrow r \subseteq R$&lt;/center&gt;
-
-&lt;p&gt;함수에서 $s$는 행렬의 행 인덱스, $a$는 행렬의 열 인덱스, $r$은 이 행열에서 $(s,a)$ 인덱스에 해당하는 행렬을 만든다. A에서는 B로만 이동할 수 있다. 따라서 A의 인덱스는 0이고 B의 인덱스는 1이므로 보상 행렬의 첫번째 행에서는 두번째 열만 1을 갖고 나머지 열은 모두 0을 갖는다. 최종적으로 얻을 보상 행렬은 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table_no.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;만약 AI가 최우선 위치 G로 이동해야 한다는 것을 어떻게 알릴 수 있을까? G에 높은 보상을 부여하면 다른 위치의 보상보다 훨씬 크기 때문에 AI는 자동으로 높은 보상을 잡으려고 한다. 즉 AI는 항상 최고의 보상을 찾는다. 때문에 G에 도달하는 비결은 다른곳보다 높은 보상을 부여하는것이다. 이에따른 보상행렬은 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table1000.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;ai-구성&quot;&gt;AI 구성&lt;/h3&gt;
-
-&lt;h4 id=&quot;q-value&quot;&gt;Q-Value&lt;/h4&gt;
-
-&lt;p&gt;Q-Value는 상태와 행동의 쌍 $(s,a)$마다 숫자 값 $Q(s,a)$와 연결시킨다.&lt;/p&gt;
-
-&lt;center&gt;$Q:(s \subseteq S, a \subseteq A) \rightarrow Q(s,a) \subseteq R$&lt;/center&gt;
-
-&lt;p&gt;$Q(s,a)$는 상태 $s$에서 행동 $a$를 수행할 때 Q-value 이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;시간차&quot;&gt;시간차&lt;/h4&gt;
-
-&lt;p&gt;특정 시간 $t$에 특정상태 $t_{s}$에 있다고 하자. 선택할 수 있는 행동 중 임의의 행동을 수행하자. 그 결과 다음 상태 $s_{t+1}$로 바뀌고 보상으로 $R(s_{t}, a_{t})$를 얻는다.&lt;/p&gt;
-
-&lt;p&gt;시간 $t$에서 시간차를 나타내는 $TD_{t}(s_{t}, a_{t})$는 다음 둘 사이의 차이다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;상태 $s_{t}$에서 행동 $a_{t}$를 수행함으로써 얻는 보상 $R(s_{t},a_{t})$에 미래 상태 $s_{t+1}$에서 수행된 최고 행동의 Q-value에 할인 계수(discount factor) $\gamma \subseteq [0, 1]$에 의해 할인된 값을 더한 값&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;center&gt;$R(s_{t},a_{t}) + \gamma max_{a}(Q(s_{t+1},a))$&lt;/center&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;상태 $s_{t}$에서 행동 $a_{t}$를 수행할 때  Q-value인 $Q(s_{t},a_{t})$&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;그 결과 다음 식이 도출된다.&lt;/p&gt;
-
-&lt;center&gt;$TD_{t}(s_{t}, a_{t}) = R(s_{t}, a_{t}) + \gamma max_{a}(Q(s_{t+1}, a)) - Q(s_{t}, a_{t})$&lt;/center&gt;
-
-&lt;p&gt;훈련 초기에 Q-value는 0으로 설정된다.AI는 더 나은 보상을 얻으려고 하기 때문에 시간차가 가장 큰 경우를 찾는다. AI가 받는 보상이 크면 그 큰 보상으로 이어진 (상태, 행동)의 특정 Q-value가 증가하므로 AI는 높은 보상에 도달한 방법을 기억할 수 있다. 상태 $s_{t}$에서 높은 보상 $R(s_{t}, a_{t})$를 받을 수 있는 행동이 $a_{t}$라고 하자. 이는 Q-value $Q(s_{t}, a_{t})$이 자동으로 증가함을 뜻한다. 이렇게 증가한 Q-value는 AI에게 어디로 전이해야 좋은 보상을 받을 수 있는지 알려주기 때문에 중요한 정보가 된다.&lt;/p&gt;
-
-&lt;p&gt;AI를 만드는 다음 단계는 나은 보상을 찾는 것뿐 아니라 그와 동시에 높은 Q-value를 찾는 것이다. Q-value가 높으면 훌륭한 보상으로 이어지기 때문이다. 실제로 Q-value가 높으면 더 높은 Q-value로 이어지고 다시 그보다 더 높은 Q-value로 이어져 마지막에는 가장 높은 보상으로 이어진다. 시간차 공식에서 $\gamma max_{a}(Q(s_{t+1},a))$의 역할이다. 어느 시점에서 AI는 좋은 보상과 높은 Q-value로 이어지는 모든 전이를 알게 되며, 이 전이들의 Q-value는 시간이 지남에 따라 이미 증가되었고 결국 시간차는 감소한다. 즉 최종 목표에 가까워질수록 시간차는 작아진다.&lt;/p&gt;
-
-&lt;p&gt;결론적으로 시간차는 일시적인 내재적 보상과 같으며 AI는 훈련을 시작할 때 큰 값을 찾으려 한다. 결국 AI는 훈련이 끝날 때 이 보상을 최소화한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;벨만-방정식&quot;&gt;벨만 방정식&lt;/h4&gt;
-
-&lt;p&gt;AI가 목표를 달성하도록 이끄는 더 나은 행동을 수행하려면 높은 시간차를 발견했을 때 행동의 Q-value를 증가시켜야 한다. 이러한 Q-value를 업데이트하는 방법은 반복할 때마다 벨만 방정식이라는 다음 방정식을 통해 시간 $t-1$에서 $t$로 Q-value를 업데이트 한다.&lt;/p&gt;
-
-&lt;center&gt;$Q_{t}(s_{t},a_{t}) = Q_{t-1}(s_{t},a_{t}) + \alpha TD_{t}(s_{t},a_{t})$&lt;/center&gt;
-
-&lt;p&gt;여기에서 $\alpha \subseteq R$은 Q-value의 학습속도를 지정하는 학습률이다. 이 값은 일반적으로 0.75처럼 0과 1사이의 값을 갖는다. $\alpha$값이 작을수로 Q-value의 업데이트는 작아지고 Q-learning이 더 오래 걸린다. $\alpha$값이 클수록 Q-value의 업데이트가 커지고 Q-learning은 빨라진다. 이 방정식에서 알 수 있듯이 시간차 $TD_{t}(s_{t},a_{t})$가 크면 Q-vlaue $Q_{t}(s_{t},a_{t})$가 증가한다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;참고 : 아들랑 드 폰테베 &lt;strong&gt;『&lt;/strong&gt;강화학습/심층강화학습특강&lt;strong&gt;』&lt;/strong&gt;, 위키북스(2021), p72-85&lt;/p&gt;
-&lt;/blockquote&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>ilvnax24er</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="reinforcement" />
-      
-
-      
-        <summary type="html">Q-Learning Basic</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Reinforcement Learning - Q-learning</title>
-      <link href="https://ilvnax24er.github.io/logistics-AI" rel="alternate" type="text/html" title="Reinforcement Learning - Q-learning" />
+      <title type="html">Reinforcement Learning - Logistics AI</title>
+      <link href="https://ilvnax24er.github.io/logistics-AI" rel="alternate" type="text/html" title="Reinforcement Learning - Logistics AI" />
       <published>2021-07-06T00:00:00+09:00</published>
       <updated>2021-07-06T00:00:00+09:00</updated>
       <id>https://ilvnax24er.github.io/logistics-AI</id>
@@ -455,7 +333,7 @@
 
 &lt;ol&gt;
   &lt;li&gt;AI는 시작위치 E에서 출발한다.&lt;/li&gt;
-  &lt;li&gt;AI는 위치 E에 핻ㅇ하는 상태를 얻는다. location_to_state 매핑에 따르면 $s_{0} = 4$ 이다.&lt;/li&gt;
+  &lt;li&gt;AI는 위치 E에 해당하는 상태를 얻는다. location_to_state 매핑에 따르면 $s_{0} = 4$ 이다.&lt;/li&gt;
   &lt;li&gt;Q-Value 행렬에서 인덱스가 $s_{0} =4$인 행에서 AI는 Q-value가 최대(707)인 열을 선택한다.&lt;/li&gt;
   &lt;li&gt;이 열의 인덱스는 8이므로 AI는 인덱스가 8인 행동을 수행하며 이로써 다음 상태 $s_{t+1} = 8$이 된다.&lt;/li&gt;
   &lt;li&gt;AI는 상태 8의 위치를 얻게 되며 state_to_location 매핑에 따라 I에 위치한다. 다음 위치가 I이므로 I가 최적 경로를 포함하고 있는 AI의 리스트에 포함된다.&lt;/li&gt;
@@ -549,6 +427,269 @@
 
       
         <summary type="html">창고에서 일하는 로봇</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">Reinforcement Learning - Q-learning</title>
+      <link href="https://ilvnax24er.github.io/qlearning" rel="alternate" type="text/html" title="Reinforcement Learning - Q-learning" />
+      <published>2021-07-06T00:00:00+09:00</published>
+      <updated>2021-07-06T00:00:00+09:00</updated>
+      <id>https://ilvnax24er.github.io/qlearning</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/qlearning">&lt;h1 id=&quot;q-learning-basic&quot;&gt;Q-Learning Basic&lt;/h1&gt;
+
+&lt;p&gt;Q-Learning은 강화학습 모델이다. 입력(상태)과 출력(행동) 원칙에 따라 작동한다. 상태, 행동, 보상이 사전에 정의된 환경에서 작동하며, 마르코프 결정 프로세스에 의해 모델링된다. 또한 훈련 모드와 추론 모드를 사용하고 훈련 모드 동안 Q-Value라 부르는 매개변수를 학습한다. 또한 상태와 행동의 수는 유한하다.&lt;/p&gt;
+
+&lt;h3 id=&quot;미로&quot;&gt;미로&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\maze.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;출발점에서 도착점까지 갈 수 있는 AI를 구성해보자. 첫번째로 환경을 구성해야한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;환경&quot;&gt;환경&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;상태&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;상태는 AI의 입력이다. 그리고 AI가 최종 목표로 이끌 행동을 취하기 충분한 정보를 담고 있어야 한다. 즉 특정 시간에 AI가 위치한 지점을 나타내는 A부터 L까지의 문자가 될것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;행동&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;행동은 AI가 한 위치에서 다음 위치로 이동하는 움직임이 될것이다. 예를들어 J에 위치한다면 다음에 수행할 수 있는 행동은 I, F, K로 이동하는것이다. AI가 수행할 수 없는 작업에 보상으로 0을 부여하고 수행 가능한 작업에 보상으로 1을 부여할 수 있다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;보상&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;구체적으로 상태 $s$와 행동 $a$를 입력으로 취하고 AI가 상태 $s$에서 작업 $a$를 수행해 얻을 수 있는 숫자 보상 $r$을 반환하는 함수 $R$을 정의해야한다.&lt;/p&gt;
+
+&lt;center&gt;$R:(s,a) \rightarrow r \subseteq R$&lt;/center&gt;
+
+&lt;p&gt;함수에서 $s$는 행렬의 행 인덱스, $a$는 행렬의 열 인덱스, $r$은 이 행열에서 $(s,a)$ 인덱스에 해당하는 행렬을 만든다. A에서는 B로만 이동할 수 있다. 따라서 A의 인덱스는 0이고 B의 인덱스는 1이므로 보상 행렬의 첫번째 행에서는 두번째 열만 1을 갖고 나머지 열은 모두 0을 갖는다. 최종적으로 얻을 보상 행렬은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table_no.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;만약 AI가 최우선 위치 G로 이동해야 한다는 것을 어떻게 알릴 수 있을까? G에 높은 보상을 부여하면 다른 위치의 보상보다 훨씬 크기 때문에 AI는 자동으로 높은 보상을 잡으려고 한다. 즉 AI는 항상 최고의 보상을 찾는다. 때문에 G에 도달하는 비결은 다른곳보다 높은 보상을 부여하는것이다. 이에따른 보상행렬은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table1000.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;ai-구성&quot;&gt;AI 구성&lt;/h3&gt;
+
+&lt;h4 id=&quot;q-value&quot;&gt;Q-Value&lt;/h4&gt;
+
+&lt;p&gt;Q-Value는 상태와 행동의 쌍 $(s,a)$마다 숫자 값 $Q(s,a)$와 연결시킨다.&lt;/p&gt;
+
+&lt;center&gt;$Q:(s \subseteq S, a \subseteq A) \rightarrow Q(s,a) \subseteq R$&lt;/center&gt;
+
+&lt;p&gt;$Q(s,a)$는 상태 $s$에서 행동 $a$를 수행할 때 Q-value 이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;시간차&quot;&gt;시간차&lt;/h4&gt;
+
+&lt;p&gt;특정 시간 $t$에 특정상태 $t_{s}$에 있다고 하자. 선택할 수 있는 행동 중 임의의 행동을 수행하자. 그 결과 다음 상태 $s_{t+1}$로 바뀌고 보상으로 $R(s_{t}, a_{t})$를 얻는다.&lt;/p&gt;
+
+&lt;p&gt;시간 $t$에서 시간차를 나타내는 $TD_{t}(s_{t}, a_{t})$는 다음 둘 사이의 차이다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;상태 $s_{t}$에서 행동 $a_{t}$를 수행함으로써 얻는 보상 $R(s_{t},a_{t})$에 미래 상태 $s_{t+1}$에서 수행된 최고 행동의 Q-value에 할인 계수(discount factor) $\gamma \subseteq [0, 1]$에 의해 할인된 값을 더한 값&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;center&gt;$R(s_{t},a_{t}) + \gamma max_{a}(Q(s_{t+1},a))$&lt;/center&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;상태 $s_{t}$에서 행동 $a_{t}$를 수행할 때  Q-value인 $Q(s_{t},a_{t})$&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;그 결과 다음 식이 도출된다.&lt;/p&gt;
+
+&lt;center&gt;$TD_{t}(s_{t}, a_{t}) = R(s_{t}, a_{t}) + \gamma max_{a}(Q(s_{t+1}, a)) - Q(s_{t}, a_{t})$&lt;/center&gt;
+
+&lt;p&gt;훈련 초기에 Q-value는 0으로 설정된다.AI는 더 나은 보상을 얻으려고 하기 때문에 시간차가 가장 큰 경우를 찾는다. AI가 받는 보상이 크면 그 큰 보상으로 이어진 (상태, 행동)의 특정 Q-value가 증가하므로 AI는 높은 보상에 도달한 방법을 기억할 수 있다. 상태 $s_{t}$에서 높은 보상 $R(s_{t}, a_{t})$를 받을 수 있는 행동이 $a_{t}$라고 하자. 이는 Q-value $Q(s_{t}, a_{t})$이 자동으로 증가함을 뜻한다. 이렇게 증가한 Q-value는 AI에게 어디로 전이해야 좋은 보상을 받을 수 있는지 알려주기 때문에 중요한 정보가 된다.&lt;/p&gt;
+
+&lt;p&gt;AI를 만드는 다음 단계는 나은 보상을 찾는 것뿐 아니라 그와 동시에 높은 Q-value를 찾는 것이다. Q-value가 높으면 훌륭한 보상으로 이어지기 때문이다. 실제로 Q-value가 높으면 더 높은 Q-value로 이어지고 다시 그보다 더 높은 Q-value로 이어져 마지막에는 가장 높은 보상으로 이어진다. 시간차 공식에서 $\gamma max_{a}(Q(s_{t+1},a))$의 역할이다. 어느 시점에서 AI는 좋은 보상과 높은 Q-value로 이어지는 모든 전이를 알게 되며, 이 전이들의 Q-value는 시간이 지남에 따라 이미 증가되었고 결국 시간차는 감소한다. 즉 최종 목표에 가까워질수록 시간차는 작아진다.&lt;/p&gt;
+
+&lt;p&gt;결론적으로 시간차는 일시적인 내재적 보상과 같으며 AI는 훈련을 시작할 때 큰 값을 찾으려 한다. 결국 AI는 훈련이 끝날 때 이 보상을 최소화한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;벨만-방정식&quot;&gt;벨만 방정식&lt;/h4&gt;
+
+&lt;p&gt;AI가 목표를 달성하도록 이끄는 더 나은 행동을 수행하려면 높은 시간차를 발견했을 때 행동의 Q-value를 증가시켜야 한다. 이러한 Q-value를 업데이트하는 방법은 반복할 때마다 벨만 방정식이라는 다음 방정식을 통해 시간 $t-1$에서 $t$로 Q-value를 업데이트 한다.&lt;/p&gt;
+
+&lt;center&gt;$Q_{t}(s_{t},a_{t}) = Q_{t-1}(s_{t},a_{t}) + \alpha TD_{t}(s_{t},a_{t})$&lt;/center&gt;
+
+&lt;p&gt;여기에서 $\alpha \subseteq R$은 Q-value의 학습속도를 지정하는 학습률이다. 이 값은 일반적으로 0.75처럼 0과 1사이의 값을 갖는다. $\alpha$값이 작을수로 Q-value의 업데이트는 작아지고 Q-learning이 더 오래 걸린다. $\alpha$값이 클수록 Q-value의 업데이트가 커지고 Q-learning은 빨라진다. 이 방정식에서 알 수 있듯이 시간차 $TD_{t}(s_{t},a_{t})$가 크면 Q-vlaue $Q_{t}(s_{t},a_{t})$가 증가한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 아들랑 드 폰테베 &lt;strong&gt;『&lt;/strong&gt;강화학습/심층강화학습특강&lt;strong&gt;』&lt;/strong&gt;, 위키북스(2021), p72-85&lt;/p&gt;
+&lt;/blockquote&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>ilvnax24er</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="reinforcement" />
+      
+
+      
+        <summary type="html">Q-Learning Basic</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">Reinforcement Learning - Deep Q-Learning</title>
+      <link href="https://ilvnax24er.github.io/DeepQLearning" rel="alternate" type="text/html" title="Reinforcement Learning - Deep Q-Learning" />
+      <published>2021-07-06T00:00:00+09:00</published>
+      <updated>2021-07-06T00:00:00+09:00</updated>
+      <id>https://ilvnax24er.github.io/DeepQLearning</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/DeepQLearning">&lt;h1 id=&quot;deep-q-learning&quot;&gt;Deep Q-Learning&lt;/h1&gt;
+
+&lt;p&gt;Deep Q-Learning(DQL)은 Q-Learning과 Deeplearning을 결합한 것이다. Q-Learning에 ANN을 통합해보면, 신경망의 입력은 입력 상태가 될것이다. 이 입력 상태는 환경에서 어떤 일이 발생했는지를 인코딩한 1차원 벡터이거나 이미지일 수 있다. 출력은 각 행동에 대한 Q-value의 집합으로 수행 가능한 행동 각각에 부여된 Q-value로 구성된 1차원 벡터가 될것이다. 그 이후 AI는 Q-value가 최대인 행동을 취해 수행한다.&lt;/p&gt;
+
+&lt;p&gt;벨만 방정식을 사용해 반복적인 업데이트를 통해 Q-value를 예측하는 대신 입력으로 입력 상태를 취하고 행동별로 Q-value를 출력으로 반환하는 ANN을 사용해 예측한다.&lt;/p&gt;
+
+&lt;p&gt;여기서 예측의 target은 실제 값이거나 이상적으로 원하는 예측이다. 예측이 target에 가까울수록 더 정확하다. 예측과 타깃 사이의 손실 오차 $C$를 계산하고 확률적 경사 하강법이나 미니 배치 경사 하강법으로 역전파하여 이를 줄여나가는 이유다.&lt;/p&gt;
+
+&lt;p&gt;Target이 분명하지 않을때, target은 시간차 공식의 왼편의 첫번째 요소이다.&lt;/p&gt;
+
+&lt;center&gt;Target = $R_(s_{t}, a_{t}) + \gamma max_{a}(Q(s_{t+1}, a))$&lt;/center&gt;
+
+&lt;p&gt;그러면 다음 공식을 얻을 수 있다.&lt;/p&gt;
+
+&lt;center&gt;$TD_{t}(s_{t}, a_{t})$ = Target - $Q(S_{t}, a_{t})$ = Target - Prediction&lt;/center&gt;
+
+&lt;p&gt;처음에는 Q-value가 null이므로 target은 보상과 같다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;softmax 기법&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;softmax 기법은 Q-value를 예측한 다음 수행할 행동을 선택하는 방법이다. Q-Learning에서 이 과정이 간단했는데, argmax로 Q-value가 가장 높은 행동을 수행하면 된다. 하지만 DQL에서는 상황이 다르다. 문제가 일반적으로 더 복잡하기 때문에 최적의 솔루션을 찾으려면 Exploration이라는 프로세스를 거쳐야 한다.&lt;/p&gt;
+
+&lt;p&gt;Q-value가 최대인 행동을 수행하는 대신 각 행동에 Q-value에 비례하는 확률을 부여해 Q-value가 높을수록 확률이 높아진다. 이렇게 하면 수행 가능한 행동의 분포를 생성한다. 마지막으로 수행할 행동은 해당 분포에서 무작위로 추첨하여 선택된다.&lt;/p&gt;
+
+&lt;p&gt;수행 가능한 행동이 전진, 좌회전, 우회전이 있다고 가정하자 그 다음 특정 시간에 AI가 다음 Q-value를 예측한다고 하자&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;전진&lt;/th&gt;
+      &lt;th&gt;좌회전&lt;/th&gt;
+      &lt;th&gt;우회전&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;24&lt;/td&gt;
+      &lt;td&gt;38&lt;/td&gt;
+      &lt;td&gt;11&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;각 Q-value를 세개의 Q-value의 합으로 나누어 매시간마다 특정 행동의 확률을 산출함으로써 필요한 확률분포를 생성할 수 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;전진할 확률 = $\frac{24}{24+38+11} = 33%$&lt;/li&gt;
+  &lt;li&gt;좌회전할 확률 = $\frac{38}{24+38+11} = 52%$&lt;/li&gt;
+  &lt;li&gt;우회전할 확률 = $\frac{11}{24+38+11} = 15%$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;전체의 확률합은 1이고 이 확률은 Q-value에 비례한다. 이를통해 행동의 분포를 알 수 있다. softmax 기법은 이 분포에서 무작위로 추첨해 수행할 행동을 선택한다.&lt;/p&gt;
+
+&lt;p&gt;이렇게 하는 이유는, 다른 행동을 탐험함으로써 순수한 활용으로 얻는 보상보다 더 높은 보상을 가져오는 전환으로 이어지는 경우를 대비해야 하기 때문이다.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;입력은 인코딩된 벡터로 각 요소는 환경의 상태를 정의한다. ANN에 이 입력이 공급되면 각 행동에 대해 예측된 Q-value가 포함된 출력이 반환된다. 즉 AI가 취할 수 있는 행동이 n개가 있을 때 인공 신경망의 출력은 n개의 요소로 구성된 1차원 벡터이며 이 벡터의 각 요소는 현재 상타에서 수행될 수 있는 각 행동의 Q-value에 해당한다. 그 후 softmax 기법을 통해 선택된다.&lt;/p&gt;
+
+&lt;p&gt;따라서 상태 $s_{t}$에서&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Prediction은 Q-value $Q(s_{t}, a_{t})$이며, softmax 기법에 의해 수행된다.&lt;/li&gt;
+  &lt;li&gt;Target은 $R(s_{t},a_{t}) + \gamma max_{a}(Q(s_{t+1}, a))$이다.&lt;/li&gt;
+  &lt;li&gt;Prediction과 Target 사이의 Loss는 시간차의 제곱이다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;center&gt;$Loss = \frac{1}{2} (R(s_{t},a_{t}) + \gamma max_{a}(Q(s_{t+1}, a)) - Q(s_{t},a_{t}))^{2} = \frac{1}{2}TD_{t}(s_{t},a_{t})^{2}$&lt;/center&gt;
+
+&lt;p&gt;이 Loss는 신경망으로 역전파되어 오차에 얼마나 기여하는지에 따라 확률적 경사 하강법이나 미니 배치 경사하강법을 통해 업데이트 된다.&lt;/p&gt;
+
+&lt;h2 id=&quot;경험재현&quot;&gt;경험재현&lt;/h2&gt;
+
+&lt;p&gt;지금까지 하나의 상태 $s_{t}$에서 다음 상태 $s_{t+1}$로 전이하는 것만 고려했다. 하지만 대부분의 경우 $s_{t}$는 $s_{t+1}$과 상관관계가 있다. 매번 마지막 전이만 고려하는 대신 마지막 $m$개의 전이를 고려하면($m$은 큰수) 개선 될 수 있다. 마지막 $m$개의 전이의 집하을 경험 재현 메모리 또는 간단하게 메모리라고 부른다. 이 메모리에서 일부 전이를 무작위로 샘플링해서 작은 크기의 배치를 만든다. 그 후 이 배치를 사용해 신경망을 훈련시킨 다음 미니 배치 경사 하강볍을 통해 가중치를 업데이트 한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;dql-algorithm&quot;&gt;DQL Algorithm&lt;/h2&gt;
+
+&lt;h4 id=&quot;initialization&quot;&gt;Initialization&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;경험 재현 메모리를 빈 리스트 $M$으로 초기화한다.&lt;/li&gt;
+  &lt;li&gt;메모리의 최대 크기를 선택한다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;시간 $t$에서 다음 프로세스를 세대가 끝날 때까지 반복한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;현재 상태 $s_{t}$의 Q-value를 예측한다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;softmax 기법에 의해 선택된 행동을 수행한다. $a_{t} = Softmax_{a} {Q(s_{t}, a)}$&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;보상 $R(s_{t}, a_{t})$를 받는다.&lt;/li&gt;
+  &lt;li&gt;다음 상태 $s_{t+1}$에 도달한다.&lt;/li&gt;
+  &lt;li&gt;메모리 $M$에 전이 $(s_{t}, a_{t}, r{t}, s_{t+1})$를 추가한다.&lt;/li&gt;
+  &lt;li&gt;메모리 $M$에서 무작위로 선택한 전이로 배치 $B \subset M$을 구성한다. 무작위 배치 $B$의 $(s_{tB}, a_{tB}, r{tB}, s_{tB+1})$ 전이 전체에 대해
+    &lt;ol&gt;
+      &lt;li&gt;Prediction을 가져온다 : $Q(s_{tB}, a_{tB})$&lt;/li&gt;
+      &lt;li&gt;Target을 가져온다 : $R(s_{tB}, a_{tB}) + \gamma max_{a}(Q(s_{tB+1}, a))$&lt;/li&gt;
+      &lt;li&gt;전체 배치 $B$에서 Prediction과 Target 사이의 손실을 계산한다.&lt;/li&gt;
+    &lt;/ol&gt;
+    &lt;center&gt;$Loss = \frac{1}{2} \sum_{B} (R(s_{tB},a_{tB}) + \gamma max_{a}(Q(s_{tB+1}, a)) - Q(s_{tB},a_{tB}))^{2} = \frac{1}{2} \sum_{B} TD_{tB}(s_{tB},a_{tB})^{2}$&lt;/center&gt;
+    &lt;p&gt;4.Loss를 다시 신경망으로 역전파하고 확률적 경사 하강법을 통해 손실 오차에 얼마나 기여하는 정도에 따라 가중치를 업데이트 한다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 아들랑 드 폰테베 &lt;strong&gt;『&lt;/strong&gt;강화학습/심층강화학습특강&lt;strong&gt;』&lt;/strong&gt;, 위키북스(2021), p138-144&lt;/p&gt;
+&lt;/blockquote&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>ilvnax24er</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="reinforcement" />
+      
+
+      
+        <summary type="html">Deep Q-Learning</summary>
       
 
       

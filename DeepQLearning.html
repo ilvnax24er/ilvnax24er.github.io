@@ -11,7 +11,7 @@
 
 
 
-    <title>Reinforcement Learning - Q-learning</title>
+    <title>Reinforcement Learning - Deep Q-Learning</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -66,15 +66,15 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     <!-- This tag outputs SEO meta+structured data and other important settings -->
     <meta name="description" content="Deeplearning Archive" />
     <link rel="shortcut icon" href="https://ilvnax24er.github.io/" type="image/png" />
-    <link rel="canonical" href="https://ilvnax24er.github.io/qlearning" />
+    <link rel="canonical" href="https://ilvnax24er.github.io/DeepQLearning" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Archive" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Reinforcement Learning - Q-learning" />
-    <meta property="og:description" content="Q-Learning Basic Q-Learning은 강화학습 모델이다. 입력(상태)과 출력(행동) 원칙에 따라 작동한다. 상태, 행동, 보상이 사전에 정의된 환경에서 작동하며, 마르코프 결정 프로세스에 의해 모델링된다. 또한 훈련 모드와 추론 모드를 사용하고 훈련 모드 동안 Q-Value라 부르는 매개변수를 학습한다. 또한 상태와 행동의 수는 유한하다. 미로 출발점에서 도착점까지 갈 수 있는 AI를 구성해보자. 첫번째로 환경을" />
-    <meta property="og:url" content="https://ilvnax24er.github.io/qlearning" />
+    <meta property="og:title" content="Reinforcement Learning - Deep Q-Learning" />
+    <meta property="og:description" content="Deep Q-Learning Deep Q-Learning(DQL)은 Q-Learning과 Deeplearning을 결합한 것이다. Q-Learning에 ANN을 통합해보면, 신경망의 입력은 입력 상태가 될것이다. 이 입력 상태는 환경에서 어떤 일이 발생했는지를 인코딩한 1차원 벡터이거나 이미지일 수 있다. 출력은 각 행동에 대한 Q-value의 집합으로 수행 가능한 행동 각각에 부여된 Q-value로 구성된 1차원 벡터가 될것이다. 그 이후 AI는 Q-value가 최대인" />
+    <meta property="og:url" content="https://ilvnax24er.github.io/DeepQLearning" />
     <meta property="og:image" content="https://ilvnax24er.github.io/assets/built/images/reinforce-book-cover.jpg" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
@@ -82,8 +82,8 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     <meta property="article:modified_time" content="2021-07-06T00:00:00+09:00" />
     <meta property="article:tag" content="Reinforcement" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Reinforcement Learning - Q-learning" />
-    <meta name="twitter:description" content="Q-Learning Basic Q-Learning은 강화학습 모델이다. 입력(상태)과 출력(행동) 원칙에 따라 작동한다. 상태, 행동, 보상이 사전에 정의된 환경에서 작동하며, 마르코프 결정 프로세스에 의해 모델링된다. 또한 훈련 모드와 추론 모드를 사용하고 훈련 모드 동안 Q-Value라 부르는 매개변수를 학습한다. 또한 상태와 행동의 수는 유한하다. 미로 출발점에서 도착점까지 갈 수 있는 AI를 구성해보자. 첫번째로 환경을" />
+    <meta name="twitter:title" content="Reinforcement Learning - Deep Q-Learning" />
+    <meta name="twitter:description" content="Deep Q-Learning Deep Q-Learning(DQL)은 Q-Learning과 Deeplearning을 결합한 것이다. Q-Learning에 ANN을 통합해보면, 신경망의 입력은 입력 상태가 될것이다. 이 입력 상태는 환경에서 어떤 일이 발생했는지를 인코딩한 1차원 벡터이거나 이미지일 수 있다. 출력은 각 행동에 대한 Q-value의 집합으로 수행 가능한 행동 각각에 부여된 Q-value로 구성된 1차원 벡터가 될것이다. 그 이후 AI는 Q-value가 최대인" />
     <meta name="twitter:url" content="https://ilvnax24er.github.io/" />
     <meta name="twitter:image" content="https://ilvnax24er.github.io/assets/built/images/reinforce-book-cover.jpg" />
     <meta name="twitter:label1" content="Written by" />
@@ -104,7 +104,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
         "name": "Archive",
         "logo": "https://ilvnax24er.github.io/"
     },
-    "url": "https://ilvnax24er.github.io/qlearning",
+    "url": "https://ilvnax24er.github.io/DeepQLearning",
     "image": {
         "@type": "ImageObject",
         "url": "https://ilvnax24er.github.io/assets/built/images/reinforce-book-cover.jpg",
@@ -113,9 +113,9 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://ilvnax24er.github.io/qlearning"
+        "@id": "https://ilvnax24er.github.io/DeepQLearning"
     },
-    "description": "Q-Learning Basic Q-Learning은 강화학습 모델이다. 입력(상태)과 출력(행동) 원칙에 따라 작동한다. 상태, 행동, 보상이 사전에 정의된 환경에서 작동하며, 마르코프 결정 프로세스에 의해 모델링된다. 또한 훈련 모드와 추론 모드를 사용하고 훈련 모드 동안 Q-Value라 부르는 매개변수를 학습한다. 또한 상태와 행동의 수는 유한하다. 미로 출발점에서 도착점까지 갈 수 있는 AI를 구성해보자. 첫번째로 환경을"
+    "description": "Deep Q-Learning Deep Q-Learning(DQL)은 Q-Learning과 Deeplearning을 결합한 것이다. Q-Learning에 ANN을 통합해보면, 신경망의 입력은 입력 상태가 될것이다. 이 입력 상태는 환경에서 어떤 일이 발생했는지를 인코딩한 1차원 벡터이거나 이미지일 수 있다. 출력은 각 행동에 대한 Q-value의 집합으로 수행 가능한 행동 각각에 부여된 Q-value로 구성된 1차원 벡터가 될것이다. 그 이후 AI는 Q-value가 최대인"
 }
     </script>
 
@@ -128,7 +128,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="Reinforcement Learning - Q-learning" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Reinforcement Learning - Deep Q-Learning" href="/feed.xml" />
 
 
 </head>
@@ -200,7 +200,7 @@ into the {body} of the default.hbs template -->
                         
                     
                 </section>
-                <h1 class="post-full-title">Reinforcement Learning - Q-learning</h1>
+                <h1 class="post-full-title">Reinforcement Learning - Deep Q-Learning</h1>
             </header>
 
             <!-- cover on/off
@@ -214,94 +214,113 @@ into the {body} of the default.hbs template -->
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <h1 id="q-learning-basic">Q-Learning Basic</h1>
+                    <h1 id="deep-q-learning">Deep Q-Learning</h1>
 
-<p>Q-Learning은 강화학습 모델이다. 입력(상태)과 출력(행동) 원칙에 따라 작동한다. 상태, 행동, 보상이 사전에 정의된 환경에서 작동하며, 마르코프 결정 프로세스에 의해 모델링된다. 또한 훈련 모드와 추론 모드를 사용하고 훈련 모드 동안 Q-Value라 부르는 매개변수를 학습한다. 또한 상태와 행동의 수는 유한하다.</p>
+<p>Deep Q-Learning(DQL)은 Q-Learning과 Deeplearning을 결합한 것이다. Q-Learning에 ANN을 통합해보면, 신경망의 입력은 입력 상태가 될것이다. 이 입력 상태는 환경에서 어떤 일이 발생했는지를 인코딩한 1차원 벡터이거나 이미지일 수 있다. 출력은 각 행동에 대한 Q-value의 집합으로 수행 가능한 행동 각각에 부여된 Q-value로 구성된 1차원 벡터가 될것이다. 그 이후 AI는 Q-value가 최대인 행동을 취해 수행한다.</p>
 
-<h3 id="미로">미로</h3>
+<p>벨만 방정식을 사용해 반복적인 업데이트를 통해 Q-value를 예측하는 대신 입력으로 입력 상태를 취하고 행동별로 Q-value를 출력으로 반환하는 ANN을 사용해 예측한다.</p>
 
-<p><img src="\assets\built\images\post_images\qlearning\maze.png" alt="" /></p>
+<p>여기서 예측의 target은 실제 값이거나 이상적으로 원하는 예측이다. 예측이 target에 가까울수록 더 정확하다. 예측과 타깃 사이의 손실 오차 $C$를 계산하고 확률적 경사 하강법이나 미니 배치 경사 하강법으로 역전파하여 이를 줄여나가는 이유다.</p>
 
-<p>출발점에서 도착점까지 갈 수 있는 AI를 구성해보자. 첫번째로 환경을 구성해야한다.</p>
+<p>Target이 분명하지 않을때, target은 시간차 공식의 왼편의 첫번째 요소이다.</p>
 
-<h4 id="환경">환경</h4>
+<center>Target = $R_(s_{t}, a_{t}) + \gamma max_{a}(Q(s_{t+1}, a))$</center>
 
-<blockquote>
-  <p>상태</p>
-</blockquote>
+<p>그러면 다음 공식을 얻을 수 있다.</p>
 
-<p>상태는 AI의 입력이다. 그리고 AI가 최종 목표로 이끌 행동을 취하기 충분한 정보를 담고 있어야 한다. 즉 특정 시간에 AI가 위치한 지점을 나타내는 A부터 L까지의 문자가 될것이다.</p>
+<center>$TD_{t}(s_{t}, a_{t})$ = Target - $Q(S_{t}, a_{t})$ = Target - Prediction</center>
 
-<p><img src="\assets\built\images\post_images\qlearning\table_1.png" alt="" /></p>
+<p>처음에는 Q-value가 null이므로 target은 보상과 같다.</p>
 
 <blockquote>
-  <p>행동</p>
+  <p>softmax 기법</p>
 </blockquote>
 
-<p>행동은 AI가 한 위치에서 다음 위치로 이동하는 움직임이 될것이다. 예를들어 J에 위치한다면 다음에 수행할 수 있는 행동은 I, F, K로 이동하는것이다. AI가 수행할 수 없는 작업에 보상으로 0을 부여하고 수행 가능한 작업에 보상으로 1을 부여할 수 있다.</p>
+<p>softmax 기법은 Q-value를 예측한 다음 수행할 행동을 선택하는 방법이다. Q-Learning에서 이 과정이 간단했는데, argmax로 Q-value가 가장 높은 행동을 수행하면 된다. 하지만 DQL에서는 상황이 다르다. 문제가 일반적으로 더 복잡하기 때문에 최적의 솔루션을 찾으려면 Exploration이라는 프로세스를 거쳐야 한다.</p>
 
-<blockquote>
-  <p>보상</p>
-</blockquote>
+<p>Q-value가 최대인 행동을 수행하는 대신 각 행동에 Q-value에 비례하는 확률을 부여해 Q-value가 높을수록 확률이 높아진다. 이렇게 하면 수행 가능한 행동의 분포를 생성한다. 마지막으로 수행할 행동은 해당 분포에서 무작위로 추첨하여 선택된다.</p>
 
-<p>구체적으로 상태 $s$와 행동 $a$를 입력으로 취하고 AI가 상태 $s$에서 작업 $a$를 수행해 얻을 수 있는 숫자 보상 $r$을 반환하는 함수 $R$을 정의해야한다.</p>
+<p>수행 가능한 행동이 전진, 좌회전, 우회전이 있다고 가정하자 그 다음 특정 시간에 AI가 다음 Q-value를 예측한다고 하자</p>
 
-<center>$R:(s,a) \rightarrow r \subseteq R$</center>
+<table>
+  <thead>
+    <tr>
+      <th>전진</th>
+      <th>좌회전</th>
+      <th>우회전</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>24</td>
+      <td>38</td>
+      <td>11</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>함수에서 $s$는 행렬의 행 인덱스, $a$는 행렬의 열 인덱스, $r$은 이 행열에서 $(s,a)$ 인덱스에 해당하는 행렬을 만든다. A에서는 B로만 이동할 수 있다. 따라서 A의 인덱스는 0이고 B의 인덱스는 1이므로 보상 행렬의 첫번째 행에서는 두번째 열만 1을 갖고 나머지 열은 모두 0을 갖는다. 최종적으로 얻을 보상 행렬은 다음과 같다.</p>
+<p>각 Q-value를 세개의 Q-value의 합으로 나누어 매시간마다 특정 행동의 확률을 산출함으로써 필요한 확률분포를 생성할 수 있다.</p>
 
-<p><img src="\assets\built\images\post_images\qlearning\table_no.png" alt="" /></p>
+<ul>
+  <li>전진할 확률 = $\frac{24}{24+38+11} = 33%$</li>
+  <li>좌회전할 확률 = $\frac{38}{24+38+11} = 52%$</li>
+  <li>우회전할 확률 = $\frac{11}{24+38+11} = 15%$</li>
+</ul>
 
-<p>만약 AI가 최우선 위치 G로 이동해야 한다는 것을 어떻게 알릴 수 있을까? G에 높은 보상을 부여하면 다른 위치의 보상보다 훨씬 크기 때문에 AI는 자동으로 높은 보상을 잡으려고 한다. 즉 AI는 항상 최고의 보상을 찾는다. 때문에 G에 도달하는 비결은 다른곳보다 높은 보상을 부여하는것이다. 이에따른 보상행렬은 다음과 같다.</p>
+<p>전체의 확률합은 1이고 이 확률은 Q-value에 비례한다. 이를통해 행동의 분포를 알 수 있다. softmax 기법은 이 분포에서 무작위로 추첨해 수행할 행동을 선택한다.</p>
 
-<p><img src="\assets\built\images\post_images\qlearning\table1000.png" alt="" /></p>
+<p>이렇게 하는 이유는, 다른 행동을 탐험함으로써 순수한 활용으로 얻는 보상보다 더 높은 보상을 가져오는 전환으로 이어지는 경우를 대비해야 하기 때문이다.</p>
 
-<h3 id="ai-구성">AI 구성</h3>
+<h2 id="summary">Summary</h2>
 
-<h4 id="q-value">Q-Value</h4>
+<p>입력은 인코딩된 벡터로 각 요소는 환경의 상태를 정의한다. ANN에 이 입력이 공급되면 각 행동에 대해 예측된 Q-value가 포함된 출력이 반환된다. 즉 AI가 취할 수 있는 행동이 n개가 있을 때 인공 신경망의 출력은 n개의 요소로 구성된 1차원 벡터이며 이 벡터의 각 요소는 현재 상타에서 수행될 수 있는 각 행동의 Q-value에 해당한다. 그 후 softmax 기법을 통해 선택된다.</p>
 
-<p>Q-Value는 상태와 행동의 쌍 $(s,a)$마다 숫자 값 $Q(s,a)$와 연결시킨다.</p>
-
-<center>$Q:(s \subseteq S, a \subseteq A) \rightarrow Q(s,a) \subseteq R$</center>
-
-<p>$Q(s,a)$는 상태 $s$에서 행동 $a$를 수행할 때 Q-value 이다.</p>
-
-<h4 id="시간차">시간차</h4>
-
-<p>특정 시간 $t$에 특정상태 $t_{s}$에 있다고 하자. 선택할 수 있는 행동 중 임의의 행동을 수행하자. 그 결과 다음 상태 $s_{t+1}$로 바뀌고 보상으로 $R(s_{t}, a_{t})$를 얻는다.</p>
-
-<p>시간 $t$에서 시간차를 나타내는 $TD_{t}(s_{t}, a_{t})$는 다음 둘 사이의 차이다.</p>
+<p>따라서 상태 $s_{t}$에서</p>
 
 <ol>
-  <li>상태 $s_{t}$에서 행동 $a_{t}$를 수행함으로써 얻는 보상 $R(s_{t},a_{t})$에 미래 상태 $s_{t+1}$에서 수행된 최고 행동의 Q-value에 할인 계수(discount factor) $\gamma \subseteq [0, 1]$에 의해 할인된 값을 더한 값</li>
+  <li>Prediction은 Q-value $Q(s_{t}, a_{t})$이며, softmax 기법에 의해 수행된다.</li>
+  <li>Target은 $R(s_{t},a_{t}) + \gamma max_{a}(Q(s_{t+1}, a))$이다.</li>
+  <li>Prediction과 Target 사이의 Loss는 시간차의 제곱이다.</li>
 </ol>
 
-<center>$R(s_{t},a_{t}) + \gamma max_{a}(Q(s_{t+1},a))$</center>
+<center>$Loss = \frac{1}{2} (R(s_{t},a_{t}) + \gamma max_{a}(Q(s_{t+1}, a)) - Q(s_{t},a_{t}))^{2} = \frac{1}{2}TD_{t}(s_{t},a_{t})^{2}$</center>
 
-<ol>
-  <li>상태 $s_{t}$에서 행동 $a_{t}$를 수행할 때  Q-value인 $Q(s_{t},a_{t})$</li>
-</ol>
+<p>이 Loss는 신경망으로 역전파되어 오차에 얼마나 기여하는지에 따라 확률적 경사 하강법이나 미니 배치 경사하강법을 통해 업데이트 된다.</p>
 
-<p>그 결과 다음 식이 도출된다.</p>
+<h2 id="경험재현">경험재현</h2>
 
-<center>$TD_{t}(s_{t}, a_{t}) = R(s_{t}, a_{t}) + \gamma max_{a}(Q(s_{t+1}, a)) - Q(s_{t}, a_{t})$</center>
+<p>지금까지 하나의 상태 $s_{t}$에서 다음 상태 $s_{t+1}$로 전이하는 것만 고려했다. 하지만 대부분의 경우 $s_{t}$는 $s_{t+1}$과 상관관계가 있다. 매번 마지막 전이만 고려하는 대신 마지막 $m$개의 전이를 고려하면($m$은 큰수) 개선 될 수 있다. 마지막 $m$개의 전이의 집하을 경험 재현 메모리 또는 간단하게 메모리라고 부른다. 이 메모리에서 일부 전이를 무작위로 샘플링해서 작은 크기의 배치를 만든다. 그 후 이 배치를 사용해 신경망을 훈련시킨 다음 미니 배치 경사 하강볍을 통해 가중치를 업데이트 한다.</p>
 
-<p>훈련 초기에 Q-value는 0으로 설정된다.AI는 더 나은 보상을 얻으려고 하기 때문에 시간차가 가장 큰 경우를 찾는다. AI가 받는 보상이 크면 그 큰 보상으로 이어진 (상태, 행동)의 특정 Q-value가 증가하므로 AI는 높은 보상에 도달한 방법을 기억할 수 있다. 상태 $s_{t}$에서 높은 보상 $R(s_{t}, a_{t})$를 받을 수 있는 행동이 $a_{t}$라고 하자. 이는 Q-value $Q(s_{t}, a_{t})$이 자동으로 증가함을 뜻한다. 이렇게 증가한 Q-value는 AI에게 어디로 전이해야 좋은 보상을 받을 수 있는지 알려주기 때문에 중요한 정보가 된다.</p>
+<h2 id="dql-algorithm">DQL Algorithm</h2>
 
-<p>AI를 만드는 다음 단계는 나은 보상을 찾는 것뿐 아니라 그와 동시에 높은 Q-value를 찾는 것이다. Q-value가 높으면 훌륭한 보상으로 이어지기 때문이다. 실제로 Q-value가 높으면 더 높은 Q-value로 이어지고 다시 그보다 더 높은 Q-value로 이어져 마지막에는 가장 높은 보상으로 이어진다. 시간차 공식에서 $\gamma max_{a}(Q(s_{t+1},a))$의 역할이다. 어느 시점에서 AI는 좋은 보상과 높은 Q-value로 이어지는 모든 전이를 알게 되며, 이 전이들의 Q-value는 시간이 지남에 따라 이미 증가되었고 결국 시간차는 감소한다. 즉 최종 목표에 가까워질수록 시간차는 작아진다.</p>
+<h4 id="initialization">Initialization</h4>
 
-<p>결론적으로 시간차는 일시적인 내재적 보상과 같으며 AI는 훈련을 시작할 때 큰 값을 찾으려 한다. 결국 AI는 훈련이 끝날 때 이 보상을 최소화한다.</p>
-
-<h4 id="벨만-방정식">벨만 방정식</h4>
-
-<p>AI가 목표를 달성하도록 이끄는 더 나은 행동을 수행하려면 높은 시간차를 발견했을 때 행동의 Q-value를 증가시켜야 한다. 이러한 Q-value를 업데이트하는 방법은 반복할 때마다 벨만 방정식이라는 다음 방정식을 통해 시간 $t-1$에서 $t$로 Q-value를 업데이트 한다.</p>
-
-<center>$Q_{t}(s_{t},a_{t}) = Q_{t-1}(s_{t},a_{t}) + \alpha TD_{t}(s_{t},a_{t})$</center>
-
-<p>여기에서 $\alpha \subseteq R$은 Q-value의 학습속도를 지정하는 학습률이다. 이 값은 일반적으로 0.75처럼 0과 1사이의 값을 갖는다. $\alpha$값이 작을수로 Q-value의 업데이트는 작아지고 Q-learning이 더 오래 걸린다. $\alpha$값이 클수록 Q-value의 업데이트가 커지고 Q-learning은 빨라진다. 이 방정식에서 알 수 있듯이 시간차 $TD_{t}(s_{t},a_{t})$가 크면 Q-vlaue $Q_{t}(s_{t},a_{t})$가 증가한다.</p>
+<ul>
+  <li>경험 재현 메모리를 빈 리스트 $M$으로 초기화한다.</li>
+  <li>메모리의 최대 크기를 선택한다.</li>
+  <li>
+    <p>시간 $t$에서 다음 프로세스를 세대가 끝날 때까지 반복한다.</p>
+  </li>
+  <li>현재 상태 $s_{t}$의 Q-value를 예측한다.</li>
+  <li>
+    <p>softmax 기법에 의해 선택된 행동을 수행한다. $a_{t} = Softmax_{a} {Q(s_{t}, a)}$</p>
+  </li>
+  <li>보상 $R(s_{t}, a_{t})$를 받는다.</li>
+  <li>다음 상태 $s_{t+1}$에 도달한다.</li>
+  <li>메모리 $M$에 전이 $(s_{t}, a_{t}, r{t}, s_{t+1})$를 추가한다.</li>
+  <li>메모리 $M$에서 무작위로 선택한 전이로 배치 $B \subset M$을 구성한다. 무작위 배치 $B$의 $(s_{tB}, a_{tB}, r{tB}, s_{tB+1})$ 전이 전체에 대해
+    <ol>
+      <li>Prediction을 가져온다 : $Q(s_{tB}, a_{tB})$</li>
+      <li>Target을 가져온다 : $R(s_{tB}, a_{tB}) + \gamma max_{a}(Q(s_{tB+1}, a))$</li>
+      <li>전체 배치 $B$에서 Prediction과 Target 사이의 손실을 계산한다.</li>
+    </ol>
+    <center>$Loss = \frac{1}{2} \sum_{B} (R(s_{tB},a_{tB}) + \gamma max_{a}(Q(s_{tB+1}, a)) - Q(s_{tB},a_{tB}))^{2} = \frac{1}{2} \sum_{B} TD_{tB}(s_{tB},a_{tB})^{2}$</center>
+    <p>4.Loss를 다시 신경망으로 역전파하고 확률적 경사 하강법을 통해 손실 오차에 얼마나 기여하는 정도에 따라 가중치를 업데이트 한다.</p>
+  </li>
+</ul>
 
 <blockquote>
-  <p>참고 : 아들랑 드 폰테베 <strong>『</strong>강화학습/심층강화학습특강<strong>』</strong>, 위키북스(2021), p72-85</p>
+  <p>참고 : 아들랑 드 폰테베 <strong>『</strong>강화학습/심층강화학습특강<strong>』</strong>, 위키북스(2021), p138-144</p>
 </blockquote>
 
                 </div>
@@ -391,11 +410,6 @@ into the {body} of the default.hbs template -->
                                 
                                   
                                     
-                                        
-                                        
-                                            <li><a href="/DeepQLearning">Reinforcement Learning - Deep Q-Learning</a></li>
-                                        
-                                    
                                   
                                 
                                   
@@ -408,6 +422,11 @@ into the {body} of the default.hbs template -->
                                   
                                 
                                   
+                                    
+                                        
+                                        
+                                            <li><a href="/qlearning">Reinforcement Learning - Q-learning</a></li>
+                                        
                                     
                                   
                                 
@@ -465,6 +484,9 @@ into the {body} of the default.hbs template -->
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
             
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
                 
 
     <article class="post-card post-template">
@@ -517,60 +539,6 @@ into the {body} of the default.hbs template -->
 
             
 
-            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
-            
-                
-
-    <article class="post-card post-template">
-        
-            <a class="post-card-image-link" href="/3sales-adv">
-                <div class="post-card-image" style="background-image: url(/assets/built/images/reinforce-book-cover.jpg)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/3sales-adv">
-                <header class="post-card-header">
-                    
-                        
-                            
-                                <span class="post-card-tags">Reinforcement</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">Reinforcement Learning - Sales and Advertisement</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    
-                        <p>문제정의
-
-</p>
-                    
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/ilvnax24er/">ilvnax24er</a>
-                        </span>
-                    
-                
-                <span class="reading-time">
-                    
-                    
-                      3 min read
-                    
-                </span>
-            </footer>
-        </div>
-    </article>
-
-            
-
         </div>
     </div>
 </aside>
@@ -584,18 +552,18 @@ into the {body} of the default.hbs template -->
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">Reinforcement Learning - Q-learning</div>
+    <div class="floating-header-title">Reinforcement Learning - Deep Q-Learning</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Reinforcement+Learning+-+Q-learning&amp;url=https://ilvnax24er.github.io/qlearning"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Reinforcement+Learning+-+Deep+Q-Learning&amp;url=https://ilvnax24er.github.io/DeepQLearning"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
         </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://ilvnax24er.github.io/qlearning"
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://ilvnax24er.github.io/DeepQLearning"
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 
