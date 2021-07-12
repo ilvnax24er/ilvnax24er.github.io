@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://ilvnax24er.github.io/tag/reinforcement/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" />
-  <updated>2021-07-09T16:22:52+09:00</updated>
+  <updated>2021-07-12T15:16:50+09:00</updated>
   <id>https://ilvnax24er.github.io/tag/reinforcement/feed.xml</id>
 
   
@@ -30,6 +30,164 @@
   
   
 
+  
+    <entry>
+      <title type="html">Reinforcement Learning - Intro</title>
+      <link href="https://ilvnax24er.github.io/minimize-cost" rel="alternate" type="text/html" title="Reinforcement Learning - Intro" />
+      <published>2021-07-12T00:00:00+09:00</published>
+      <updated>2021-07-12T00:00:00+09:00</updated>
+      <id>https://ilvnax24er.github.io/minimize-cost</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/minimize-cost">&lt;h1 id=&quot;deep-q-learning---minimize-cost-of-air-conditioning&quot;&gt;Deep Q-Learning - Minimize Cost of Air Conditioning&lt;/h1&gt;
+
+&lt;p&gt;서버 환경을 구성하고 최소한의 에너지를 사용하면서도 최적의 온도 범위를 유지하도록 서버의 냉난방을 제어하는 AI를 구축해 비용을 최소화하자.&lt;/p&gt;
+
+&lt;h2 id=&quot;환경구성&quot;&gt;환경구성&lt;/h2&gt;
+
+&lt;p&gt;상태, 행동, 보상을 정의 및 서버의 작동 방식&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;서버를 제어할 환경 매개변수와 변수를 모두 나열한다.&lt;/li&gt;
+  &lt;li&gt;AI가 솔루션을 제공하기 위해 의존하게 되는 문제에 대한 필수 가정을 설정한다.&lt;/li&gt;
+  &lt;li&gt;전체 프로세스를 시뮬레이션하는 방법을 지정한다.&lt;/li&gt;
+  &lt;li&gt;서버의 전체 기능을 설명하고 AI가 자신의 역할을 수행&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;서버-환경의-매개변수와-변수&quot;&gt;서버 환경의 매개변수와 변수&lt;/h3&gt;
+
+&lt;h4 id=&quot;매개변수&quot;&gt;매개변수&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;월 평균 기온.&lt;/li&gt;
+  &lt;li&gt;서버의 최적 온도범위 : 18 ~ 24 $^{\circ}C$&lt;/li&gt;
+  &lt;li&gt;최저 온도 : -20$^{\circ}C$&lt;/li&gt;
+  &lt;li&gt;최대 온도 : 80$^{\circ}C$&lt;/li&gt;
+  &lt;li&gt;최소 사용자 수 : 10&lt;/li&gt;
+  &lt;li&gt;최대 사용자 수 : 100&lt;/li&gt;
+  &lt;li&gt;분당 서버 사용자 수의 최대 변동폭 : 5&lt;/li&gt;
+  &lt;li&gt;서버의 최소 데이터 전송속도 : 20&lt;/li&gt;
+  &lt;li&gt;서버의 최대 데이터 전송속도 : 300&lt;/li&gt;
+  &lt;li&gt;분당 데이터 전송 속도의 최대 변동폭 : 10&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;환경-변수&quot;&gt;환경 변수&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;서버 온도&lt;/li&gt;
+  &lt;li&gt;서버와 연결된 사용자 수&lt;/li&gt;
+  &lt;li&gt;데이터 전송 속도&lt;/li&gt;
+  &lt;li&gt;AI가 서버를 냉각시키거나 온도를 높이기 위해 소비한 에너지&lt;/li&gt;
+  &lt;li&gt;서버 온도가 최적의 온도 범위를 벗어날 때마다 자동으로 서버 온도를 최적의 온도 범위로 되돌리기 위해 서버 자체 냉각 시스템이 소비하는 에너지&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;서버-환경에-대한-가정&quot;&gt;서버 환경에 대한 가정&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;서버 온도를 근사치로 계산할 수 있다.&lt;/p&gt;
+
+    &lt;p&gt;서버 온도는 다중 선형 회귀를 통해 선형 함수로 근사시킬 수 있다.&lt;/p&gt;
+
+    &lt;center&gt;서버온도 = $b_{0} + b_{1} \times 기온 + b_{2} \times 사용자 수 + b_{3} \times 데이터 전송 속도$&lt;/center&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;에너지 비용을 근사치로 계산할 수 있다.&lt;/p&gt;
+
+    &lt;p&gt;AI 또는 서버 자체 냉각 시스템이 서버 온도를 단위 시간내에서 $T_{t}$에서 $T_{t+1}$로 바꾸는데 소비하는 에너지는 서버 온도 변화의 절댓값의 선형 함수에의한 회귀를 통해 다시 근사될 수 있다.&lt;/p&gt;
+
+    &lt;center&gt;$E_{t} = \alpha |\Delta T_{t} | + \beta = \alpha |T_{t+1} - T_{t}| + \beta$&lt;/center&gt;
+  &lt;/li&gt;
+  &lt;li&gt;$E_{t}$ : 시간 $t$와 $t+1$ 분 사이 시스템이 서버에 소비한 에너지&lt;/li&gt;
+  &lt;li&gt;$\Delta T_{t}$ : 시간 $t$와 $t+1$ 분 사이 시스템이 일으킨 서버 온도의 변경분&lt;/li&gt;
+  &lt;li&gt;$T_{t}$ : 시간 $t$에서 서버 온도&lt;/li&gt;
+  &lt;li&gt;$T_{t+1}$ : 시간 $t+1$에서 서버 온도&lt;/li&gt;
+  &lt;li&gt;$\alpha$ &amp;gt; 0&lt;/li&gt;
+  &lt;li&gt;$B \in R$&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;상태-정의&quot;&gt;상태 정의&lt;/h3&gt;
+
+&lt;p&gt;시간 $t$에 입력 상태 $t_{s}$는 세가지 요소로 구성된다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;시간 $t$에서 서버 온도&lt;/li&gt;
+  &lt;li&gt;시간 $t$에서 서버 사용자 수&lt;/li&gt;
+  &lt;li&gt;시간 $t$에서 데이터 전송률&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;행동-정의&quot;&gt;행동 정의&lt;/h3&gt;
+
+&lt;p&gt;행동은 단순히 AI가 서버 내부에서 서버 온도를 올리거나 내리기 위해 일으키는 온도 변화가 될 것이다. DQL에서 행동은 항상 불연속적이어야 한다. 서버 온도를 조절하기 위해 수행할 수 있는 작업을 5가지로 나누어 정의한다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;행동&lt;/th&gt;
+      &lt;th&gt;수행내역&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;AI가 서버 온도를 3$^{\circ}C$ 낮춘다.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;AI가 서버 온도를 1.5$^{\circ}C$ 낮춘다.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;AI가 서버에 열을 전달하지 않는다.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;AI가 서버 온도를 1.5$^{\circ}C$ 높인다.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;AI가 서버 온도를 3$^{\circ}C$ 높인다.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;보상-정의&quot;&gt;보상 정의&lt;/h3&gt;
+
+&lt;p&gt;AI가 비활성화된 경우 비지능형 냉각 시스템이 소비한 에너지와 AI가 서버에 소비한 에너지 간의 차이가 된다.&lt;/p&gt;
+
+&lt;center&gt;$Reward_{t} = E_{t}^{noAI} - E_{t}^{AI}$&lt;/center&gt;
+
+&lt;p&gt;가정2에 따라 시간 $t$와 시간$t+1$사이에 AI에 의해 절약된 에너지는&lt;/p&gt;
+
+&lt;center&gt;$E_{t}^{noAI} - E_{t}^{AI} = |\Delta T_{t}^{noAI}| - |\Delta T_{t}^{AI}|$이다.&lt;/center&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 아들랑 드 폰테베 &lt;strong&gt;『&lt;/strong&gt;강화학습/심층강화학습특강&lt;strong&gt;』&lt;/strong&gt;, 위키북스(2021), p191-203&lt;/p&gt;
+&lt;/blockquote&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>ilvnax24er</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="reinforcement" />
+      
+
+      
+        <summary type="html">Deep Q-Learning - Minimize Cost of Air Conditioning</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Reinforcement Learning - Logistics AI</title>

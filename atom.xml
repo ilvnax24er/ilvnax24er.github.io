@@ -8,6 +8,51 @@
     
       
       <item>
+        <title>Reinforcement Learning - Intro</title>
+        
+          <description>&lt;h1 id=&quot;deep-q-learning---minimize-cost-of-air-conditioning&quot;&gt;Deep Q-Learning - Minimize Cost of Air Conditioning&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Mon, 12 Jul 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/minimize-cost</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/minimize-cost</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>심층학습-Deep Feedforward Neural Network(5)</title>
+        
+          <description>&lt;h2 id=&quot;back-propagation&quot;&gt;Back Propagation&lt;/h2&gt;
+
+</description>
+        
+        <pubDate>Sat, 10 Jul 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/back-propagation</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/back-propagation</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Recurrent Neural Network (1)</title>
+        
+          <description>&lt;h1 id=&quot;recurrent-neural-network&quot;&gt;Recurrent Neural Network&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Fri, 09 Jul 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/RNN</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/RNN</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Reinforcement Learning - Deep Q-Learning</title>
         
           <description>&lt;h1 id=&quot;deep-q-learning&quot;&gt;Deep Q-Learning&lt;/h1&gt;
@@ -128,21 +173,6 @@
     
       
       <item>
-        <title>Recurrent Neural Network</title>
-        
-          <description>&lt;h1 id=&quot;recurrent-neural-network&quot;&gt;Recurrent Neural Network&lt;/h1&gt;
-
-</description>
-        
-        <pubDate>Thu, 01 Jul 2021 00:00:00 +0900</pubDate>
-        <link>
-        https://ilvnax24er.github.io/RNN</link>
-        <guid isPermaLink="true">https://ilvnax24er.github.io/RNN</guid>
-      </item>
-      
-    
-      
-      <item>
         <title>심층학습-Deep Feedforward Neural Network(3)</title>
         
           <description>&lt;h3 id=&quot;hidden-unit&quot;&gt;Hidden Unit&lt;/h3&gt;
@@ -212,6 +242,126 @@
         <link>
         https://ilvnax24er.github.io/deeplearning-tutorial</link>
         <guid isPermaLink="true">https://ilvnax24er.github.io/deeplearning-tutorial</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Time Series Analysis - fbprophet</title>
+        
+          <description>&lt;h1 id=&quot;fbprophet&quot;&gt;fbprophet&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Wed, 09 Dec 2020 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/8.-fbprophet</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/8.-fbprophet</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Time Series Analysis - Multivariage Time Series with LSTM &amp; RNNs</title>
+        
+          <description>&lt;h1 id=&quot;multivariate-time-series&quot;&gt;Multivariate Time Series&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Sat, 05 Dec 2020 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/7.-Multivariate-Time-Series-with-LSTM-RNNs</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/7.-Multivariate-Time-Series-with-LSTM-RNNs</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Time Series Analysis - Deep Learning for Time Series Forecasting</title>
+        
+          <description>&lt;h1 id=&quot;deep-learning-for-time-series-forecasting&quot;&gt;Deep Learning for Time Series Forecasting&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Thu, 03 Dec 2020 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/6.-Deep-Learning-for-TIme-Series-Forecasting</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/6.-Deep-Learning-for-TIme-Series-Forecasting</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Time Series Analysis - VAR Models</title>
+        
+          <description>&lt;h1 id=&quot;var-model&quot;&gt;VAR Model&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Sun, 29 Nov 2020 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/5.-VAR-Models</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/5.-VAR-Models</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Time Series Analysis - ARIMA</title>
+        
+          <description>&lt;h1 id=&quot;arima-theory&quot;&gt;ARIMA Theory&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Mon, 23 Nov 2020 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/4.-ARIMA</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/4.-ARIMA</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Time Series Analysis - General Forecasting Model</title>
+        
+          <description>&lt;h1 id=&quot;introduction-to-forecasting&quot;&gt;Introduction to Forecasting&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Sun, 22 Nov 2020 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/3.-General-Forecasting-Model</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/3.-General-Forecasting-Model</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Time Series Analysis - Time Series Analysis with Statsmodels</title>
+        
+          <description>&lt;h1 id=&quot;time-series-analysis-with-statsmodels&quot;&gt;Time Series Analysis with Statsmodels&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Thu, 19 Nov 2020 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/2.-Time-Series-Analysis-with-Statsmodels</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/2.-Time-Series-Analysis-with-Statsmodels</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Time Series Analysis - Time Series with Pandas</title>
+        
+          <description>&lt;h1 id=&quot;time-series-with-pandas&quot;&gt;Time Series with Pandas&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Tue, 17 Nov 2020 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/1.-Time-Series-with-Pandas</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/1.-Time-Series-with-Pandas</guid>
       </item>
       
     

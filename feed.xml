@@ -1,92 +1,238 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://ilvnax24er.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" /><updated>2021-07-09T16:22:52+09:00</updated><id>https://ilvnax24er.github.io/feed.xml</id><title type="html">Archive</title><subtitle>Deeplearning Archive</subtitle><entry><title type="html">Reinforcement Learning - Q-learning</title><link href="https://ilvnax24er.github.io/qlearning" rel="alternate" type="text/html" title="Reinforcement Learning - Q-learning" /><published>2021-07-06T00:00:00+09:00</published><updated>2021-07-06T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/qlearning</id><content type="html" xml:base="https://ilvnax24er.github.io/qlearning">&lt;h1 id=&quot;q-learning-basic&quot;&gt;Q-Learning Basic&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://ilvnax24er.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" /><updated>2021-07-12T15:16:50+09:00</updated><id>https://ilvnax24er.github.io/feed.xml</id><title type="html">Archive</title><subtitle>Deeplearning Archive</subtitle><entry><title type="html">Reinforcement Learning - Intro</title><link href="https://ilvnax24er.github.io/minimize-cost" rel="alternate" type="text/html" title="Reinforcement Learning - Intro" /><published>2021-07-12T00:00:00+09:00</published><updated>2021-07-12T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/minimize-cost</id><content type="html" xml:base="https://ilvnax24er.github.io/minimize-cost">&lt;h1 id=&quot;deep-q-learning---minimize-cost-of-air-conditioning&quot;&gt;Deep Q-Learning - Minimize Cost of Air Conditioning&lt;/h1&gt;
 
-&lt;p&gt;Q-Learning은 강화학습 모델이다. 입력(상태)과 출력(행동) 원칙에 따라 작동한다. 상태, 행동, 보상이 사전에 정의된 환경에서 작동하며, 마르코프 결정 프로세스에 의해 모델링된다. 또한 훈련 모드와 추론 모드를 사용하고 훈련 모드 동안 Q-Value라 부르는 매개변수를 학습한다. 또한 상태와 행동의 수는 유한하다.&lt;/p&gt;
+&lt;p&gt;서버 환경을 구성하고 최소한의 에너지를 사용하면서도 최적의 온도 범위를 유지하도록 서버의 냉난방을 제어하는 AI를 구축해 비용을 최소화하자.&lt;/p&gt;
 
-&lt;h3 id=&quot;미로&quot;&gt;미로&lt;/h3&gt;
+&lt;h2 id=&quot;환경구성&quot;&gt;환경구성&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\maze.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;출발점에서 도착점까지 갈 수 있는 AI를 구성해보자. 첫번째로 환경을 구성해야한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;환경&quot;&gt;환경&lt;/h4&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;상태&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;상태는 AI의 입력이다. 그리고 AI가 최종 목표로 이끌 행동을 취하기 충분한 정보를 담고 있어야 한다. 즉 특정 시간에 AI가 위치한 지점을 나타내는 A부터 L까지의 문자가 될것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;행동&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;행동은 AI가 한 위치에서 다음 위치로 이동하는 움직임이 될것이다. 예를들어 J에 위치한다면 다음에 수행할 수 있는 행동은 I, F, K로 이동하는것이다. AI가 수행할 수 없는 작업에 보상으로 0을 부여하고 수행 가능한 작업에 보상으로 1을 부여할 수 있다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;보상&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;구체적으로 상태 $s$와 행동 $a$를 입력으로 취하고 AI가 상태 $s$에서 작업 $a$를 수행해 얻을 수 있는 숫자 보상 $r$을 반환하는 함수 $R$을 정의해야한다.&lt;/p&gt;
-
-&lt;center&gt;$R:(s,a) \rightarrow r \subseteq R$&lt;/center&gt;
-
-&lt;p&gt;함수에서 $s$는 행렬의 행 인덱스, $a$는 행렬의 열 인덱스, $r$은 이 행열에서 $(s,a)$ 인덱스에 해당하는 행렬을 만든다. A에서는 B로만 이동할 수 있다. 따라서 A의 인덱스는 0이고 B의 인덱스는 1이므로 보상 행렬의 첫번째 행에서는 두번째 열만 1을 갖고 나머지 열은 모두 0을 갖는다. 최종적으로 얻을 보상 행렬은 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table_no.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;만약 AI가 최우선 위치 G로 이동해야 한다는 것을 어떻게 알릴 수 있을까? G에 높은 보상을 부여하면 다른 위치의 보상보다 훨씬 크기 때문에 AI는 자동으로 높은 보상을 잡으려고 한다. 즉 AI는 항상 최고의 보상을 찾는다. 때문에 G에 도달하는 비결은 다른곳보다 높은 보상을 부여하는것이다. 이에따른 보상행렬은 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table1000.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;ai-구성&quot;&gt;AI 구성&lt;/h3&gt;
-
-&lt;h4 id=&quot;q-value&quot;&gt;Q-Value&lt;/h4&gt;
-
-&lt;p&gt;Q-Value는 상태와 행동의 쌍 $(s,a)$마다 숫자 값 $Q(s,a)$와 연결시킨다.&lt;/p&gt;
-
-&lt;center&gt;$Q:(s \subseteq S, a \subseteq A) \rightarrow Q(s,a) \subseteq R$&lt;/center&gt;
-
-&lt;p&gt;$Q(s,a)$는 상태 $s$에서 행동 $a$를 수행할 때 Q-value 이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;시간차&quot;&gt;시간차&lt;/h4&gt;
-
-&lt;p&gt;특정 시간 $t$에 특정상태 $t_{s}$에 있다고 하자. 선택할 수 있는 행동 중 임의의 행동을 수행하자. 그 결과 다음 상태 $s_{t+1}$로 바뀌고 보상으로 $R(s_{t}, a_{t})$를 얻는다.&lt;/p&gt;
-
-&lt;p&gt;시간 $t$에서 시간차를 나타내는 $TD_{t}(s_{t}, a_{t})$는 다음 둘 사이의 차이다.&lt;/p&gt;
+&lt;p&gt;상태, 행동, 보상을 정의 및 서버의 작동 방식&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;상태 $s_{t}$에서 행동 $a_{t}$를 수행함으로써 얻는 보상 $R(s_{t},a_{t})$에 미래 상태 $s_{t+1}$에서 수행된 최고 행동의 Q-value에 할인 계수(discount factor) $\gamma \subseteq [0, 1]$에 의해 할인된 값을 더한 값&lt;/li&gt;
+  &lt;li&gt;서버를 제어할 환경 매개변수와 변수를 모두 나열한다.&lt;/li&gt;
+  &lt;li&gt;AI가 솔루션을 제공하기 위해 의존하게 되는 문제에 대한 필수 가정을 설정한다.&lt;/li&gt;
+  &lt;li&gt;전체 프로세스를 시뮬레이션하는 방법을 지정한다.&lt;/li&gt;
+  &lt;li&gt;서버의 전체 기능을 설명하고 AI가 자신의 역할을 수행&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;center&gt;$R(s_{t},a_{t}) + \gamma max_{a}(Q(s_{t+1},a))$&lt;/center&gt;
+&lt;h3 id=&quot;서버-환경의-매개변수와-변수&quot;&gt;서버 환경의 매개변수와 변수&lt;/h3&gt;
+
+&lt;h4 id=&quot;매개변수&quot;&gt;매개변수&lt;/h4&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;상태 $s_{t}$에서 행동 $a_{t}$를 수행할 때  Q-value인 $Q(s_{t},a_{t})$&lt;/li&gt;
+  &lt;li&gt;월 평균 기온.&lt;/li&gt;
+  &lt;li&gt;서버의 최적 온도범위 : 18 ~ 24 $^{\circ}C$&lt;/li&gt;
+  &lt;li&gt;최저 온도 : -20$^{\circ}C$&lt;/li&gt;
+  &lt;li&gt;최대 온도 : 80$^{\circ}C$&lt;/li&gt;
+  &lt;li&gt;최소 사용자 수 : 10&lt;/li&gt;
+  &lt;li&gt;최대 사용자 수 : 100&lt;/li&gt;
+  &lt;li&gt;분당 서버 사용자 수의 최대 변동폭 : 5&lt;/li&gt;
+  &lt;li&gt;서버의 최소 데이터 전송속도 : 20&lt;/li&gt;
+  &lt;li&gt;서버의 최대 데이터 전송속도 : 300&lt;/li&gt;
+  &lt;li&gt;분당 데이터 전송 속도의 최대 변동폭 : 10&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;그 결과 다음 식이 도출된다.&lt;/p&gt;
+&lt;h4 id=&quot;환경-변수&quot;&gt;환경 변수&lt;/h4&gt;
 
-&lt;center&gt;$TD_{t}(s_{t}, a_{t}) = R(s_{t}, a_{t}) + \gamma max_{a}(Q(s_{t+1}, a)) - Q(s_{t}, a_{t})$&lt;/center&gt;
+&lt;ol&gt;
+  &lt;li&gt;서버 온도&lt;/li&gt;
+  &lt;li&gt;서버와 연결된 사용자 수&lt;/li&gt;
+  &lt;li&gt;데이터 전송 속도&lt;/li&gt;
+  &lt;li&gt;AI가 서버를 냉각시키거나 온도를 높이기 위해 소비한 에너지&lt;/li&gt;
+  &lt;li&gt;서버 온도가 최적의 온도 범위를 벗어날 때마다 자동으로 서버 온도를 최적의 온도 범위로 되돌리기 위해 서버 자체 냉각 시스템이 소비하는 에너지&lt;/li&gt;
+&lt;/ol&gt;
 
-&lt;p&gt;훈련 초기에 Q-value는 0으로 설정된다.AI는 더 나은 보상을 얻으려고 하기 때문에 시간차가 가장 큰 경우를 찾는다. AI가 받는 보상이 크면 그 큰 보상으로 이어진 (상태, 행동)의 특정 Q-value가 증가하므로 AI는 높은 보상에 도달한 방법을 기억할 수 있다. 상태 $s_{t}$에서 높은 보상 $R(s_{t}, a_{t})$를 받을 수 있는 행동이 $a_{t}$라고 하자. 이는 Q-value $Q(s_{t}, a_{t})$이 자동으로 증가함을 뜻한다. 이렇게 증가한 Q-value는 AI에게 어디로 전이해야 좋은 보상을 받을 수 있는지 알려주기 때문에 중요한 정보가 된다.&lt;/p&gt;
+&lt;h3 id=&quot;서버-환경에-대한-가정&quot;&gt;서버 환경에 대한 가정&lt;/h3&gt;
 
-&lt;p&gt;AI를 만드는 다음 단계는 나은 보상을 찾는 것뿐 아니라 그와 동시에 높은 Q-value를 찾는 것이다. Q-value가 높으면 훌륭한 보상으로 이어지기 때문이다. 실제로 Q-value가 높으면 더 높은 Q-value로 이어지고 다시 그보다 더 높은 Q-value로 이어져 마지막에는 가장 높은 보상으로 이어진다. 시간차 공식에서 $\gamma max_{a}(Q(s_{t+1},a))$의 역할이다. 어느 시점에서 AI는 좋은 보상과 높은 Q-value로 이어지는 모든 전이를 알게 되며, 이 전이들의 Q-value는 시간이 지남에 따라 이미 증가되었고 결국 시간차는 감소한다. 즉 최종 목표에 가까워질수록 시간차는 작아진다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;서버 온도를 근사치로 계산할 수 있다.&lt;/p&gt;
 
-&lt;p&gt;결론적으로 시간차는 일시적인 내재적 보상과 같으며 AI는 훈련을 시작할 때 큰 값을 찾으려 한다. 결국 AI는 훈련이 끝날 때 이 보상을 최소화한다.&lt;/p&gt;
+    &lt;p&gt;서버 온도는 다중 선형 회귀를 통해 선형 함수로 근사시킬 수 있다.&lt;/p&gt;
 
-&lt;h4 id=&quot;벨만-방정식&quot;&gt;벨만 방정식&lt;/h4&gt;
+    &lt;center&gt;서버온도 = $b_{0} + b_{1} \times 기온 + b_{2} \times 사용자 수 + b_{3} \times 데이터 전송 속도$&lt;/center&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;에너지 비용을 근사치로 계산할 수 있다.&lt;/p&gt;
 
-&lt;p&gt;AI가 목표를 달성하도록 이끄는 더 나은 행동을 수행하려면 높은 시간차를 발견했을 때 행동의 Q-value를 증가시켜야 한다. 이러한 Q-value를 업데이트하는 방법은 반복할 때마다 벨만 방정식이라는 다음 방정식을 통해 시간 $t-1$에서 $t$로 Q-value를 업데이트 한다.&lt;/p&gt;
+    &lt;p&gt;AI 또는 서버 자체 냉각 시스템이 서버 온도를 단위 시간내에서 $T_{t}$에서 $T_{t+1}$로 바꾸는데 소비하는 에너지는 서버 온도 변화의 절댓값의 선형 함수에의한 회귀를 통해 다시 근사될 수 있다.&lt;/p&gt;
 
-&lt;center&gt;$Q_{t}(s_{t},a_{t}) = Q_{t-1}(s_{t},a_{t}) + \alpha TD_{t}(s_{t},a_{t})$&lt;/center&gt;
+    &lt;center&gt;$E_{t} = \alpha |\Delta T_{t} | + \beta = \alpha |T_{t+1} - T_{t}| + \beta$&lt;/center&gt;
+  &lt;/li&gt;
+  &lt;li&gt;$E_{t}$ : 시간 $t$와 $t+1$ 분 사이 시스템이 서버에 소비한 에너지&lt;/li&gt;
+  &lt;li&gt;$\Delta T_{t}$ : 시간 $t$와 $t+1$ 분 사이 시스템이 일으킨 서버 온도의 변경분&lt;/li&gt;
+  &lt;li&gt;$T_{t}$ : 시간 $t$에서 서버 온도&lt;/li&gt;
+  &lt;li&gt;$T_{t+1}$ : 시간 $t+1$에서 서버 온도&lt;/li&gt;
+  &lt;li&gt;$\alpha$ &amp;gt; 0&lt;/li&gt;
+  &lt;li&gt;$B \in R$&lt;/li&gt;
+&lt;/ol&gt;
 
-&lt;p&gt;여기에서 $\alpha \subseteq R$은 Q-value의 학습속도를 지정하는 학습률이다. 이 값은 일반적으로 0.75처럼 0과 1사이의 값을 갖는다. $\alpha$값이 작을수로 Q-value의 업데이트는 작아지고 Q-learning이 더 오래 걸린다. $\alpha$값이 클수록 Q-value의 업데이트가 커지고 Q-learning은 빨라진다. 이 방정식에서 알 수 있듯이 시간차 $TD_{t}(s_{t},a_{t})$가 크면 Q-vlaue $Q_{t}(s_{t},a_{t})$가 증가한다.&lt;/p&gt;
+&lt;h3 id=&quot;상태-정의&quot;&gt;상태 정의&lt;/h3&gt;
+
+&lt;p&gt;시간 $t$에 입력 상태 $t_{s}$는 세가지 요소로 구성된다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;시간 $t$에서 서버 온도&lt;/li&gt;
+  &lt;li&gt;시간 $t$에서 서버 사용자 수&lt;/li&gt;
+  &lt;li&gt;시간 $t$에서 데이터 전송률&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;행동-정의&quot;&gt;행동 정의&lt;/h3&gt;
+
+&lt;p&gt;행동은 단순히 AI가 서버 내부에서 서버 온도를 올리거나 내리기 위해 일으키는 온도 변화가 될 것이다. DQL에서 행동은 항상 불연속적이어야 한다. 서버 온도를 조절하기 위해 수행할 수 있는 작업을 5가지로 나누어 정의한다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;행동&lt;/th&gt;
+      &lt;th&gt;수행내역&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;AI가 서버 온도를 3$^{\circ}C$ 낮춘다.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;AI가 서버 온도를 1.5$^{\circ}C$ 낮춘다.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;AI가 서버에 열을 전달하지 않는다.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;AI가 서버 온도를 1.5$^{\circ}C$ 높인다.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;AI가 서버 온도를 3$^{\circ}C$ 높인다.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;보상-정의&quot;&gt;보상 정의&lt;/h3&gt;
+
+&lt;p&gt;AI가 비활성화된 경우 비지능형 냉각 시스템이 소비한 에너지와 AI가 서버에 소비한 에너지 간의 차이가 된다.&lt;/p&gt;
+
+&lt;center&gt;$Reward_{t} = E_{t}^{noAI} - E_{t}^{AI}$&lt;/center&gt;
+
+&lt;p&gt;가정2에 따라 시간 $t$와 시간$t+1$사이에 AI에 의해 절약된 에너지는&lt;/p&gt;
+
+&lt;center&gt;$E_{t}^{noAI} - E_{t}^{AI} = |\Delta T_{t}^{noAI}| - |\Delta T_{t}^{AI}|$이다.&lt;/center&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;참고 : 아들랑 드 폰테베 &lt;strong&gt;『&lt;/strong&gt;강화학습/심층강화학습특강&lt;strong&gt;』&lt;/strong&gt;, 위키북스(2021), p72-85&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="reinforcement" /><summary type="html">Q-Learning Basic</summary></entry><entry><title type="html">Reinforcement Learning - Deep Q-Learning</title><link href="https://ilvnax24er.github.io/DeepQLearning" rel="alternate" type="text/html" title="Reinforcement Learning - Deep Q-Learning" /><published>2021-07-06T00:00:00+09:00</published><updated>2021-07-06T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/DeepQLearning</id><content type="html" xml:base="https://ilvnax24er.github.io/DeepQLearning">&lt;h1 id=&quot;deep-q-learning&quot;&gt;Deep Q-Learning&lt;/h1&gt;
+  &lt;p&gt;참고 : 아들랑 드 폰테베 &lt;strong&gt;『&lt;/strong&gt;강화학습/심층강화학습특강&lt;strong&gt;』&lt;/strong&gt;, 위키북스(2021), p191-203&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="reinforcement" /><summary type="html">Deep Q-Learning - Minimize Cost of Air Conditioning</summary></entry><entry><title type="html">심층학습-Deep Feedforward Neural Network(5)</title><link href="https://ilvnax24er.github.io/back-propagation" rel="alternate" type="text/html" title="심층학습-Deep Feedforward Neural Network(5)" /><published>2021-07-10T00:00:00+09:00</published><updated>2021-07-10T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/back-propagation</id><content type="html" xml:base="https://ilvnax24er.github.io/back-propagation">&lt;h2 id=&quot;back-propagation&quot;&gt;Back Propagation&lt;/h2&gt;
+
+&lt;p&gt;입력 $x$를 받아서 출력 $\hat{y}$를 산출하는 순방향 신경망에서 정보는 신경망을 따라 앞으로 흘러간다. 입력 $x$는 초기 정보에 해당하고, 그 초기 정보는 각 층의 은닉단위들로 전파되어서 결국 출력층에 도달하며, 거기서 최종적으로 $\hat{y}$가 출력된다. 이러한 전파 과정을 순방향 전파라고 부른다.&lt;/p&gt;
+
+&lt;p&gt;훈련과정에서 이러한 순전파를 반복해서 하나의 스칼라 비용 $J(\theta)$를 얻는다. 한편, 역방향 전파 알고리즘은 그러한 비용에서 나온 정보를 신경망을 따라 거꾸로 흐르게 해서 기울기를 계산한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;$f$의 기울기 $\nabla_{x}f(x,y)$&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;여기서 $x$는 우리가 그 미분들을 구하고자 하는 변수들의 집합이고 $y$는 함수의 입력들이긴 하지만 미분들을 구할 필요는 없는 변수들의 집합이다. 학습 알고리즘에 가장 요구되는 기울기는 비용함수의 매개변수들에 대한 기울기 $\nabla_{\theta}J(\theta)$이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;계산-그래프&quot;&gt;계산 그래프&lt;/h4&gt;
+
+&lt;p&gt;역전파 알고리즘을 정확하게 설명하려면 엄밀한 computational graph 언어가 필요하다. 그래프를 공식화하려면 연산(operation)이라는 개념도 도입해야한다. 연산이란 하나 이상의 변수들의 함수이다. 변수 $x$에 어떤 연산을 적용해서 변수 $y$를 계산한다고 할 때, 그래프에서는 이를 $x$에서 $y$로의 유향간선으로 표시한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;미분의-연쇄법칙&quot;&gt;미분의 연쇄법칙&lt;/h4&gt;
+
+&lt;p&gt;도함수가 알려진 여러 함수를 결합해서 만든 함수의 미분을 계산하는 데 쓰인다. 역전파는 그러한 연쇄법칙을 고도로 효율적인 특정한 연산 순서로 계산하는 알고리즘이다.&lt;/p&gt;
+
+&lt;p&gt;$x$가 하나의 실수이고 $f$와 $g$가 실수를 실수로 사상하는 함수들이라고 하자. $y=g(x)$이고 $z=f(g(x)) = f(x)$라고 하면, 연쇄법칙에 의해 다음이 성립한다.&lt;/p&gt;
+
+&lt;center&gt;$\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dz}$&lt;/center&gt;
+
+&lt;p&gt;이를 스칼라가 아닌 복합적인 값들로 일반화 할 수 있다. $x \in R^{m}, y \in R^{n}$이고 $g$가 $R^{m}$에서 $R^{n}$으로의 사상이라고 하자. 그리고 $f$는 $R^{n}$을 $R$로 사상한다고 하자. $y=g(x)$이고 $z=f(y)$라고 할 때 다음이 성립한다.&lt;/p&gt;
+
+&lt;center&gt;$\frac{\partial z}{\partial x_{i}} = \sum_{j} \frac{\partial z}{\partial y_{j}} \frac{\partial y_{j}}{\partial x_{i}}$&lt;/center&gt;
+
+&lt;p&gt;이를 벡터 표기법으로 표현하면 다음과 같다.&lt;/p&gt;
+
+&lt;center&gt;$\nabla_{x} z = (\frac{\partial y}{\partial x})^{T} \nabla_{y}z$&lt;/center&gt;
+
+&lt;p&gt;여기서 $\frac{\partial y}{\partial x}$는 $g$의 $n \times m$ Jacobian matrix이다.&lt;/p&gt;
+
+&lt;p&gt;위의 공식들에서, 변수 $x$의 기울기는 야코비 행렬 $\frac{\partial y}{\partial x}$에 기울기 벡터 $\nabla_{y} z$를 곱해서 구할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;이를 임의의 차원의 텐서엥 적용하면, 각 텐서를 벡터 형태로 평평하게 펼친 후 벡터 값 기울기를 계산하고 그것을 다시 텐서 형태로 재조립한다. 이러한 재배치 접근 방식에서 역전파 알고리즘은 여전히 야코비 행렬을 기울기 벡터에 곱한다.&lt;/p&gt;
+
+&lt;p&gt;값 $z$의 텐서 $X$에 대한 기울기를, $X$를 벡터처럼 취급하여 $\nabla_{X}z$로 표기한다. 그러나 벡터의 경우와는 달리 $X$의 아래첨자에는 좌표성분이 여러개 있다. 색인 튜플 전체를 하나의 변수 $i$로 표기하면, 모든 가능한 튜플 $i$에 대해, $(\nabla_{X}z)_{i}$는 
+$\frac {\partial z}{\partial x{i}}$를 뜻한다. 이것을 연쇄법칙으로 표현하면,
+$Y = g(X)$이고 $z = f(X)$라 할때 다음이 성립한다.&lt;/p&gt;
+
+&lt;center&gt;$\nabla_{X}z = \sum_{j}(\nabla_{X}Y_{j}) \frac{\partial z}{\partial Y_{j}}$&lt;/center&gt;
+
+&lt;h4 id=&quot;연쇄법칙을-재귀적으로-적용해서-역전파-구하기&quot;&gt;연쇄법칙을 재귀적으로 적용해서 역전파 구하기&lt;/h4&gt;
+
+&lt;p&gt;기울기에 대한 전체 수식 안에 다수의 부분식이 여러번 되풀이될 수 있다. 기울기를 계산하는 절차를 설계할 때는 그러한 부분식들의 결과를 저장할 것인지 아니면 매번 다시 계산할 것인지 결정해야한다. 복잡한 그래프에서는 반복 계산 사례가 지수적으로 증가해서 연쇄법칙을 적용하기가 불가능할 수도 있다.&lt;/p&gt;
+
+&lt;p&gt;우선 하나의 스칼라 $u^{(n)}$을 계산하는 방법을 서술하는 그래프를 살펴보자. 알고리즘의 목표는 이 스칼라의 $u^{(1)}$에서 $u^{(n_{i})}$까지의 $n_{i}$개의 입력 노드들에 대한 기울기를 구하는 것이다. 즉 모든 $i \in {1,2,\dots , n_{i}}$에 대해 $\frac {\partial u^{(n)}}{\partial u^{(i)}}$를 계산하고자 한다.&lt;/p&gt;
+
+&lt;p&gt;그래프의 노드들이 $u^{(n_{i} + 1)}$에서 $u^{(n)}$으로 거슬러 올라가는 순서로 출력을 계산하는 형태라고 가정한다. 각 노드 $u^{(i)}$에는 하나의 연산 $f^{i}$가 ㅜㅂ여되어 있다. 각 노드는 다음을 계산한다.&lt;/p&gt;
+
+&lt;center&gt;$u^{(i)} = f(A^{(i)})$&lt;/center&gt;
+
+&lt;p&gt;순전파 계산들을 명시하는 계산 그래프가 $\zeta$라고 하자. 역전파를 수행할 때는, 그 $\zeta$에 의존하되 또 다른 노드들이 추가된 하나의 계산 그래프를 구축한다. $\zeta$의 노드당 하나의 추가 노드로 이루어진 부분 그래프를 $B$라고하면, $B$의 계산은 $\zeta$의 계산과 정확히 반대 순서로 진행되며, $B$의 각 노드는 순방향 그래프 노드 $u^{(i)}$와 연관된 미분 $\frac {\partial u^{(n)}}{\partial u^{(i)}}$를 계산한다. 이러한 모든 계산은 미분의 연쇄법칙을 따른다.&lt;/p&gt;
+
+&lt;center&gt;$\frac {\partial u^{(n)}}{\partial u^{(j)}} = \sum_{i : j \in pa(u^{(i)})} \frac {\partial u^{(n)}}{\partial u^{(i)}} \frac {\partial u^{(i)}}{\partial u^{(j)}}$&lt;/center&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p225-2235&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Back Propagation</summary></entry><entry><title type="html">Recurrent Neural Network (1)</title><link href="https://ilvnax24er.github.io/RNN" rel="alternate" type="text/html" title="Recurrent Neural Network (1)" /><published>2021-07-09T00:00:00+09:00</published><updated>2021-07-09T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/RNN</id><content type="html" xml:base="https://ilvnax24er.github.io/RNN">&lt;h1 id=&quot;recurrent-neural-network&quot;&gt;Recurrent Neural Network&lt;/h1&gt;
+
+&lt;h3 id=&quot;intro&quot;&gt;Intro&lt;/h3&gt;
+
+&lt;p&gt;RNN은 순차적인 자료를 처리하는 신경망의 한 종류로서 sequence를 처리하는데 특화되어 있다. 출력의 각 성분은 출력의 이전 성분의 함수이다. 출력의 각 성분은 이전 성분에 적용한 것과 동일한 규칙에 따라 산출되며, 점화식과 같은 방식이 된다.&lt;/p&gt;
+
+&lt;h3 id=&quot;계산-그래프-펼치기&quot;&gt;계산 그래프 펼치기&lt;/h3&gt;
+
+&lt;p&gt;다음과 같은 Dynamic ststem을 생각해보면,&lt;/p&gt;
+
+&lt;center&gt;$s^{t} = f(s^{s+1};\theta)$&lt;/center&gt;
+
+&lt;p&gt;여기서 $s^{t}$를 계의 상태(state)라고 부른다. 시간 $t$에서 상태 $s$의 정의가 시간 $t-1$에서의 동일한 정의를 참조한다. 즉 재귀적으로 정의되고, 이런 형태를 점화식(recurrenec formula)라고 부른다.&lt;/p&gt;
+
+&lt;p&gt;시간 단계의 수 $\tau$가 유한한 경우에는 이 정의를 $\tau -1$번 적용해서 그래프를 펼칠 수 있다.&lt;/p&gt;
+
+&lt;center&gt;$s^{(3)} = f(s^{(2)}; \theta) = f(f(s^{(1)};\theta);\theta)$&lt;/center&gt;
+
+&lt;p&gt;이런식으로 공식을 펼치면 순환관계가 없는 수식이 나온다. 이러한 수식은 유향 비순환 그래프로 표현할 수 있다.&lt;/p&gt;
+
+&lt;center&gt;$h^{(t)} = f(h^{(t-1), x^{t}; \theta})$&lt;/center&gt;
+
+&lt;p&gt;위 식은 순환 신경망의 은닉단위를 정의하는 공식이다.  순환 신경망을 훈련할 때, $h^{t}$를 일종의 손실 있는 과거 요약 함수, 즉 $t$까지의 지나간 입력 순차열을 요약하는 함수로서 활용할때가 많다. 이러한 요약함수는 시간 $t$까지의 입력 순차열의 모든 정보를 저장할 필요 없이 예측에 충분한 정보만 저장하면 된다.&lt;/p&gt;
+
+&lt;p&gt;위 식을 $t$단계로 펼쳐진 점화식 $g^{(t)}$로 표현하면,&lt;/p&gt;
+
+&lt;center&gt;$h^{(t)} = g^{(t)}(x^{(t)},x^{(t-1)},x^{(t-2)}, \dots , x^{(2)}, x^{(1)}) = f(h^{(t-1)}, x^{(t)};\theta)$&lt;/center&gt;
+
+&lt;p&gt;이러한 펼치기 과정은 두가지 장점을 제공한다. 첫번째는 학습된 모형은 길이가 가변적인 상태가 아니라 한 상태에서 다른 상태로의 전이를 명시하므로, 그 입력 크기는 순차열의 길이와는 무관하게 항상 동일하다. 두번째로, 모든 시간 단계에서 &lt;strong&gt;동일한&lt;/strong&gt; 전이 함수 $f$를 동일한 매개변수들과 함께 적용하는것이 가능하다.&lt;/p&gt;
+
+&lt;h3 id=&quot;재귀-신경망&quot;&gt;재귀 신경망&lt;/h3&gt;
+
+&lt;p&gt;Recursive Neural Network는 순환 신경망의 또 다른 일반화에 해당한다. RNN의 계산 그래프는 사슬 형태이지만 재귀 신경망의 계산 그래프는 깊은 트리 형태이다. 재귀 신경망의 한가지 장점은, 순차열의 길이가 $\tau$라고 할 때 순환 신경망의 깊이는 $\tau$이지만 재귀 신경망의 깊이는 $O(log\tau)$밖에 되지 않는다. 이 장점은 장기 의존관계를 다루는데 도움이 될 수 있다.&lt;/p&gt;
+
+&lt;h4 id=&quot;장기-의존성&quot;&gt;장기 의존성&lt;/h4&gt;
+
+&lt;p&gt;장기 의존성(long-term dependency)의 학습에서 나타나는 문제는 여러 단계에 걸쳐 전파되는 기울기들이 소멸하거나 폭발하는 경향이 이다는 것이다. 대부분 소멸이 발생하고, 폭발은 드물게 일어나지만 최적화에 미치는 악영향이 훨씬 크다. 매개변수들이 적당해서 순환 신경망이 안정적이라고 가정하는 경우에도, 단기 상호작용들에 주어지는 가중치들보다 지수적으로 작은 가중치들이 장기 상호작용들에 주어진다면 장기 의존성과 관련된 어려움이 발생할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;순환 신경망은 같은 함수를 시간 단계당 한번씩 여러 번 합성한다. 이런 다수의 합성 때문에 신경망이 극도로 비선형적인 방식으로 행동할 수 있다. 특히, 순환 신경망이 사용하는 함수 합성은 행렬 곱셈과 다소 비슷하다. 점화식&lt;/p&gt;
+
+&lt;center&gt;$h^{(t)} = W^{T}h^{(t-1)}$&lt;/center&gt;
+
+&lt;p&gt;을 비선형 활성화 함수가 없고 입력 $x$도 없는 아주 단순한 순환 신경망으로 간주할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;고윳값들이 $t$를 지수로 해서 거듭제곱되므로, 크기가 1보다 작은 고윳값은 0으로 소멸하고 크기가 1보다 큰 고윳값은 폭발한다. 결괒거으로, $h^{(0)}$의 성분 중 가장 큰 고유벡터와 방향이 맞지 않는 모든 성분은 결국 폐기된다.&lt;/p&gt;
+
+&lt;p&gt;###&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p411-443&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Recurrent Neural Network</summary></entry><entry><title type="html">Reinforcement Learning - Deep Q-Learning</title><link href="https://ilvnax24er.github.io/DeepQLearning" rel="alternate" type="text/html" title="Reinforcement Learning - Deep Q-Learning" /><published>2021-07-06T00:00:00+09:00</published><updated>2021-07-06T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/DeepQLearning</id><content type="html" xml:base="https://ilvnax24er.github.io/DeepQLearning">&lt;h1 id=&quot;deep-q-learning&quot;&gt;Deep Q-Learning&lt;/h1&gt;
 
 &lt;p&gt;Deep Q-Learning(DQL)은 Q-Learning과 Deeplearning을 결합한 것이다. Q-Learning에 ANN을 통합해보면, 신경망의 입력은 입력 상태가 될것이다. 이 입력 상태는 환경에서 어떤 일이 발생했는지를 인코딩한 1차원 벡터이거나 이미지일 수 있다. 출력은 각 행동에 대한 Q-value의 집합으로 수행 가능한 행동 각각에 부여된 Q-value로 구성된 1차원 벡터가 될것이다. 그 이후 AI는 Q-value가 최대인 행동을 취해 수행한다.&lt;/p&gt;
 
@@ -561,7 +707,95 @@
 
 &lt;blockquote&gt;
   &lt;p&gt;참고 : 아들랑 드 폰테베 &lt;strong&gt;『&lt;/strong&gt;강화학습/심층강화학습특강&lt;strong&gt;』&lt;/strong&gt;, 위키북스(2021), p86-107&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="reinforcement" /><summary type="html">창고에서 일하는 로봇</summary></entry><entry><title type="html">Reinforcement Learning - Intro</title><link href="https://ilvnax24er.github.io/1reinforcement-intro" rel="alternate" type="text/html" title="Reinforcement Learning - Intro" /><published>2021-07-05T00:00:00+09:00</published><updated>2021-07-05T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/1reinforcement-intro</id><content type="html" xml:base="https://ilvnax24er.github.io/1reinforcement-intro">&lt;h2 id=&quot;intro&quot;&gt;Intro&lt;/h2&gt;
+&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="reinforcement" /><summary type="html">창고에서 일하는 로봇</summary></entry><entry><title type="html">Reinforcement Learning - Q-learning</title><link href="https://ilvnax24er.github.io/qlearning" rel="alternate" type="text/html" title="Reinforcement Learning - Q-learning" /><published>2021-07-06T00:00:00+09:00</published><updated>2021-07-06T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/qlearning</id><content type="html" xml:base="https://ilvnax24er.github.io/qlearning">&lt;h1 id=&quot;q-learning-basic&quot;&gt;Q-Learning Basic&lt;/h1&gt;
+
+&lt;p&gt;Q-Learning은 강화학습 모델이다. 입력(상태)과 출력(행동) 원칙에 따라 작동한다. 상태, 행동, 보상이 사전에 정의된 환경에서 작동하며, 마르코프 결정 프로세스에 의해 모델링된다. 또한 훈련 모드와 추론 모드를 사용하고 훈련 모드 동안 Q-Value라 부르는 매개변수를 학습한다. 또한 상태와 행동의 수는 유한하다.&lt;/p&gt;
+
+&lt;h3 id=&quot;미로&quot;&gt;미로&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\maze.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;출발점에서 도착점까지 갈 수 있는 AI를 구성해보자. 첫번째로 환경을 구성해야한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;환경&quot;&gt;환경&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;상태&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;상태는 AI의 입력이다. 그리고 AI가 최종 목표로 이끌 행동을 취하기 충분한 정보를 담고 있어야 한다. 즉 특정 시간에 AI가 위치한 지점을 나타내는 A부터 L까지의 문자가 될것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;행동&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;행동은 AI가 한 위치에서 다음 위치로 이동하는 움직임이 될것이다. 예를들어 J에 위치한다면 다음에 수행할 수 있는 행동은 I, F, K로 이동하는것이다. AI가 수행할 수 없는 작업에 보상으로 0을 부여하고 수행 가능한 작업에 보상으로 1을 부여할 수 있다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;보상&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;구체적으로 상태 $s$와 행동 $a$를 입력으로 취하고 AI가 상태 $s$에서 작업 $a$를 수행해 얻을 수 있는 숫자 보상 $r$을 반환하는 함수 $R$을 정의해야한다.&lt;/p&gt;
+
+&lt;center&gt;$R:(s,a) \rightarrow r \subseteq R$&lt;/center&gt;
+
+&lt;p&gt;함수에서 $s$는 행렬의 행 인덱스, $a$는 행렬의 열 인덱스, $r$은 이 행열에서 $(s,a)$ 인덱스에 해당하는 행렬을 만든다. A에서는 B로만 이동할 수 있다. 따라서 A의 인덱스는 0이고 B의 인덱스는 1이므로 보상 행렬의 첫번째 행에서는 두번째 열만 1을 갖고 나머지 열은 모두 0을 갖는다. 최종적으로 얻을 보상 행렬은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table_no.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;만약 AI가 최우선 위치 G로 이동해야 한다는 것을 어떻게 알릴 수 있을까? G에 높은 보상을 부여하면 다른 위치의 보상보다 훨씬 크기 때문에 AI는 자동으로 높은 보상을 잡으려고 한다. 즉 AI는 항상 최고의 보상을 찾는다. 때문에 G에 도달하는 비결은 다른곳보다 높은 보상을 부여하는것이다. 이에따른 보상행렬은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table1000.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;ai-구성&quot;&gt;AI 구성&lt;/h3&gt;
+
+&lt;h4 id=&quot;q-value&quot;&gt;Q-Value&lt;/h4&gt;
+
+&lt;p&gt;Q-Value는 상태와 행동의 쌍 $(s,a)$마다 숫자 값 $Q(s,a)$와 연결시킨다.&lt;/p&gt;
+
+&lt;center&gt;$Q:(s \subseteq S, a \subseteq A) \rightarrow Q(s,a) \subseteq R$&lt;/center&gt;
+
+&lt;p&gt;$Q(s,a)$는 상태 $s$에서 행동 $a$를 수행할 때 Q-value 이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;시간차&quot;&gt;시간차&lt;/h4&gt;
+
+&lt;p&gt;특정 시간 $t$에 특정상태 $t_{s}$에 있다고 하자. 선택할 수 있는 행동 중 임의의 행동을 수행하자. 그 결과 다음 상태 $s_{t+1}$로 바뀌고 보상으로 $R(s_{t}, a_{t})$를 얻는다.&lt;/p&gt;
+
+&lt;p&gt;시간 $t$에서 시간차를 나타내는 $TD_{t}(s_{t}, a_{t})$는 다음 둘 사이의 차이다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;상태 $s_{t}$에서 행동 $a_{t}$를 수행함으로써 얻는 보상 $R(s_{t},a_{t})$에 미래 상태 $s_{t+1}$에서 수행된 최고 행동의 Q-value에 할인 계수(discount factor) $\gamma \subseteq [0, 1]$에 의해 할인된 값을 더한 값&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;center&gt;$R(s_{t},a_{t}) + \gamma max_{a}(Q(s_{t+1},a))$&lt;/center&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;상태 $s_{t}$에서 행동 $a_{t}$를 수행할 때  Q-value인 $Q(s_{t},a_{t})$&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;그 결과 다음 식이 도출된다.&lt;/p&gt;
+
+&lt;center&gt;$TD_{t}(s_{t}, a_{t}) = R(s_{t}, a_{t}) + \gamma max_{a}(Q(s_{t+1}, a)) - Q(s_{t}, a_{t})$&lt;/center&gt;
+
+&lt;p&gt;훈련 초기에 Q-value는 0으로 설정된다.AI는 더 나은 보상을 얻으려고 하기 때문에 시간차가 가장 큰 경우를 찾는다. AI가 받는 보상이 크면 그 큰 보상으로 이어진 (상태, 행동)의 특정 Q-value가 증가하므로 AI는 높은 보상에 도달한 방법을 기억할 수 있다. 상태 $s_{t}$에서 높은 보상 $R(s_{t}, a_{t})$를 받을 수 있는 행동이 $a_{t}$라고 하자. 이는 Q-value $Q(s_{t}, a_{t})$이 자동으로 증가함을 뜻한다. 이렇게 증가한 Q-value는 AI에게 어디로 전이해야 좋은 보상을 받을 수 있는지 알려주기 때문에 중요한 정보가 된다.&lt;/p&gt;
+
+&lt;p&gt;AI를 만드는 다음 단계는 나은 보상을 찾는 것뿐 아니라 그와 동시에 높은 Q-value를 찾는 것이다. Q-value가 높으면 훌륭한 보상으로 이어지기 때문이다. 실제로 Q-value가 높으면 더 높은 Q-value로 이어지고 다시 그보다 더 높은 Q-value로 이어져 마지막에는 가장 높은 보상으로 이어진다. 시간차 공식에서 $\gamma max_{a}(Q(s_{t+1},a))$의 역할이다. 어느 시점에서 AI는 좋은 보상과 높은 Q-value로 이어지는 모든 전이를 알게 되며, 이 전이들의 Q-value는 시간이 지남에 따라 이미 증가되었고 결국 시간차는 감소한다. 즉 최종 목표에 가까워질수록 시간차는 작아진다.&lt;/p&gt;
+
+&lt;p&gt;결론적으로 시간차는 일시적인 내재적 보상과 같으며 AI는 훈련을 시작할 때 큰 값을 찾으려 한다. 결국 AI는 훈련이 끝날 때 이 보상을 최소화한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;벨만-방정식&quot;&gt;벨만 방정식&lt;/h4&gt;
+
+&lt;p&gt;AI가 목표를 달성하도록 이끄는 더 나은 행동을 수행하려면 높은 시간차를 발견했을 때 행동의 Q-value를 증가시켜야 한다. 이러한 Q-value를 업데이트하는 방법은 반복할 때마다 벨만 방정식이라는 다음 방정식을 통해 시간 $t-1$에서 $t$로 Q-value를 업데이트 한다.&lt;/p&gt;
+
+&lt;center&gt;$Q_{t}(s_{t},a_{t}) = Q_{t-1}(s_{t},a_{t}) + \alpha TD_{t}(s_{t},a_{t})$&lt;/center&gt;
+
+&lt;p&gt;여기에서 $\alpha \subseteq R$은 Q-value의 학습속도를 지정하는 학습률이다. 이 값은 일반적으로 0.75처럼 0과 1사이의 값을 갖는다. $\alpha$값이 작을수로 Q-value의 업데이트는 작아지고 Q-learning이 더 오래 걸린다. $\alpha$값이 클수록 Q-value의 업데이트가 커지고 Q-learning은 빨라진다. 이 방정식에서 알 수 있듯이 시간차 $TD_{t}(s_{t},a_{t})$가 크면 Q-vlaue $Q_{t}(s_{t},a_{t})$가 증가한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 아들랑 드 폰테베 &lt;strong&gt;『&lt;/strong&gt;강화학습/심층강화학습특강&lt;strong&gt;』&lt;/strong&gt;, 위키북스(2021), p72-85&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="reinforcement" /><summary type="html">Q-Learning Basic</summary></entry><entry><title type="html">Reinforcement Learning - Intro</title><link href="https://ilvnax24er.github.io/1reinforcement-intro" rel="alternate" type="text/html" title="Reinforcement Learning - Intro" /><published>2021-07-05T00:00:00+09:00</published><updated>2021-07-05T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/1reinforcement-intro</id><content type="html" xml:base="https://ilvnax24er.github.io/1reinforcement-intro">&lt;h2 id=&quot;intro&quot;&gt;Intro&lt;/h2&gt;
 
 &lt;h3 id=&quot;강화학습이란&quot;&gt;강화학습이란?&lt;/h3&gt;
 
@@ -1013,315 +1247,8 @@ Best machine is 1
 
 &lt;center&gt;$O(k^{l-1)+d})$&lt;/center&gt;
 
-&lt;p&gt;신경망 아키텍처 중에는 특정 과제에 맞게 개발된것들이 있다. CNN의 경우 Computer Vision에 RNN은 순방향 신경망을 순차열 처리에 맞게 일반화 한것이 예이다. 일반적으로 신경망의 층들이 반드시 사슬로 연결될 필요는 없다.&lt;/p&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Architecture 설계</summary></entry><entry><title type="html">pytorch - MNIST</title><link href="https://ilvnax24er.github.io/CNN-MNIST" rel="alternate" type="text/html" title="pytorch - MNIST" /><published>2021-07-01T00:00:00+09:00</published><updated>2021-07-01T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/CNN-MNIST</id><content type="html" xml:base="https://ilvnax24er.github.io/CNN-MNIST">&lt;h1 id=&quot;mnist&quot;&gt;MNIST&lt;/h1&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch.nn&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch.nn.functional&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch.optim&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;optim&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch.autograd&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Variable&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torchvision&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;data&quot;&gt;Data&lt;/h2&gt;
-
-&lt;h3 id=&quot;load-mnist-dataset&quot;&gt;Load MNIST dataset&lt;/h3&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;transformation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Compose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToTensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
-                                    &lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1307&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.3081&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;))])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;train_dataset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MNIST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'data/'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transformation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;test_dataset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MNIST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'data/'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transformation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataLoader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shuffle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataLoader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shuffle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;plot-image&quot;&gt;Plot Image&lt;/h3&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;plot_img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numpy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1307&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.3081&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'gray'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sample_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;iter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plot_img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sample_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plot_img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sample_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\2021-07-01-CNN-MNIST\output_8_0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\2021-07-01-CNN-MNIST\output_8_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;model&quot;&gt;Model&lt;/h2&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CNN_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Conv2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kernel_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Conv2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kernel_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BatchNorm2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Linear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;320&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Linear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;forward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_pool2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_pool2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;320&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dropout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;training&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;training&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log_softmax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CNN_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Conv2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kernel_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Conv2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kernel_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c2_drop&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dropout2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Linear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;320&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Linear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;forward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_pool2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_pool2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c2_drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;320&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dropout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;training&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;training&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log_softmax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;conv&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Conv1d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bias&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tensor([[[ 0.9066,  0.1089, -1.9883, -1.6145,  0.1072, -1.3022, -0.7888]]])
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;conv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tensor([[[-0.1690,  0.6463,  0.1258, -0.8724,  0.4924]]],
-       grad_fn=&amp;lt;SqueezeBackward1&amp;gt;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;conv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Parameter containing:
-tensor([[[ 0.3372, -0.4791,  0.2125]]], requires_grad=True)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.3111&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.2455&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.3354&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1736&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.2611&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0896&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-0.14989406999999996
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'training'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;volatile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'training'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'validation'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;volatile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;running_loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;running_correct&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batch_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;enumerate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_available&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Variable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;volatile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Variable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'training'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zero_grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nll_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        
-        &lt;span class=&quot;n&quot;&gt;running_loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nll_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size_average&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keepdim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;running_correct&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view_as&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'training'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;step&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;running_loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;global&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;accuracy&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;accuracy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;100.&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;running_correct&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            
-            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phase&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; loss is &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; and &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phase&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; accuracy is &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;running_correct&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;accuracy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;accuracy&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;model_bn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CNN_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;model_do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CNN_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CNN_bn(
-  (c1): Conv2d(1, 10, kernel_size=(5, 5), stride=(1, 1))
-  (c2): Conv2d(10, 20, kernel_size=(5, 5), stride=(1, 1))
-  (bn): BatchNorm2d(20, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-  (fc1): Linear(in_features=320, out_features=50, bias=True)
-  (fc2): Linear(in_features=50, out_features=10, bias=True)
-)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CNN_do(
-  (c1): Conv2d(1, 10, kernel_size=(5, 5), stride=(1, 1))
-  (c2): Conv2d(10, 20, kernel_size=(5, 5), stride=(1, 1))
-  (c2_drop): Dropout2d(p=0.5, inplace=False)
-  (fc1): Linear(in_features=320, out_features=50, bias=True)
-  (fc2): Linear(in_features=50, out_features=10, bias=True)
-)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;train&quot;&gt;Train&lt;/h2&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_available&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;model_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;model_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;optim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SGD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;momentum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;train_losses_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_accuracy_bn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;val_losses_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val_accuracy_bn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;start_time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;epoch_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;epoch_accuracy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'training'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;val_epoch_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val_epoch_accuracy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'validation'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;train_losses_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;train_accuracy_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch_accuracy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;val_losses_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val_epoch_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;val_accuracy_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val_epoch_accuracy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_time&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; second elapsed'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_losses_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_losses_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'bo'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'training_loss'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val_losses_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val_losses_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'validation_loss'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_accuracy_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_accuracy_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'bo'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'training_accuracy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val_accuracy_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val_accuracy_bn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'validation_accuracy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\2021-07-01-CNN-MNIST\output_25_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;optim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SGD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;momentum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;train_losses_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_accuracy_do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;val_losses_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val_accuracy_do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;start_time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;epoch_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;epoch_accuracy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'training'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;val_epoch_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val_epoch_accuracy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;phase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'validation'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;train_losses_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;train_accuracy_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch_accuracy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;val_losses_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val_epoch_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;val_accuracy_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val_epoch_accuracy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_time&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; second elapsed'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_losses_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_losses_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'bo'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'training_loss'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val_losses_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val_losses_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'validation_loss'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_accuracy_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_accuracy_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'bo'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'training_accuracy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val_accuracy_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val_accuracy_do&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'validation_accuracy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\2021-07-01-CNN-MNIST\output_27_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name>ilvnax24er</name></author><category term="pytorch" /><summary type="html">MNIST</summary></entry><entry><title type="html">Recurrent Neural Network</title><link href="https://ilvnax24er.github.io/RNN" rel="alternate" type="text/html" title="Recurrent Neural Network" /><published>2021-07-01T00:00:00+09:00</published><updated>2021-07-01T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/RNN</id><content type="html" xml:base="https://ilvnax24er.github.io/RNN">&lt;h1 id=&quot;recurrent-neural-network&quot;&gt;Recurrent Neural Network&lt;/h1&gt;
-
-&lt;h3 id=&quot;intro&quot;&gt;Intro&lt;/h3&gt;
+&lt;p&gt;신경망 아키텍처 중에는 특정 과제에 맞게 개발된것들이 있다. CNN의 경우 Computer Vision에 RNN은 순방향 신경망을 순차열 처리에 맞게 일반화 한것이 예이다. 일반적으로 신경망의 층들이 반드시 사슬로 연결될 필요는 없다.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p368-408&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Recurrent Neural Network</summary></entry><entry><title type="html">Convolutional Neural Network</title><link href="https://ilvnax24er.github.io/CNN" rel="alternate" type="text/html" title="Convolutional Neural Network" /><published>2021-06-30T00:00:00+09:00</published><updated>2021-06-30T00:00:00+09:00</updated><id>https://ilvnax24er.github.io/CNN</id><content type="html" xml:base="https://ilvnax24er.github.io/CNN">&lt;h1 id=&quot;convolutional-neural-network&quot;&gt;Convolutional Neural Network&lt;/h1&gt;
-
-&lt;h3 id=&quot;intro&quot;&gt;Intro&lt;/h3&gt;
-
-&lt;p&gt;정해진 격자 형태로 배열된 자료를 처리하는데 특화된 신경망이다. 이 신경망이 합성곱(convolution)연산을 사용하기 때문에 붙은 이름이다. 적어도 하나의 층에서 일반적인 행렬 곱셈 대신 합성곱을 사용하는 신경망이면 합성곱 신경망이라고 할 수 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;합성곱-연산&quot;&gt;합성곱 연산&lt;/h3&gt;
-
-&lt;p&gt;합성곱은 실숫값을 받는 두 함수에 관한 연산이다.&lt;/p&gt;
-
-&lt;p&gt;일반적으로 $s(t) = (x \ast \omega)(t)$ 로 표기한다.&lt;/p&gt;
-
-&lt;p&gt;합성곱은 첫 인수를 input이라고 부르며, 두번째 인수를 kernel이라고 부른다. 그리고 합성곱의 출력을 feature map이라고 부른다.&lt;/p&gt;
-
-&lt;p&gt;$x$와 $\omega$가 오직 정수 $t$에 대해서만 정의된다고 가정하고, 이산적인 합성곱 연산을 정의할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;$s(t) = (x \ast \omega)(t) = \sum_{a=-\infty}^{\infty} x(a)\omega(t-a)$&lt;/p&gt;
-
-&lt;p&gt;종종 합성곱을 한 번에 여러 축에 적용할 때, 2차원 이미지 $I$를 입력으로 사용할 때는 다음과 같이 2차원 kernel $K$를 적용한다.&lt;/p&gt;
-
-&lt;p&gt;$s(i,j) = (I \ast K)(i,j) = \sum_{m} \sum_{n} I(m,n)K(i-m,j-n)$&lt;/p&gt;
-
-&lt;p&gt;이산 합성곱은 일부 성분들이 다른 성분들과 같아야 한다는 제약이 있는 행렬을 곱하는 연산에 해당한다. 단변량 이산 합성곱에서 행렬의 각 행은 반드시 그 위 행의 성분들을 한 자리 이동한 것과 같아야 한다. 이러한 조건을 만족하는 행렬을 퇴플리츠 행렬(Toeplitz matrix)라고 부른다. 2차원의 경우에는 double block circulant matrix가 합성곱에 해당한다.&lt;/p&gt;
-
-&lt;p&gt;합성곱 신경망은 세가지 중요한 개념을 활용한다&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;sparse interaction, sparse weights, sparse connectivity&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;전통적인 신경망의 층들은 매개변수들의 행렬을 곱하는 연산을 수행한다. 이때 각 매개변수는 각 입력 단위와 각 출력 단위의 상호작용을 나타낸다. 결과적으로, 모든 출력 단위는 모든 입력단위와 상호작용한다. 그런데 보통의 경우 합성곱 신경망에는 sparse interaction이라는 성질이 있다. 이것은 kernel이 input보다 작기 때문에 생긴 성질인데, 윤곽선 같은 작고 의미 있는 특징들을 kernel로 검출할 수 있다. 따라서 상대적으로 적은 수의 매개변수들만 저장해도 되며, 결과적으로 효율성이 높아진다. 또한 출력을 계산하는데 필요한 연산의 수도 줄어든다.&lt;/p&gt;
-
-&lt;p&gt;이처럼 희소한 상호작용만 서술하는 간단한 구성요소들 사이의 상호작용을 구축함으로써 여러 변수 사이의 복잡한 상호작용을 효율적으로 서술한다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;parameter sharing&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;모형의 둘 이상의 함수에 같은 매개변수를 사용하는것을 말한다. 전통적인 신경망에서는 한 층의 출력을 계산할 때 가중치 행렬의 각 성분은 딱 한번만 사용된다. 합성곱 신경망에서 핵의 각 성분은 입력의 모든 곳에 쓰인다. 모든 위치에 대해 개별적인 매개변수 집합을 학습하는 것이 아니라 하나의 집합만 학습하는것에 해당한다. 이는 모형이 저장해야하는 매개변수 개수를 줄여 효율적이다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;equivariance representation&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;합성곱의 경우, 매개변수 공유의 특정한 형태 때문에 신경망 층에는 이동에 대한 등변성이라는 성질이 생긴다. 함수 $f(x)$와 $g$가 있을 때 만일 $f(g(x)) = g(f(x))$ 이면 $f(x)$는 $g$에 대해 등변이다. 합송곱의 경우, 만일 $g$가 입력을 이동하는 함수이면 합성곱 함수는 $g$에 대해 등변이다. 즉 input에서 어떤 대상을 이동하면 output에서도 해당 표현이 같은 양으로 이동한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;pooling&quot;&gt;pooling&lt;/h3&gt;
-
-&lt;p&gt;합성곱 신경망의 한 층은 세단계로 작동한다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;다수의 합성곱을 병렬로 수행해서 선형 활성화 값들을 산출한다.&lt;/li&gt;
-  &lt;li&gt;각 선형 활성화 값이 정류 선형 활성화 함수같은 비선형 활성화 함수를 거치게 된다. 이 단계를 detector stage라고 부른다.&lt;/li&gt;
-  &lt;li&gt;pooling function을 이용해서 그 층의 출력을 좀 더 수정한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;pooling function은 특정 위치에서의 신경망의 출력을 근처 출력들의 요약통계량(summary statistics)으로 대체한다. pooling은 표현이 입력의 작은 이동에 대해 근사적으로 불변이 되게하는데 도움을 준다. 이동에 대한 불변성이란, 입력을 조금 이동해도 풀링된 출력들의 값들은 대부분 변하지 않는것을 말한다. &lt;strong&gt;어떤 특징의 구체적인 위치가 아니라 특징의 존재 여부 자체가 더 중요할 때는 국소 이동에 대한 불변성이 유용할 수 있다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p368-408&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Convolutional Neural Network</summary></entry></feed>
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p218-224&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>ilvnax24er</name></author><category term="deeplearning" /><summary type="html">Architecture 설계</summary></entry></feed>

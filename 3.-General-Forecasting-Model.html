@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>Time Series Analysis - General Forecasting Model</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+
+    <!-- 수식 -->
+
+    
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$'] ],
+    processEscapes: true,
+  }
+});
+MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+</script>
+<script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+    
+
+
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="Deeplearning Archive" />
+    <link rel="shortcut icon" href="https://ilvnax24er.github.io/" type="image/png" />
+    <link rel="canonical" href="https://ilvnax24er.github.io/3.-General-Forecasting-Model" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="Archive" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Time Series Analysis - General Forecasting Model" />
+    <meta property="og:description" content="Introduction to Forecasting import pandas as pd import numpy as np %matplotlib inline df = pd.read_csv('Data/airline_passengers.csv',index_col = 'Month', parse_dates=True) df.index.freq = 'MS' df.head() Thousands of Passengers Month 1949-01-01 112 1949-02-01 118 1949-03-01 132 1949-04-01 129 1949-05-01 121 df.tail() Thousands of Passengers Month 1960-08-01 606 1960-09-01 508 1960-10-01 461 1960-11-01 390" />
+    <meta property="og:url" content="https://ilvnax24er.github.io/3.-General-Forecasting-Model" />
+    <meta property="og:image" content="https://ilvnax24er.github.io/assets/built/images/timeseries.png" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2020-11-22T00:00:00+09:00" />
+    <meta property="article:modified_time" content="2020-11-22T00:00:00+09:00" />
+    <meta property="article:tag" content="Timeseries" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Time Series Analysis - General Forecasting Model" />
+    <meta name="twitter:description" content="Introduction to Forecasting import pandas as pd import numpy as np %matplotlib inline df = pd.read_csv('Data/airline_passengers.csv',index_col = 'Month', parse_dates=True) df.index.freq = 'MS' df.head() Thousands of Passengers Month 1949-01-01 112 1949-02-01 118 1949-03-01 132 1949-04-01 129 1949-05-01 121 df.tail() Thousands of Passengers Month 1960-08-01 606 1960-09-01 508 1960-10-01 461 1960-11-01 390" />
+    <meta name="twitter:url" content="https://ilvnax24er.github.io/" />
+    <meta name="twitter:image" content="https://ilvnax24er.github.io/assets/built/images/timeseries.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Archive" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Timeseries" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Archive",
+        "logo": "https://ilvnax24er.github.io/"
+    },
+    "url": "https://ilvnax24er.github.io/3.-General-Forecasting-Model",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://ilvnax24er.github.io/assets/built/images/timeseries.png",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ilvnax24er.github.io/3.-General-Forecasting-Model"
+    },
+    "description": "Introduction to Forecasting import pandas as pd import numpy as np %matplotlib inline df = pd.read_csv('Data/airline_passengers.csv',index_col = 'Month', parse_dates=True) df.index.freq = 'MS' df.head() Thousands of Passengers Month 1949-01-01 112 1949-02-01 118 1949-03-01 132 1949-04-01 129 1949-05-01 121 df.tail() Thousands of Passengers Month 1960-08-01 606 1960-09-01 508 1960-10-01 461 1960-11-01 390"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="Time Series Analysis - General Forecasting Model" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://ilvnax24er.github.io/">Archive</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
+    <li class="nav-pytorch" role="menuitem"><a href="/tag/pytorch/">pytorch</a></li>
+    <li class="nav-deeplearning" role="menuitem"><a href="/tag/deeplearning/">deeplearning</a></li>
+    <li class="nav-reinforcement" role="menuitem"><a href="/tag/reinforcement/">reinforcement</a></li>
+    <li class="nav-timeseries" role="menuitem"><a href="/tag/timeseries/">timeseries</a></li>
+    <li class="nav-archive" role="menuitem">
+    <a href="/archive.html">All Posts</a>
+    </li>
+    <li class="nav-archive" role="menuitem">
+    <a href="/author_archive.html">Tag별 Posts</a>
+    </li>
+</ul>
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Subscribe</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-timeseries post tag-timeseries ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="22 November 2020">22 November 2020</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/timeseries/'>TIMESERIES</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">Time Series Analysis - General Forecasting Model</h1>
+            </header>
+
+            <!-- cover on/off
+                        
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/timeseries.png)">
+            </figure>
+            
+            -->
+
+
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <h1 id="introduction-to-forecasting">Introduction to Forecasting</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Data/airline_passengers.csv'</span><span class="p">,</span><span class="n">index_col</span> <span class="o">=</span> <span class="s">'Month'</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">index</span><span class="p">.</span><span class="n">freq</span> <span class="o">=</span> <span class="s">'MS'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Thousands of Passengers</th>
+    </tr>
+    <tr>
+      <th>Month</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1949-01-01</th>
+      <td>112</td>
+    </tr>
+    <tr>
+      <th>1949-02-01</th>
+      <td>118</td>
+    </tr>
+    <tr>
+      <th>1949-03-01</th>
+      <td>132</td>
+    </tr>
+    <tr>
+      <th>1949-04-01</th>
+      <td>129</td>
+    </tr>
+    <tr>
+      <th>1949-05-01</th>
+      <td>121</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">tail</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Thousands of Passengers</th>
+    </tr>
+    <tr>
+      <th>Month</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1960-08-01</th>
+      <td>606</td>
+    </tr>
+    <tr>
+      <th>1960-09-01</th>
+      <td>508</td>
+    </tr>
+    <tr>
+      <th>1960-10-01</th>
+      <td>461</td>
+    </tr>
+    <tr>
+      <th>1960-11-01</th>
+      <td>390</td>
+    </tr>
+    <tr>
+      <th>1960-12-01</th>
+      <td>432</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<ul>
+  <li>The size of the test set is typically about 20% of the total sample, although this value depends on how long the sample is and how far ahead you want to forecast. The test set should ideally be at least as large as the maximum forecast horizon required.</li>
+  <li>Keep in mind, the longer the forecast horizon, the more likely your prediction becomes less accurate</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+DatetimeIndex: 144 entries, 1949-01-01 to 1960-12-01
+Freq: MS
+Data columns (total 1 columns):
+ #   Column                   Non-Null Count  Dtype
+---  ------                   --------------  -----
+ 0   Thousands of Passengers  144 non-null    int64
+dtypes: int64(1)
+memory usage: 2.2 KB
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">109</span><span class="p">]</span> <span class="c1">#.loc[:'1940-01-01']
+</span><span class="n">test_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">108</span><span class="p">:]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.tsa.holtwinters</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fitted_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">],</span>
+                                   <span class="n">trend</span><span class="o">=</span><span class="s">'mul'</span><span class="p">,</span><span class="n">seasonal</span><span class="o">=</span><span class="s">'mul'</span><span class="p">,</span>
+                                   <span class="n">seasonal_periods</span><span class="o">=</span><span class="mi">12</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\ilvna\.conda\envs\tf-2.3\lib\site-packages\statsmodels\tsa\holtwinters\model.py:429: FutureWarning: After 0.13 initialization must be handled at model creation
+  FutureWarning,
+C:\Users\ilvna\.conda\envs\tf-2.3\lib\site-packages\statsmodels\tsa\holtwinters\model.py:80: RuntimeWarning: overflow encountered in matmul
+  return err.T @ err
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test_predictions</span> <span class="o">=</span> <span class="n">fitted_model</span><span class="p">.</span><span class="n">forecast</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test_predictions</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1958-02-01    339.142839
+1958-03-01    399.281567
+1958-04-01    394.233518
+1958-05-01    402.545212
+1958-06-01    473.128729
+1958-07-01    521.795258
+1958-08-01    514.513564
+1958-09-01    446.216722
+1958-10-01    385.430842
+1958-11-01    339.645012
+1958-12-01    381.455551
+1959-01-01    401.210071
+1959-02-01    387.159060
+1959-03-01    455.812296
+1959-04-01    450.049538
+1959-05-01    459.538011
+1959-06-01    540.114821
+1959-07-01    595.671611
+1959-08-01    587.358966
+1959-09-01    509.392582
+1959-10-01    440.000570
+1959-11-01    387.732331
+1959-12-01    435.462452
+1960-01-01    458.013840
+1960-02-01    441.973470
+1960-03-01    520.346708
+1960-04-01    513.768052
+1960-05-01    524.599914
+1960-06-01    616.584878
+1960-07-01    680.007460
+1960-08-01    670.517902
+1960-09-01    581.512951
+1960-10-01    502.296340
+1960-11-01    442.627906
+1960-12-01    497.115710
+1961-01-01    522.859949
+Freq: MS, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_data</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'TRAIN'</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">test_data</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'TEST'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='Month'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_13_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_data</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'TRAIN'</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">test_data</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'TEST'</span><span class="p">)</span>
+<span class="n">test_predictions</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'PREDICTION'</span><span class="p">,</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="s">'1958-01-01'</span><span class="p">,</span><span class="s">'1961-01-01'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='Month'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_14_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test_data</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Thousands of Passengers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>36.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>428.500000</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>79.329152</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>310.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>362.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>412.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>472.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>622.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">test_predictions</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>63.031111382769595
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">test_predictions</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5614.2515044341835
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span><span class="n">test_predictions</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>74.92830909899264
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">final_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">],</span> <span class="n">trend</span> <span class="o">=</span><span class="s">'mul'</span><span class="p">,</span><span class="n">seasonal</span><span class="o">=</span><span class="s">'mul'</span><span class="p">,</span><span class="n">seasonal_periods</span><span class="o">=</span><span class="mi">12</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\ilvna\.conda\envs\tf-2.3\lib\site-packages\statsmodels\tsa\holtwinters\model.py:429: FutureWarning: After 0.13 initialization must be handled at model creation
+  FutureWarning,
+C:\Users\ilvna\.conda\envs\tf-2.3\lib\site-packages\statsmodels\tsa\holtwinters\model.py:80: RuntimeWarning: overflow encountered in matmul
+  return err.T @ err
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">forecast_prediction</span> <span class="o">=</span> <span class="n">final_model</span><span class="p">.</span><span class="n">forecast</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">forecast_prediction</span><span class="p">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='Month'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_22_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Data/samples.csv'</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df2</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+      <th>c</th>
+      <th>d</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1950-01-01</th>
+      <td>36</td>
+      <td>27</td>
+      <td>0</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>1950-02-01</th>
+      <td>58</td>
+      <td>22</td>
+      <td>3</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>1950-03-01</th>
+      <td>61</td>
+      <td>17</td>
+      <td>5</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>1950-04-01</th>
+      <td>37</td>
+      <td>15</td>
+      <td>8</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>1950-05-01</th>
+      <td>66</td>
+      <td>13</td>
+      <td>8</td>
+      <td>62</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df2</span><span class="p">[</span><span class="s">'a'</span><span class="p">].</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_25_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df2</span><span class="p">[</span><span class="s">'b'</span><span class="p">].</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_26_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.tsa.statespace.tools</span> <span class="kn">import</span> <span class="n">diff</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># df2['b'] - df2['b'].shift(1)
+</span><span class="n">diff</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'b'</span><span class="p">],</span> <span class="n">k_diff</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_28_1.png" alt="png" /></p>
+
+<h1 id="acf--pacf">ACF &amp; PACF</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">acovf</span><span class="p">,</span> <span class="n">acf</span><span class="p">,</span> <span class="n">pacf</span><span class="p">,</span> <span class="n">pacf_yw</span><span class="p">,</span> <span class="n">pacf_ols</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># NON STATIONARY
+</span><span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Data/airline_passengers.csv'</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="s">'Month'</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">df1</span><span class="p">.</span><span class="n">index</span><span class="p">.</span><span class="n">freq</span> <span class="o">=</span> <span class="s">'MS'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># STATIONARY
+</span><span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Data/DailyTotalFemaleBirths.csv'</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">'Date'</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">df2</span><span class="p">.</span><span class="n">index</span><span class="p">.</span><span class="n">freq</span> <span class="o">=</span> <span class="s">'D'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Thousands of Passengers</th>
+    </tr>
+    <tr>
+      <th>Month</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1949-01-01</th>
+      <td>112</td>
+    </tr>
+    <tr>
+      <th>1949-02-01</th>
+      <td>118</td>
+    </tr>
+    <tr>
+      <th>1949-03-01</th>
+      <td>132</td>
+    </tr>
+    <tr>
+      <th>1949-04-01</th>
+      <td>129</td>
+    </tr>
+    <tr>
+      <th>1949-05-01</th>
+      <td>121</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df2</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Births</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1959-01-01</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>1959-01-02</th>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>1959-01-03</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>1959-01-04</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>1959-01-05</th>
+      <td>44</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="p">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">'ignore'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">'a'</span> <span class="p">:</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">]})</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">acf</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'a'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([ 1.   , -0.5  , -0.2  ,  0.275, -0.075])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pacf_yw</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'a'</span><span class="p">],</span> <span class="n">nlags</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'unbiased'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([ 1.        , -0.625     , -1.18803419,  2.03764205,  0.8949589 ])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pacf_ols</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'a'</span><span class="p">],</span> <span class="n">nlags</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([ 1.        , -0.49677419, -0.43181818,  0.53082621,  0.25434783])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pandas.plotting</span> <span class="kn">import</span> <span class="n">lag_plot</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lag_plot</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='y(t)', ylabel='y(t + 1)'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_43_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lag_plot</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'Births'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='y(t)', ylabel='y(t + 1)'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_44_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_acf</span><span class="p">,</span> <span class="n">plot_pacf</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_acf</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span><span class="n">lags</span><span class="o">=</span><span class="mi">40</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_46_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_acf</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="mi">40</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_47_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_pacf</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">'Daily Female Births'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_48_0.png" alt="png" /></p>
+
+<h1 id="arima">ARIMA</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.ar_model</span> <span class="kn">import</span> <span class="n">AR</span><span class="p">,</span> <span class="n">ARResults</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Data/uspopulation.csv'</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">'DATE'</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">index</span><span class="p">.</span><span class="n">freq</span> <span class="o">=</span> <span class="s">'MS'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PopEst</th>
+    </tr>
+    <tr>
+      <th>DATE</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2011-01-01</th>
+      <td>311037</td>
+    </tr>
+    <tr>
+      <th>2011-02-01</th>
+      <td>311189</td>
+    </tr>
+    <tr>
+      <th>2011-03-01</th>
+      <td>311351</td>
+    </tr>
+    <tr>
+      <th>2011-04-01</th>
+      <td>311522</td>
+    </tr>
+    <tr>
+      <th>2011-05-01</th>
+      <td>311699</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='DATE'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_54_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>96
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">96</span><span class="o">-</span><span class="mi">12</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>84
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">84</span><span class="p">]</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">84</span><span class="p">:]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="p">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">'ignore'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">AR</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s">'PopEst'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AR1fit</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">maxlag</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AR1fit</span><span class="p">.</span><span class="n">k_ar</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AR1fit</span><span class="p">.</span><span class="n">params</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const        284.913797
+L1.PopEst      0.999686
+dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">start</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>84 95
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AR1fit</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2018-01-01    326560.403377
+2018-02-01    326742.749463
+2018-03-01    326925.038278
+2018-04-01    327107.269838
+2018-05-01    327289.444162
+2018-06-01    327471.561268
+2018-07-01    327653.621173
+2018-08-01    327835.623896
+2018-09-01    328017.569455
+2018-10-01    328199.457868
+2018-11-01    328381.289152
+2018-12-01    328563.063326
+Freq: MS, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PopEst</th>
+    </tr>
+    <tr>
+      <th>DATE</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2018-01-01</th>
+      <td>326527</td>
+    </tr>
+    <tr>
+      <th>2018-02-01</th>
+      <td>326669</td>
+    </tr>
+    <tr>
+      <th>2018-03-01</th>
+      <td>326812</td>
+    </tr>
+    <tr>
+      <th>2018-04-01</th>
+      <td>326968</td>
+    </tr>
+    <tr>
+      <th>2018-05-01</th>
+      <td>327134</td>
+    </tr>
+    <tr>
+      <th>2018-06-01</th>
+      <td>327312</td>
+    </tr>
+    <tr>
+      <th>2018-07-01</th>
+      <td>327502</td>
+    </tr>
+    <tr>
+      <th>2018-08-01</th>
+      <td>327698</td>
+    </tr>
+    <tr>
+      <th>2018-09-01</th>
+      <td>327893</td>
+    </tr>
+    <tr>
+      <th>2018-10-01</th>
+      <td>328077</td>
+    </tr>
+    <tr>
+      <th>2018-11-01</th>
+      <td>328241</td>
+    </tr>
+    <tr>
+      <th>2018-12-01</th>
+      <td>328393</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predictions1</span> <span class="o">=</span> <span class="n">AR1fit</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predictions1</span> <span class="o">=</span> <span class="n">predictions1</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="s">'AR(1) Predictions'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predictions1</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2018-01-01    326560.403377
+2018-02-01    326742.749463
+2018-03-01    326925.038278
+2018-04-01    327107.269838
+2018-05-01    327289.444162
+2018-06-01    327471.561268
+2018-07-01    327653.621173
+2018-08-01    327835.623896
+2018-09-01    328017.569455
+2018-10-01    328199.457868
+2018-11-01    328381.289152
+2018-12-01    328563.063326
+Freq: MS, Name: AR(1) Predictions, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">predictions1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='DATE'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_70_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">AR</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s">'PopEst'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AR2fit</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">maxlag</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AR2fit</span><span class="p">.</span><span class="n">params</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const        137.368305
+L1.PopEst      1.853490
+L2.PopEst     -0.853836
+dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predictions2</span> <span class="o">=</span> <span class="n">AR2fit</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predictions2</span> <span class="o">=</span> <span class="n">predictions2</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="s">'AR (2) Predictions'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">predictions1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">predictions2</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='DATE'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_76_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">AR</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s">'PopEst'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ARfit</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ic</span><span class="o">=</span><span class="s">'t-stat'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ARfit</span><span class="p">.</span><span class="n">params</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const        82.309677
+L1.PopEst     2.437997
+L2.PopEst    -2.302100
+L3.PopEst     1.565427
+L4.PopEst    -1.431211
+L5.PopEst     1.125022
+L6.PopEst    -0.919494
+L7.PopEst     0.963694
+L8.PopEst    -0.439511
+dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predictions8</span> <span class="o">=</span> <span class="n">ARfit</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+<span class="n">predictions8</span> <span class="o">=</span> <span class="n">predictions8</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="s">'AR (8) Predictions'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s">'AR1'</span><span class="p">,</span> <span class="s">'AR2'</span><span class="p">,</span> <span class="s">'AR8'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">preds</span> <span class="o">=</span> <span class="p">[</span><span class="n">predictions1</span><span class="p">,</span> <span class="n">predictions2</span><span class="p">,</span> <span class="n">predictions8</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># np.sqrt()
+</span>    <span class="n">error</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s">'PopEst'</span><span class="p">],</span><span class="n">preds</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s"> MSE was : </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>AR1 MSE was : 17449.714239577344
+AR2 MSE was : 2713.258615675103
+AR8 MSE was : 186.97377437908688
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">predictions1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">predictions2</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">predictions8</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='DATE'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_85_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Forecasting __ Future
+</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AR</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'PopEst'</span><span class="p">])</span>
+
+<span class="n">ARfit</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">forcasted_values</span> <span class="o">=</span> <span class="n">ARfit</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">+</span> <span class="mi">12</span><span class="p">).</span><span class="n">rename</span><span class="p">(</span><span class="s">'Forecast'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'PopEst'</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">forcasted_values</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='DATE'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_87_1.png" alt="png" /></p>
+
+<h1 id="descriptive-statisics-and-tests">Descriptive Statisics and Tests</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="p">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">'ignore'</span><span class="p">)</span>
+
+<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Data/airline_passengers.csv'</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="s">'Month'</span><span class="p">,</span> <span class="n">parse_dates</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">df1</span><span class="p">.</span><span class="n">index</span><span class="p">.</span><span class="n">freq</span> <span class="o">=</span> <span class="s">'MS'</span>
+
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Data/DailyTotalFemaleBirths.csv'</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="s">'Date'</span><span class="p">,</span> <span class="n">parse_dates</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">df2</span><span class="p">.</span><span class="n">index</span><span class="p">.</span><span class="n">freq</span> <span class="o">=</span> <span class="s">'D'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='Month'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_90_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">adfuller</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">adfuller</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(0.8153688792060512,
+ 0.991880243437641,
+ 13,
+ 130,
+ {'1%': -3.4816817173418295,
+  '5%': -2.8840418343195267,
+  '10%': -2.578770059171598},
+ 996.692930839019)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">help</span><span class="p">(</span><span class="n">adfuller</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Help on function adfuller in module statsmodels.tsa.stattools:
+
+adfuller(x, maxlag=None, regression='c', autolag='AIC', store=False, regresults=False)
+    Augmented Dickey-Fuller unit root test.
+    
+    The Augmented Dickey-Fuller test can be used to test for a unit root in a
+    univariate process in the presence of serial correlation.
+    
+    Parameters
+    ----------
+    x : array_like, 1d
+        The data series to test.
+    maxlag : int
+        Maximum lag which is included in test, default 12*(nobs/100)^{1/4}.
+    regression : {"c","ct","ctt","nc"}
+        Constant and trend order to include in regression.
+    
+        * "c" : constant only (default).
+        * "ct" : constant and trend.
+        * "ctt" : constant, and linear and quadratic trend.
+        * "nc" : no constant, no trend.
+    
+    autolag : {"AIC", "BIC", "t-stat", None}
+        Method to use when automatically determining the lag.
+    
+        * if None, then maxlag lags are used.
+        * if "AIC" (default) or "BIC", then the number of lags is chosen
+          to minimize the corresponding information criterion.
+        * "t-stat" based choice of maxlag.  Starts with maxlag and drops a
+          lag until the t-statistic on the last lag length is significant
+          using a 5%-sized test.
+    store : bool
+        If True, then a result instance is returned additionally to
+        the adf statistic. Default is False.
+    regresults : bool, optional
+        If True, the full regression results are returned. Default is False.
+    
+    Returns
+    -------
+    adf : float
+        The test statistic.
+    pvalue : float
+        MacKinnon"s approximate p-value based on MacKinnon (1994, 2010).
+    usedlag : int
+        The number of lags used.
+    nobs : int
+        The number of observations used for the ADF regression and calculation
+        of the critical values.
+    critical values : dict
+        Critical values for the test statistic at the 1 %, 5 %, and 10 %
+        levels. Based on MacKinnon (2010).
+    icbest : float
+        The maximized information criterion if autolag is not None.
+    resstore : ResultStore, optional
+        A dummy class with results attached as attributes.
+    
+    Notes
+    -----
+    The null hypothesis of the Augmented Dickey-Fuller is that there is a unit
+    root, with the alternative that there is no unit root. If the pvalue is
+    above a critical size, then we cannot reject that there is a unit root.
+    
+    The p-values are obtained through regression surface approximation from
+    MacKinnon 1994, but using the updated 2010 tables. If the p-value is close
+    to significant, then the critical values should be used to judge whether
+    to reject the null.
+    
+    The autolag option and maxlag for it are described in Greene.
+    
+    References
+    ----------
+    .. [1] W. Green.  "Econometric Analysis," 5th ed., Pearson, 2003.
+    
+    .. [2] Hamilton, J.D.  "Time Series Analysis".  Princeton, 1994.
+    
+    .. [3] MacKinnon, J.G. 1994.  "Approximate asymptotic distribution functions for
+        unit-root and cointegration tests.  `Journal of Business and Economic
+        Statistics` 12, 167-76.
+    
+    .. [4] MacKinnon, J.G. 2010. "Critical Values for Cointegration Tests."  Queen"s
+        University, Dept of Economics, Working Papers.  Available at
+        http://ideas.repec.org/p/qed/wpaper/1227.html
+    
+    Examples
+    --------
+    See example notebook
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dftest</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">])</span>
+<span class="n">dfout</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dftest</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s">'ADF Test Statistic'</span><span class="p">,</span><span class="s">'p-value'</span><span class="p">,</span><span class="s">'# Lags Used'</span><span class="p">,</span> <span class="s">'# Observations'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">dftest</span><span class="p">[</span><span class="mi">4</span><span class="p">].</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">dfout</span><span class="p">[</span><span class="sa">f</span><span class="s">'critical value (</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">)'</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dfout</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ADF Test Statistic        0.815369
+p-value                   0.991880
+# Lags Used              13.000000
+# Observations          130.000000
+critical value (1%)      -3.481682
+critical value (5%)      -2.884042
+critical value (10%)     -2.578770
+dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">adfuller</span>
+
+<span class="k">def</span> <span class="nf">adf_test</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">''</span><span class="p">):</span>
+    <span class="s">"""
+    Pass in a time series and an optional title, returns an ADF report
+    """</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Augmented Dickey-Fuller Test: </span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">series</span><span class="p">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">autolag</span> <span class="o">=</span> <span class="s">'AIC'</span><span class="p">)</span>
+    
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s">'ADF test statistic'</span><span class="p">,</span> <span class="s">'p-value'</span><span class="p">,</span> <span class="s">'# lags used'</span><span class="p">,</span> <span class="s">'# obervations'</span><span class="p">]</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">index</span> <span class="o">=</span> <span class="n">labels</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">4</span><span class="p">].</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">out</span><span class="p">[</span><span class="sa">f</span><span class="s">'critical value (</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">)'</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        
+    <span class="k">print</span><span class="p">(</span><span class="n">out</span><span class="p">.</span><span class="n">to_string</span><span class="p">())</span>
+    
+    <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mf">0.05</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Strong evidence against the null hypothesis'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Reject the null hypothesis'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Data has no unit root and is stationary'</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Weak evidence against the null hypothesis'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Fail to reject the null hypothesis'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Data has a unit root and is non-stationary'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">adf_test</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Augmented Dickey-Fuller Test: 
+ADF test statistic        0.815369
+p-value                   0.991880
+# lags used              13.000000
+# obervations           130.000000
+critical value (1%)      -3.481682
+critical value (5%)      -2.884042
+critical value (10%)     -2.578770
+Weak evidence against the null hypothesis
+Fail to reject the null hypothesis
+Data has a unit root and is non-stationary
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='Month'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_99_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df2</span><span class="p">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='Date'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_100_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">adf_test</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'Births'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Augmented Dickey-Fuller Test: 
+ADF test statistic       -4.808291
+p-value                   0.000052
+# lags used               6.000000
+# obervations           358.000000
+critical value (1%)      -3.448749
+critical value (5%)      -2.869647
+critical value (10%)     -2.571089
+Strong evidence against the null hypothesis
+Reject the null hypothesis
+Data has no unit root and is stationary
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Data/samples.csv'</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">df3</span><span class="p">.</span><span class="n">index</span><span class="p">.</span><span class="n">freq</span> <span class="o">=</span> <span class="s">'MS'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df3</span><span class="p">[[</span><span class="s">'a'</span><span class="p">,</span><span class="s">'d'</span><span class="p">]].</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_103_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df3</span><span class="p">[</span><span class="s">'a'</span><span class="p">].</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">:].</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">df3</span><span class="p">[</span><span class="s">'d'</span><span class="p">].</span><span class="n">shift</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_104_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">grangercausalitytests</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grangercausalitytests</span><span class="p">(</span><span class="n">df3</span><span class="p">[[</span><span class="s">'a'</span><span class="p">,</span><span class="s">'d'</span><span class="p">]],</span> <span class="n">maxlag</span> <span class="o">=</span> <span class="mi">3</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Granger Causality
+number of lags (no zero) 1
+ssr based F test:         F=1.7051  , p=0.1942  , df_denom=116, df_num=1
+ssr based chi2 test:   chi2=1.7492  , p=0.1860  , df=1
+likelihood ratio test: chi2=1.7365  , p=0.1876  , df=1
+parameter F test:         F=1.7051  , p=0.1942  , df_denom=116, df_num=1
+
+Granger Causality
+number of lags (no zero) 2
+ssr based F test:         F=286.0339, p=0.0000  , df_denom=113, df_num=2
+ssr based chi2 test:   chi2=597.3806, p=0.0000  , df=2
+likelihood ratio test: chi2=212.6514, p=0.0000  , df=2
+parameter F test:         F=286.0339, p=0.0000  , df_denom=113, df_num=2
+
+Granger Causality
+number of lags (no zero) 3
+ssr based F test:         F=188.7446, p=0.0000  , df_denom=110, df_num=3
+ssr based chi2 test:   chi2=602.2669, p=0.0000  , df=3
+likelihood ratio test: chi2=212.4789, p=0.0000  , df=3
+parameter F test:         F=188.7446, p=0.0000  , df_denom=110, df_num=3
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grangercausalitytests</span><span class="p">(</span><span class="n">df3</span><span class="p">[[</span><span class="s">'b'</span><span class="p">,</span><span class="s">'d'</span><span class="p">]],</span> <span class="n">maxlag</span> <span class="o">=</span> <span class="mi">3</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Granger Causality
+number of lags (no zero) 1
+ssr based F test:         F=1.5225  , p=0.2197  , df_denom=116, df_num=1
+ssr based chi2 test:   chi2=1.5619  , p=0.2114  , df=1
+likelihood ratio test: chi2=1.5517  , p=0.2129  , df=1
+parameter F test:         F=1.5225  , p=0.2197  , df_denom=116, df_num=1
+
+Granger Causality
+number of lags (no zero) 2
+ssr based F test:         F=0.4350  , p=0.6483  , df_denom=113, df_num=2
+ssr based chi2 test:   chi2=0.9086  , p=0.6349  , df=2
+likelihood ratio test: chi2=0.9051  , p=0.6360  , df=2
+parameter F test:         F=0.4350  , p=0.6483  , df_denom=113, df_num=2
+
+Granger Causality
+number of lags (no zero) 3
+ssr based F test:         F=0.5333  , p=0.6604  , df_denom=110, df_num=3
+ssr based chi2 test:   chi2=1.7018  , p=0.6365  , df=3
+likelihood ratio test: chi2=1.6895  , p=0.6393  , df=3
+parameter F test:         F=0.5333  , p=0.6604  , df_denom=110, df_num=3
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,(</span><span class="mi">50</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">'test'</span><span class="p">,</span><span class="s">'predictions'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>test</th>
+      <th>predictions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>26</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>27</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>26</td>
+      <td>29</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>22</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>27</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_110_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.tools.eval_measures</span> <span class="kn">import</span> <span class="n">mse</span><span class="p">,</span> <span class="n">rmse</span><span class="p">,</span> <span class="n">meanabs</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">mse</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'test'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s">'predictions'</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rmse</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'test'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s">'predictions'</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">meanabs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'test'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s">'predictions'</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>17.02
+4.125530268947253
+3.54
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Data/airline_passengers.csv'</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">'Month'</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">index</span><span class="p">.</span><span class="n">freq</span> <span class="o">=</span> <span class="s">'MS'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='Month'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_114_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">month_plot</span><span class="p">,</span> <span class="n">quarter_plot</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">month_plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">]);</span>
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_116_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dfq</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'Thousands of Passengers'</span><span class="p">].</span><span class="n">resample</span><span class="p">(</span><span class="n">rule</span> <span class="o">=</span> <span class="s">'Q'</span><span class="p">).</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">quarter_plot</span><span class="p">(</span><span class="n">dfq</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\3_General_Forecasting_Model\output_118_0.png" alt="png" /></p>
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+
+            <!--
+            
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to Archive</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+                </section>
+            
+            -->
+
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/ilvnax24er">ilvnax24er</a></h4>
+                                
+                                    <p>Read <a href="/author/ilvnax24er">more posts</a> by this author.</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/ilvnax24er">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/built/images/cover.jpg)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; Archive &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/timeseries/">Timeseries</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/8.-fbprophet">Time Series Analysis - fbprophet</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/7.-Multivariate-Time-Series-with-LSTM-RNNs">Time Series Analysis - Multivariage Time Series with LSTM & RNNs</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/6.-Deep-Learning-for-TIme-Series-Forecasting">Time Series Analysis - Deep Learning for Time Series Forecasting</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/timeseries/">
+                                
+                                    See all 7 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/4.-ARIMA">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/timeseries.png)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/4.-ARIMA">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Timeseries</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Time Series Analysis - ARIMA</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p>ARIMA Theory
+
+</p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/ilvnax24er/">ilvnax24er</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      20 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/2.-Time-Series-Analysis-with-Statsmodels">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/timeseries.png)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/2.-Time-Series-Analysis-with-Statsmodels">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Timeseries</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Time Series Analysis - Time Series Analysis with Statsmodels</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p>Time Series Analysis with Statsmodels
+
+</p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/ilvnax24er/">ilvnax24er</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      3 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://ilvnax24er.github.io/">
+            
+            <span>Archive</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Time Series Analysis - General Forecasting Model</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Time+Series+Analysis+-+General+Forecasting+Model&amp;url=https://ilvnax24er.github.io/3.-General-Forecasting-Model"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://ilvnax24er.github.io/3.-General-Forecasting-Model"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://ilvnax24er.github.io/">Archive</a> &copy; 2021</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyllt/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                <h1 class="subscribe-overlay-title">Subscribe to Archive</h1>
+                <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
+                <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- syntax.css 추가 -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+
+    <!-- web font 추가 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+    <!-- custom css -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/custom.css" />
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-xxxxxxxx-x', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>

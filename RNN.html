@@ -11,7 +11,7 @@
 
 
 
-    <title>Recurrent Neural Network</title>
+    <title>Recurrent Neural Network (1)</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -72,32 +72,18 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Archive" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Recurrent Neural Network" />
-    <meta property="og:description" content="Recurrent Neural Network
-
-Intro
-
-
-  참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, 『심층학습』, Jpub(2018), p368-408
-
-" />
+    <meta property="og:title" content="Recurrent Neural Network (1)" />
+    <meta property="og:description" content="Recurrent Neural Network Intro RNN은 순차적인 자료를 처리하는 신경망의 한 종류로서 sequence를 처리하는데 특화되어 있다. 출력의 각 성분은 출력의 이전 성분의 함수이다. 출력의 각 성분은 이전 성분에 적용한 것과 동일한 규칙에 따라 산출되며, 점화식과 같은 방식이 된다. 계산 그래프 펼치기 다음과 같은 Dynamic ststem을 생각해보면, $s^{t} = f(s^{s+1};\theta)$ 여기서 $s^{t}$를" />
     <meta property="og:url" content="https://ilvnax24er.github.io/RNN" />
     <meta property="og:image" content="https://ilvnax24er.github.io/assets/built/images/deeplearning-cover.jpg" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2021-07-01T00:00:00+09:00" />
-    <meta property="article:modified_time" content="2021-07-01T00:00:00+09:00" />
+    <meta property="article:published_time" content="2021-07-09T00:00:00+09:00" />
+    <meta property="article:modified_time" content="2021-07-09T00:00:00+09:00" />
     <meta property="article:tag" content="Deeplearning" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Recurrent Neural Network" />
-    <meta name="twitter:description" content="Recurrent Neural Network
-
-Intro
-
-
-  참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, 『심층학습』, Jpub(2018), p368-408
-
-" />
+    <meta name="twitter:title" content="Recurrent Neural Network (1)" />
+    <meta name="twitter:description" content="Recurrent Neural Network Intro RNN은 순차적인 자료를 처리하는 신경망의 한 종류로서 sequence를 처리하는데 특화되어 있다. 출력의 각 성분은 출력의 이전 성분의 함수이다. 출력의 각 성분은 이전 성분에 적용한 것과 동일한 규칙에 따라 산출되며, 점화식과 같은 방식이 된다. 계산 그래프 펼치기 다음과 같은 Dynamic ststem을 생각해보면, $s^{t} = f(s^{s+1};\theta)$ 여기서 $s^{t}$를" />
     <meta name="twitter:url" content="https://ilvnax24er.github.io/" />
     <meta name="twitter:image" content="https://ilvnax24er.github.io/assets/built/images/deeplearning-cover.jpg" />
     <meta name="twitter:label1" content="Written by" />
@@ -129,14 +115,7 @@ Intro
         "@type": "WebPage",
         "@id": "https://ilvnax24er.github.io/RNN"
     },
-    "description": "Recurrent Neural Network
-
-Intro
-
-
-  참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, 『심층학습』, Jpub(2018), p368-408
-
-"
+    "description": "Recurrent Neural Network Intro RNN은 순차적인 자료를 처리하는 신경망의 한 종류로서 sequence를 처리하는데 특화되어 있다. 출력의 각 성분은 출력의 이전 성분의 함수이다. 출력의 각 성분은 이전 성분에 적용한 것과 동일한 규칙에 따라 산출되며, 점화식과 같은 방식이 된다. 계산 그래프 펼치기 다음과 같은 Dynamic ststem을 생각해보면, $s^{t} = f(s^{s+1};\theta)$ 여기서 $s^{t}$를"
 }
     </script>
 
@@ -149,7 +128,7 @@ Intro
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="Recurrent Neural Network" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Recurrent Neural Network (1)" href="/feed.xml" />
 
 
 </head>
@@ -178,6 +157,7 @@ into the {body} of the default.hbs template -->
     <li class="nav-pytorch" role="menuitem"><a href="/tag/pytorch/">pytorch</a></li>
     <li class="nav-deeplearning" role="menuitem"><a href="/tag/deeplearning/">deeplearning</a></li>
     <li class="nav-reinforcement" role="menuitem"><a href="/tag/reinforcement/">reinforcement</a></li>
+    <li class="nav-timeseries" role="menuitem"><a href="/tag/timeseries/">timeseries</a></li>
     <li class="nav-archive" role="menuitem">
     <a href="/archive.html">All Posts</a>
     </li>
@@ -211,7 +191,7 @@ into the {body} of the default.hbs template -->
 
             <header class="post-full-header">
                 <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime=" 1 July 2021"> 1 July 2021</time>
+                    <time class="post-full-meta-date" datetime=" 9 July 2021"> 9 July 2021</time>
                     
                         <span class="date-divider">/</span>
                         
@@ -221,7 +201,7 @@ into the {body} of the default.hbs template -->
                         
                     
                 </section>
-                <h1 class="post-full-title">Recurrent Neural Network</h1>
+                <h1 class="post-full-title">Recurrent Neural Network (1)</h1>
             </header>
 
             <!-- cover on/off
@@ -239,8 +219,52 @@ into the {body} of the default.hbs template -->
 
 <h3 id="intro">Intro</h3>
 
+<p>RNN은 순차적인 자료를 처리하는 신경망의 한 종류로서 sequence를 처리하는데 특화되어 있다. 출력의 각 성분은 출력의 이전 성분의 함수이다. 출력의 각 성분은 이전 성분에 적용한 것과 동일한 규칙에 따라 산출되며, 점화식과 같은 방식이 된다.</p>
+
+<h3 id="계산-그래프-펼치기">계산 그래프 펼치기</h3>
+
+<p>다음과 같은 Dynamic ststem을 생각해보면,</p>
+
+<center>$s^{t} = f(s^{s+1};\theta)$</center>
+
+<p>여기서 $s^{t}$를 계의 상태(state)라고 부른다. 시간 $t$에서 상태 $s$의 정의가 시간 $t-1$에서의 동일한 정의를 참조한다. 즉 재귀적으로 정의되고, 이런 형태를 점화식(recurrenec formula)라고 부른다.</p>
+
+<p>시간 단계의 수 $\tau$가 유한한 경우에는 이 정의를 $\tau -1$번 적용해서 그래프를 펼칠 수 있다.</p>
+
+<center>$s^{(3)} = f(s^{(2)}; \theta) = f(f(s^{(1)};\theta);\theta)$</center>
+
+<p>이런식으로 공식을 펼치면 순환관계가 없는 수식이 나온다. 이러한 수식은 유향 비순환 그래프로 표현할 수 있다.</p>
+
+<center>$h^{(t)} = f(h^{(t-1), x^{t}; \theta})$</center>
+
+<p>위 식은 순환 신경망의 은닉단위를 정의하는 공식이다.  순환 신경망을 훈련할 때, $h^{t}$를 일종의 손실 있는 과거 요약 함수, 즉 $t$까지의 지나간 입력 순차열을 요약하는 함수로서 활용할때가 많다. 이러한 요약함수는 시간 $t$까지의 입력 순차열의 모든 정보를 저장할 필요 없이 예측에 충분한 정보만 저장하면 된다.</p>
+
+<p>위 식을 $t$단계로 펼쳐진 점화식 $g^{(t)}$로 표현하면,</p>
+
+<center>$h^{(t)} = g^{(t)}(x^{(t)},x^{(t-1)},x^{(t-2)}, \dots , x^{(2)}, x^{(1)}) = f(h^{(t-1)}, x^{(t)};\theta)$</center>
+
+<p>이러한 펼치기 과정은 두가지 장점을 제공한다. 첫번째는 학습된 모형은 길이가 가변적인 상태가 아니라 한 상태에서 다른 상태로의 전이를 명시하므로, 그 입력 크기는 순차열의 길이와는 무관하게 항상 동일하다. 두번째로, 모든 시간 단계에서 <strong>동일한</strong> 전이 함수 $f$를 동일한 매개변수들과 함께 적용하는것이 가능하다.</p>
+
+<h3 id="재귀-신경망">재귀 신경망</h3>
+
+<p>Recursive Neural Network는 순환 신경망의 또 다른 일반화에 해당한다. RNN의 계산 그래프는 사슬 형태이지만 재귀 신경망의 계산 그래프는 깊은 트리 형태이다. 재귀 신경망의 한가지 장점은, 순차열의 길이가 $\tau$라고 할 때 순환 신경망의 깊이는 $\tau$이지만 재귀 신경망의 깊이는 $O(log\tau)$밖에 되지 않는다. 이 장점은 장기 의존관계를 다루는데 도움이 될 수 있다.</p>
+
+<h4 id="장기-의존성">장기 의존성</h4>
+
+<p>장기 의존성(long-term dependency)의 학습에서 나타나는 문제는 여러 단계에 걸쳐 전파되는 기울기들이 소멸하거나 폭발하는 경향이 이다는 것이다. 대부분 소멸이 발생하고, 폭발은 드물게 일어나지만 최적화에 미치는 악영향이 훨씬 크다. 매개변수들이 적당해서 순환 신경망이 안정적이라고 가정하는 경우에도, 단기 상호작용들에 주어지는 가중치들보다 지수적으로 작은 가중치들이 장기 상호작용들에 주어진다면 장기 의존성과 관련된 어려움이 발생할 수 있다.</p>
+
+<p>순환 신경망은 같은 함수를 시간 단계당 한번씩 여러 번 합성한다. 이런 다수의 합성 때문에 신경망이 극도로 비선형적인 방식으로 행동할 수 있다. 특히, 순환 신경망이 사용하는 함수 합성은 행렬 곱셈과 다소 비슷하다. 점화식</p>
+
+<center>$h^{(t)} = W^{T}h^{(t-1)}$</center>
+
+<p>을 비선형 활성화 함수가 없고 입력 $x$도 없는 아주 단순한 순환 신경망으로 간주할 수 있다.</p>
+
+<p>고윳값들이 $t$를 지수로 해서 거듭제곱되므로, 크기가 1보다 작은 고윳값은 0으로 소멸하고 크기가 1보다 큰 고윳값은 폭발한다. 결괒거으로, $h^{(0)}$의 성분 중 가장 큰 고유벡터와 방향이 맞지 않는 모든 성분은 결국 폐기된다.</p>
+
+<p>###</p>
+
 <blockquote>
-  <p>참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, <strong>『</strong>심층학습<strong>』</strong>, Jpub(2018), p368-408</p>
+  <p>참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, <strong>『</strong>심층학습<strong>』</strong>, Jpub(2018), p411-443</p>
 </blockquote>
 
                 </div>
@@ -331,6 +355,21 @@ into the {body} of the default.hbs template -->
                                   
                                 
                                   
+                                    
+                                        
+                                        
+                                            <li><a href="/back-propagation">심층학습-Deep Feedforward Neural Network(5)</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                
+                                  
                                 
                                   
                                 
@@ -353,10 +392,6 @@ into the {body} of the default.hbs template -->
                                 
                                   
                                     
-                                  
-                                
-                                  
-                                    
                                         
                                         
                                             <li><a href="/deeplearning-hiddenunit">심층학습-Deep Feedforward Neural Network(3)</a></li>
@@ -368,8 +403,6 @@ into the {body} of the default.hbs template -->
                                     
                                         
                                         
-                                            <li><a href="/CNN">Convolutional Neural Network</a></li>
-                                        
                                     
                                   
                                 
@@ -387,6 +420,22 @@ into the {body} of the default.hbs template -->
                                         
                                         
                                     
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
                                   
                                 
                             </ul>
@@ -394,7 +443,7 @@ into the {body} of the default.hbs template -->
                         <footer class="read-next-card-footer">
                             <a href="/tag/deeplearning/">
                                 
-                                    See all 5 posts  →
+                                    See all 6 posts  →
                                 
                             </a>
                         </footer>
@@ -408,26 +457,80 @@ into the {body} of the default.hbs template -->
 
     <article class="post-card post-template">
         
-            <a class="post-card-image-link" href="/CNN-MNIST">
-                <div class="post-card-image" style="background-image: url(/assets/built/images/pytorch-white.png)"></div>
+            <a class="post-card-image-link" href="/back-propagation">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/deeplearning-book.jpg)"></div>
             </a>
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/CNN-MNIST">
+            <a class="post-card-content-link" href="/back-propagation">
                 <header class="post-card-header">
                     
                         
                             
-                                <span class="post-card-tags">Pytorch</span>
+                                <span class="post-card-tags">Deeplearning</span>
                             
                         
                     
 
-                    <h2 class="post-card-title">pytorch - MNIST</h2>
+                    <h2 class="post-card-title">심층학습-Deep Feedforward Neural Network(5)</h2>
                 </header>
                 <section class="post-card-excerpt">
                     
-                        <p>MNIST
+                        <p>Back Propagation
+
+</p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/ilvnax24er/">ilvnax24er</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      2 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/DeepQLearning">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/reinforce-book-cover.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/DeepQLearning">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Reinforcement</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Reinforcement Learning - Deep Q-Learning</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p>Deep Q-Learning
 
 </p>
                     
@@ -456,60 +559,6 @@ into the {body} of the default.hbs template -->
 
             
 
-            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
-            
-                
-
-    <article class="post-card post-template">
-        
-            <a class="post-card-image-link" href="/deeplearning-hiddenunit">
-                <div class="post-card-image" style="background-image: url(/assets/built/images/deeplearning-book.jpg)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/deeplearning-hiddenunit">
-                <header class="post-card-header">
-                    
-                        
-                            
-                                <span class="post-card-tags">Deeplearning</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">심층학습-Deep Feedforward Neural Network(3)</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    
-                        <p>Hidden Unit
-
-</p>
-                    
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/ilvnax24er/">ilvnax24er</a>
-                        </span>
-                    
-                
-                <span class="reading-time">
-                    
-                    
-                      1 min read
-                    
-                </span>
-            </footer>
-        </div>
-    </article>
-
-            
-
         </div>
     </div>
 </aside>
@@ -523,13 +572,13 @@ into the {body} of the default.hbs template -->
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">Recurrent Neural Network</div>
+    <div class="floating-header-title">Recurrent Neural Network (1)</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Recurrent+Neural+Network&amp;url=https://ilvnax24er.github.io/RNN"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Recurrent+Neural+Network+%281%29&amp;url=https://ilvnax24er.github.io/RNN"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
