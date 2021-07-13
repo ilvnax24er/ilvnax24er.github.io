@@ -8,7 +8,7 @@
     
       
       <item>
-        <title>Reinforcement Learning - Intro</title>
+        <title>Reinforcement Learning - Deep Q-Learning</title>
         
           <description>&lt;h1 id=&quot;deep-q-learning---minimize-cost-of-air-conditioning&quot;&gt;Deep Q-Learning - Minimize Cost of Air Conditioning&lt;/h1&gt;
 
@@ -18,6 +18,21 @@
         <link>
         https://ilvnax24er.github.io/minimize-cost</link>
         <guid isPermaLink="true">https://ilvnax24er.github.io/minimize-cost</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Deep Learning from Scratch - Perceptron</title>
+        
+          <description>&lt;h1 id=&quot;perceptron&quot;&gt;Perceptron&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Mon, 12 Jul 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/perceptron</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/perceptron</guid>
       </item>
       
     
