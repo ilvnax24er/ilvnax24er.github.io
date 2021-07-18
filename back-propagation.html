@@ -78,8 +78,8 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     <meta property="og:image" content="https://ilvnax24er.github.io/assets/built/images/deeplearning-book.jpg" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2021-07-10T00:00:00+09:00" />
-    <meta property="article:modified_time" content="2021-07-10T00:00:00+09:00" />
+    <meta property="article:published_time" content="2021-07-15T00:00:00+09:00" />
+    <meta property="article:modified_time" content="2021-07-15T00:00:00+09:00" />
     <meta property="article:tag" content="Deeplearning" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="심층학습-Deep Feedforward Neural Network(5)" />
@@ -154,10 +154,11 @@ into the {body} of the default.hbs template -->
             <ul class="nav" role="menu">
     <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
     <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
-    <li class="nav-pytorch" role="menuitem"><a href="/tag/pytorch/">pytorch</a></li>
     <li class="nav-deeplearning" role="menuitem"><a href="/tag/deeplearning/">deeplearning</a></li>
+    <li class="nav-pytorch" role="menuitem"><a href="/tag/pytorch/">pytorch</a></li>
     <li class="nav-reinforcement" role="menuitem"><a href="/tag/reinforcement/">reinforcement</a></li>
     <li class="nav-timeseries" role="menuitem"><a href="/tag/timeseries/">timeseries</a></li>
+    <li class="nav-exercise" role="menuitem"><a href="/tag/exercise/">exercise</a></li>
     <li class="nav-archive" role="menuitem">
     <a href="/archive.html">All Posts</a>
     </li>
@@ -191,7 +192,7 @@ into the {body} of the default.hbs template -->
 
             <header class="post-full-header">
                 <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime="10 July 2021">10 July 2021</time>
+                    <time class="post-full-meta-date" datetime="15 July 2021">15 July 2021</time>
                     
                         <span class="date-divider">/</span>
                         
@@ -273,8 +274,12 @@ $Y = g(X)$이고 $z = f(X)$라 할때 다음이 성립한다.</p>
 
 <center>$\frac {\partial u^{(n)}}{\partial u^{(j)}} = \sum_{i : j \in pa(u^{(i)})} \frac {\partial u^{(n)}}{\partial u^{(i)}} \frac {\partial u^{(i)}}{\partial u^{(j)}}$</center>
 
+<h4 id="일반-역전파-알고리즘">일반 역전파 알고리즘</h4>
+
+<p>어떤 스칼라 $z$의 조상들$(x)$ 중 하나에 대한 기울기를 계산하는 과정을 살펴보면, 알고리즘은 우선 $z$의 자신에 대한 기울기인 $\frac{dz}{dz} = 1$로 시작한다. 그 후 그래프에서 $z$의 각 부모에 대한 기울기를 계산한다. 이 계산은 현재의 기울기에 $z$를 산출한 연산의 야코비 행렬을 곱해 나가다가, $x$에 도달하면 멈춘다. $z$에서 시작해서 도달한 역방향 경로가 둘 이상인 노드에 대해서는, 그 노드로 이어진 기울기들을 모두 합한 결과를 그 노드의 최종 기울기로 사용한다.</p>
+
 <blockquote>
-  <p>참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, <strong>『</strong>심층학습<strong>』</strong>, Jpub(2018), p225-235</p>
+  <p>참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, <strong>『</strong>심층학습<strong>』</strong>, Jpub(2018), p225-240</p>
 </blockquote>
 
                 </div>
@@ -363,6 +368,10 @@ $Y = g(X)$이고 $z = f(X)$라 할때 다음이 성립한다.</p>
                                 
                                 
                                   
+                                    
+                                  
+                                
+                                  
                                 
                                   
                                     
@@ -370,10 +379,6 @@ $Y = g(X)$이고 $z = f(X)$라 할때 다음이 성립한다.</p>
                                         
                                             <li><a href="/perceptron">Deep Learning from Scratch - Perceptron</a></li>
                                         
-                                    
-                                  
-                                
-                                  
                                     
                                   
                                 
@@ -455,6 +460,22 @@ $Y = g(X)$이고 $z = f(X)$라 할때 다음이 성립한다.</p>
                                 
                                   
                                 
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
                             </ul>
                         </div>
                         <footer class="read-next-card-footer">
@@ -470,57 +491,6 @@ $Y = g(X)$이고 $z = f(X)$라 할때 다음이 성립한다.</p>
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
             
-                
-
-    <article class="post-card post-template">
-        
-            <a class="post-card-image-link" href="/perceptron">
-                <div class="post-card-image" style="background-image: url(/assets/built/images/scratch-cover.png)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/perceptron">
-                <header class="post-card-header">
-                    
-                        
-                            
-                                <span class="post-card-tags">Deeplearning</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">Deep Learning from Scratch - Perceptron</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    
-                        <p>Perceptron
-
-</p>
-                    
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/ilvnax24er/">ilvnax24er</a>
-                        </span>
-                    
-                
-                <span class="reading-time">
-                    
-                    
-                      1 min read
-                    
-                </span>
-            </footer>
-        </div>
-    </article>
-
-            
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
             
@@ -528,26 +498,26 @@ $Y = g(X)$이고 $z = f(X)$라 할때 다음이 성립한다.</p>
 
     <article class="post-card post-template">
         
-            <a class="post-card-image-link" href="/RNN">
-                <div class="post-card-image" style="background-image: url(/assets/built/images/deeplearning-cover.jpg)"></div>
+            <a class="post-card-image-link" href="/minimize-cost">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/reinforce-book-cover.jpg)"></div>
             </a>
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/RNN">
+            <a class="post-card-content-link" href="/minimize-cost">
                 <header class="post-card-header">
                     
                         
                             
-                                <span class="post-card-tags">Deeplearning</span>
+                                <span class="post-card-tags">Reinforcement</span>
                             
                         
                     
 
-                    <h2 class="post-card-title">Recurrent Neural Network (1)</h2>
+                    <h2 class="post-card-title">Reinforcement Learning - Deep Q-Learning</h2>
                 </header>
                 <section class="post-card-excerpt">
                     
-                        <p>Recurrent Neural Network
+                        <p>Deep Q-Learning - Minimize Cost of Air Conditioning
 
 </p>
                     

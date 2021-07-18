@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://ilvnax24er.github.io/tag/deeplearning/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" />
-  <updated>2021-07-13T15:13:59+09:00</updated>
+  <updated>2021-07-18T12:08:15+09:00</updated>
   <id>https://ilvnax24er.github.io/tag/deeplearning/feed.xml</id>
 
   
@@ -30,6 +30,104 @@
   
   
 
+  
+    <entry>
+      <title type="html">심층학습-Deep Feedforward Neural Network(5)</title>
+      <link href="https://ilvnax24er.github.io/back-propagation" rel="alternate" type="text/html" title="심층학습-Deep Feedforward Neural Network(5)" />
+      <published>2021-07-15T00:00:00+09:00</published>
+      <updated>2021-07-15T00:00:00+09:00</updated>
+      <id>https://ilvnax24er.github.io/back-propagation</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/back-propagation">&lt;h2 id=&quot;back-propagation&quot;&gt;Back Propagation&lt;/h2&gt;
+
+&lt;p&gt;입력 $x$를 받아서 출력 $\hat{y}$를 산출하는 순방향 신경망에서 정보는 신경망을 따라 앞으로 흘러간다. 입력 $x$는 초기 정보에 해당하고, 그 초기 정보는 각 층의 은닉단위들로 전파되어서 결국 출력층에 도달하며, 거기서 최종적으로 $\hat{y}$가 출력된다. 이러한 전파 과정을 순방향 전파라고 부른다.&lt;/p&gt;
+
+&lt;p&gt;훈련과정에서 이러한 순전파를 반복해서 하나의 스칼라 비용 $J(\theta)$를 얻는다. 한편, 역방향 전파 알고리즘은 그러한 비용에서 나온 정보를 신경망을 따라 거꾸로 흐르게 해서 기울기를 계산한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;$f$의 기울기 $\nabla_{x}f(x,y)$&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;여기서 $x$는 우리가 그 미분들을 구하고자 하는 변수들의 집합이고 $y$는 함수의 입력들이긴 하지만 미분들을 구할 필요는 없는 변수들의 집합이다. 학습 알고리즘에 가장 요구되는 기울기는 비용함수의 매개변수들에 대한 기울기 $\nabla_{\theta}J(\theta)$이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;계산-그래프&quot;&gt;계산 그래프&lt;/h4&gt;
+
+&lt;p&gt;역전파 알고리즘을 정확하게 설명하려면 엄밀한 computational graph 언어가 필요하다. 그래프를 공식화하려면 연산(operation)이라는 개념도 도입해야한다. 연산이란 하나 이상의 변수들의 함수이다. 변수 $x$에 어떤 연산을 적용해서 변수 $y$를 계산한다고 할 때, 그래프에서는 이를 $x$에서 $y$로의 유향간선으로 표시한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;미분의-연쇄법칙&quot;&gt;미분의 연쇄법칙&lt;/h4&gt;
+
+&lt;p&gt;도함수가 알려진 여러 함수를 결합해서 만든 함수의 미분을 계산하는 데 쓰인다. 역전파는 그러한 연쇄법칙을 고도로 효율적인 특정한 연산 순서로 계산하는 알고리즘이다.&lt;/p&gt;
+
+&lt;p&gt;$x$가 하나의 실수이고 $f$와 $g$가 실수를 실수로 사상하는 함수들이라고 하자. $y=g(x)$이고 $z=f(g(x)) = f(x)$라고 하면, 연쇄법칙에 의해 다음이 성립한다.&lt;/p&gt;
+
+&lt;center&gt;$\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dz}$&lt;/center&gt;
+
+&lt;p&gt;이를 스칼라가 아닌 복합적인 값들로 일반화 할 수 있다. $x \in R^{m}, y \in R^{n}$이고 $g$가 $R^{m}$에서 $R^{n}$으로의 사상이라고 하자. 그리고 $f$는 $R^{n}$을 $R$로 사상한다고 하자. $y=g(x)$이고 $z=f(y)$라고 할 때 다음이 성립한다.&lt;/p&gt;
+
+&lt;center&gt;$\frac{\partial z}{\partial x_{i}} = \sum_{j} \frac{\partial z}{\partial y_{j}} \frac{\partial y_{j}}{\partial x_{i}}$&lt;/center&gt;
+
+&lt;p&gt;이를 벡터 표기법으로 표현하면 다음과 같다.&lt;/p&gt;
+
+&lt;center&gt;$\nabla_{x} z = (\frac{\partial y}{\partial x})^{T} \nabla_{y}z$&lt;/center&gt;
+
+&lt;p&gt;여기서 $\frac{\partial y}{\partial x}$는 $g$의 $n \times m$ Jacobian matrix이다.&lt;/p&gt;
+
+&lt;p&gt;위의 공식들에서, 변수 $x$의 기울기는 야코비 행렬 $\frac{\partial y}{\partial x}$에 기울기 벡터 $\nabla_{y} z$를 곱해서 구할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;이를 임의의 차원의 텐서엥 적용하면, 각 텐서를 벡터 형태로 평평하게 펼친 후 벡터 값 기울기를 계산하고 그것을 다시 텐서 형태로 재조립한다. 이러한 재배치 접근 방식에서 역전파 알고리즘은 여전히 야코비 행렬을 기울기 벡터에 곱한다.&lt;/p&gt;
+
+&lt;p&gt;값 $z$의 텐서 $X$에 대한 기울기를, $X$를 벡터처럼 취급하여 $\nabla_{X}z$로 표기한다. 그러나 벡터의 경우와는 달리 $X$의 아래첨자에는 좌표성분이 여러개 있다. 색인 튜플 전체를 하나의 변수 $i$로 표기하면, 모든 가능한 튜플 $i$에 대해, $(\nabla_{X}z)_{i}$는 
+$\frac {\partial z}{\partial x{i}}$를 뜻한다. 이것을 연쇄법칙으로 표현하면,
+$Y = g(X)$이고 $z = f(X)$라 할때 다음이 성립한다.&lt;/p&gt;
+
+&lt;center&gt;$\nabla_{X}z = \sum_{j}(\nabla_{X}Y_{j}) \frac{\partial z}{\partial Y_{j}}$&lt;/center&gt;
+
+&lt;h4 id=&quot;연쇄법칙을-재귀적으로-적용해서-역전파-구하기&quot;&gt;연쇄법칙을 재귀적으로 적용해서 역전파 구하기&lt;/h4&gt;
+
+&lt;p&gt;기울기에 대한 전체 수식 안에 다수의 부분식이 여러번 되풀이될 수 있다. 기울기를 계산하는 절차를 설계할 때는 그러한 부분식들의 결과를 저장할 것인지 아니면 매번 다시 계산할 것인지 결정해야한다. 복잡한 그래프에서는 반복 계산 사례가 지수적으로 증가해서 연쇄법칙을 적용하기가 불가능할 수도 있다.&lt;/p&gt;
+
+&lt;p&gt;우선 하나의 스칼라 $u^{(n)}$을 계산하는 방법을 서술하는 그래프를 살펴보자. 알고리즘의 목표는 이 스칼라의 $u^{(1)}$에서 $u^{(n_{i})}$까지의 $n_{i}$개의 입력 노드들에 대한 기울기를 구하는 것이다. 즉 모든 $i \in {1,2,\dots , n_{i}}$에 대해 $\frac {\partial u^{(n)}}{\partial u^{(i)}}$를 계산하고자 한다.&lt;/p&gt;
+
+&lt;p&gt;그래프의 노드들이 $u^{(n_{i} + 1)}$에서 $u^{(n)}$으로 거슬러 올라가는 순서로 출력을 계산하는 형태라고 가정한다. 각 노드 $u^{(i)}$에는 하나의 연산 $f^{i}$가 ㅜㅂ여되어 있다. 각 노드는 다음을 계산한다.&lt;/p&gt;
+
+&lt;center&gt;$u^{(i)} = f(A^{(i)})$&lt;/center&gt;
+
+&lt;p&gt;순전파 계산들을 명시하는 계산 그래프가 $\zeta$라고 하자. 역전파를 수행할 때는, 그 $\zeta$에 의존하되 또 다른 노드들이 추가된 하나의 계산 그래프를 구축한다. $\zeta$의 노드당 하나의 추가 노드로 이루어진 부분 그래프를 $B$라고하면, $B$의 계산은 $\zeta$의 계산과 정확히 반대 순서로 진행되며, $B$의 각 노드는 순방향 그래프 노드 $u^{(i)}$와 연관된 미분 $\frac {\partial u^{(n)}}{\partial u^{(i)}}$를 계산한다. 이러한 모든 계산은 미분의 연쇄법칙을 따른다.&lt;/p&gt;
+
+&lt;center&gt;$\frac {\partial u^{(n)}}{\partial u^{(j)}} = \sum_{i : j \in pa(u^{(i)})} \frac {\partial u^{(n)}}{\partial u^{(i)}} \frac {\partial u^{(i)}}{\partial u^{(j)}}$&lt;/center&gt;
+
+&lt;h4 id=&quot;일반-역전파-알고리즘&quot;&gt;일반 역전파 알고리즘&lt;/h4&gt;
+
+&lt;p&gt;어떤 스칼라 $z$의 조상들$(x)$ 중 하나에 대한 기울기를 계산하는 과정을 살펴보면, 알고리즘은 우선 $z$의 자신에 대한 기울기인 $\frac{dz}{dz} = 1$로 시작한다. 그 후 그래프에서 $z$의 각 부모에 대한 기울기를 계산한다. 이 계산은 현재의 기울기에 $z$를 산출한 연산의 야코비 행렬을 곱해 나가다가, $x$에 도달하면 멈춘다. $z$에서 시작해서 도달한 역방향 경로가 둘 이상인 노드에 대해서는, 그 노드로 이어진 기울기들을 모두 합한 결과를 그 노드의 최종 기울기로 사용한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p225-240&lt;/p&gt;
+&lt;/blockquote&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>ilvnax24er</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="deeplearning" />
+      
+
+      
+        <summary type="html">Back Propagation</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Deep Learning from Scratch - Perceptron</title>
@@ -178,100 +276,6 @@ x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다.
 
       
         <summary type="html">Perceptron</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">심층학습-Deep Feedforward Neural Network(5)</title>
-      <link href="https://ilvnax24er.github.io/back-propagation" rel="alternate" type="text/html" title="심층학습-Deep Feedforward Neural Network(5)" />
-      <published>2021-07-10T00:00:00+09:00</published>
-      <updated>2021-07-10T00:00:00+09:00</updated>
-      <id>https://ilvnax24er.github.io/back-propagation</id>
-      <content type="html" xml:base="https://ilvnax24er.github.io/back-propagation">&lt;h2 id=&quot;back-propagation&quot;&gt;Back Propagation&lt;/h2&gt;
-
-&lt;p&gt;입력 $x$를 받아서 출력 $\hat{y}$를 산출하는 순방향 신경망에서 정보는 신경망을 따라 앞으로 흘러간다. 입력 $x$는 초기 정보에 해당하고, 그 초기 정보는 각 층의 은닉단위들로 전파되어서 결국 출력층에 도달하며, 거기서 최종적으로 $\hat{y}$가 출력된다. 이러한 전파 과정을 순방향 전파라고 부른다.&lt;/p&gt;
-
-&lt;p&gt;훈련과정에서 이러한 순전파를 반복해서 하나의 스칼라 비용 $J(\theta)$를 얻는다. 한편, 역방향 전파 알고리즘은 그러한 비용에서 나온 정보를 신경망을 따라 거꾸로 흐르게 해서 기울기를 계산한다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;$f$의 기울기 $\nabla_{x}f(x,y)$&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;여기서 $x$는 우리가 그 미분들을 구하고자 하는 변수들의 집합이고 $y$는 함수의 입력들이긴 하지만 미분들을 구할 필요는 없는 변수들의 집합이다. 학습 알고리즘에 가장 요구되는 기울기는 비용함수의 매개변수들에 대한 기울기 $\nabla_{\theta}J(\theta)$이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;계산-그래프&quot;&gt;계산 그래프&lt;/h4&gt;
-
-&lt;p&gt;역전파 알고리즘을 정확하게 설명하려면 엄밀한 computational graph 언어가 필요하다. 그래프를 공식화하려면 연산(operation)이라는 개념도 도입해야한다. 연산이란 하나 이상의 변수들의 함수이다. 변수 $x$에 어떤 연산을 적용해서 변수 $y$를 계산한다고 할 때, 그래프에서는 이를 $x$에서 $y$로의 유향간선으로 표시한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;미분의-연쇄법칙&quot;&gt;미분의 연쇄법칙&lt;/h4&gt;
-
-&lt;p&gt;도함수가 알려진 여러 함수를 결합해서 만든 함수의 미분을 계산하는 데 쓰인다. 역전파는 그러한 연쇄법칙을 고도로 효율적인 특정한 연산 순서로 계산하는 알고리즘이다.&lt;/p&gt;
-
-&lt;p&gt;$x$가 하나의 실수이고 $f$와 $g$가 실수를 실수로 사상하는 함수들이라고 하자. $y=g(x)$이고 $z=f(g(x)) = f(x)$라고 하면, 연쇄법칙에 의해 다음이 성립한다.&lt;/p&gt;
-
-&lt;center&gt;$\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dz}$&lt;/center&gt;
-
-&lt;p&gt;이를 스칼라가 아닌 복합적인 값들로 일반화 할 수 있다. $x \in R^{m}, y \in R^{n}$이고 $g$가 $R^{m}$에서 $R^{n}$으로의 사상이라고 하자. 그리고 $f$는 $R^{n}$을 $R$로 사상한다고 하자. $y=g(x)$이고 $z=f(y)$라고 할 때 다음이 성립한다.&lt;/p&gt;
-
-&lt;center&gt;$\frac{\partial z}{\partial x_{i}} = \sum_{j} \frac{\partial z}{\partial y_{j}} \frac{\partial y_{j}}{\partial x_{i}}$&lt;/center&gt;
-
-&lt;p&gt;이를 벡터 표기법으로 표현하면 다음과 같다.&lt;/p&gt;
-
-&lt;center&gt;$\nabla_{x} z = (\frac{\partial y}{\partial x})^{T} \nabla_{y}z$&lt;/center&gt;
-
-&lt;p&gt;여기서 $\frac{\partial y}{\partial x}$는 $g$의 $n \times m$ Jacobian matrix이다.&lt;/p&gt;
-
-&lt;p&gt;위의 공식들에서, 변수 $x$의 기울기는 야코비 행렬 $\frac{\partial y}{\partial x}$에 기울기 벡터 $\nabla_{y} z$를 곱해서 구할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;이를 임의의 차원의 텐서엥 적용하면, 각 텐서를 벡터 형태로 평평하게 펼친 후 벡터 값 기울기를 계산하고 그것을 다시 텐서 형태로 재조립한다. 이러한 재배치 접근 방식에서 역전파 알고리즘은 여전히 야코비 행렬을 기울기 벡터에 곱한다.&lt;/p&gt;
-
-&lt;p&gt;값 $z$의 텐서 $X$에 대한 기울기를, $X$를 벡터처럼 취급하여 $\nabla_{X}z$로 표기한다. 그러나 벡터의 경우와는 달리 $X$의 아래첨자에는 좌표성분이 여러개 있다. 색인 튜플 전체를 하나의 변수 $i$로 표기하면, 모든 가능한 튜플 $i$에 대해, $(\nabla_{X}z)_{i}$는 
-$\frac {\partial z}{\partial x{i}}$를 뜻한다. 이것을 연쇄법칙으로 표현하면,
-$Y = g(X)$이고 $z = f(X)$라 할때 다음이 성립한다.&lt;/p&gt;
-
-&lt;center&gt;$\nabla_{X}z = \sum_{j}(\nabla_{X}Y_{j}) \frac{\partial z}{\partial Y_{j}}$&lt;/center&gt;
-
-&lt;h4 id=&quot;연쇄법칙을-재귀적으로-적용해서-역전파-구하기&quot;&gt;연쇄법칙을 재귀적으로 적용해서 역전파 구하기&lt;/h4&gt;
-
-&lt;p&gt;기울기에 대한 전체 수식 안에 다수의 부분식이 여러번 되풀이될 수 있다. 기울기를 계산하는 절차를 설계할 때는 그러한 부분식들의 결과를 저장할 것인지 아니면 매번 다시 계산할 것인지 결정해야한다. 복잡한 그래프에서는 반복 계산 사례가 지수적으로 증가해서 연쇄법칙을 적용하기가 불가능할 수도 있다.&lt;/p&gt;
-
-&lt;p&gt;우선 하나의 스칼라 $u^{(n)}$을 계산하는 방법을 서술하는 그래프를 살펴보자. 알고리즘의 목표는 이 스칼라의 $u^{(1)}$에서 $u^{(n_{i})}$까지의 $n_{i}$개의 입력 노드들에 대한 기울기를 구하는 것이다. 즉 모든 $i \in {1,2,\dots , n_{i}}$에 대해 $\frac {\partial u^{(n)}}{\partial u^{(i)}}$를 계산하고자 한다.&lt;/p&gt;
-
-&lt;p&gt;그래프의 노드들이 $u^{(n_{i} + 1)}$에서 $u^{(n)}$으로 거슬러 올라가는 순서로 출력을 계산하는 형태라고 가정한다. 각 노드 $u^{(i)}$에는 하나의 연산 $f^{i}$가 ㅜㅂ여되어 있다. 각 노드는 다음을 계산한다.&lt;/p&gt;
-
-&lt;center&gt;$u^{(i)} = f(A^{(i)})$&lt;/center&gt;
-
-&lt;p&gt;순전파 계산들을 명시하는 계산 그래프가 $\zeta$라고 하자. 역전파를 수행할 때는, 그 $\zeta$에 의존하되 또 다른 노드들이 추가된 하나의 계산 그래프를 구축한다. $\zeta$의 노드당 하나의 추가 노드로 이루어진 부분 그래프를 $B$라고하면, $B$의 계산은 $\zeta$의 계산과 정확히 반대 순서로 진행되며, $B$의 각 노드는 순방향 그래프 노드 $u^{(i)}$와 연관된 미분 $\frac {\partial u^{(n)}}{\partial u^{(i)}}$를 계산한다. 이러한 모든 계산은 미분의 연쇄법칙을 따른다.&lt;/p&gt;
-
-&lt;center&gt;$\frac {\partial u^{(n)}}{\partial u^{(j)}} = \sum_{i : j \in pa(u^{(i)})} \frac {\partial u^{(n)}}{\partial u^{(i)}} \frac {\partial u^{(i)}}{\partial u^{(j)}}$&lt;/center&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p225-235&lt;/p&gt;
-&lt;/blockquote&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>ilvnax24er</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="deeplearning" />
-      
-
-      
-        <summary type="html">Back Propagation</summary>
       
 
       

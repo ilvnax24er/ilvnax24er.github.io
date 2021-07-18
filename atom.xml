@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>심층학습-Deep Feedforward Neural Network(5)</title>
+        
+          <description>&lt;h2 id=&quot;back-propagation&quot;&gt;Back Propagation&lt;/h2&gt;
+
+</description>
+        
+        <pubDate>Thu, 15 Jul 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/back-propagation</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/back-propagation</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Reinforcement Learning - Deep Q-Learning</title>
         
           <description>&lt;h1 id=&quot;deep-q-learning---minimize-cost-of-air-conditioning&quot;&gt;Deep Q-Learning - Minimize Cost of Air Conditioning&lt;/h1&gt;
@@ -33,21 +48,6 @@
         <link>
         https://ilvnax24er.github.io/perceptron</link>
         <guid isPermaLink="true">https://ilvnax24er.github.io/perceptron</guid>
-      </item>
-      
-    
-      
-      <item>
-        <title>심층학습-Deep Feedforward Neural Network(5)</title>
-        
-          <description>&lt;h2 id=&quot;back-propagation&quot;&gt;Back Propagation&lt;/h2&gt;
-
-</description>
-        
-        <pubDate>Sat, 10 Jul 2021 00:00:00 +0900</pubDate>
-        <link>
-        https://ilvnax24er.github.io/back-propagation</link>
-        <guid isPermaLink="true">https://ilvnax24er.github.io/back-propagation</guid>
       </item>
       
     
@@ -257,6 +257,126 @@
         <link>
         https://ilvnax24er.github.io/deeplearning-tutorial</link>
         <guid isPermaLink="true">https://ilvnax24er.github.io/deeplearning-tutorial</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Denoising Autoencoder</title>
+        
+          <description>&lt;h1 id=&quot;denoising-autoencoder&quot;&gt;Denoising Autoencoder&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Tue, 02 Feb 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/DAE</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/DAE</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Colorization Autoencoder</title>
+        
+          <description>&lt;h1 id=&quot;colorization-autoencoder&quot;&gt;Colorization Autoencoder&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Fri, 29 Jan 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/CAE</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/CAE</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Time Series of Price Anomaly Detection with LSTM</title>
+        
+          <description>&lt;h1 id=&quot;time-series-of-price-anomaly-detection-with-lstm&quot;&gt;Time Series of Price Anomaly Detection with LSTM&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Fri, 22 Jan 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/Time-Series-of-Price-Anomaly-Detection-with-LSTM</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/Time-Series-of-Price-Anomaly-Detection-with-LSTM</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>LSTM Autoencoder for Anomaly Detection</title>
+        
+          <description>&lt;h1 id=&quot;lstm-autoencoder-for-anomaly-detection&quot;&gt;LSTM Autoencoder for Anomaly Detection&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Wed, 20 Jan 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/Anomaly-Detection</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/Anomaly-Detection</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>LSTM Autoencoder</title>
+        
+          <description>&lt;h1 id=&quot;lstm-autoencoder&quot;&gt;LSTM Autoencoder&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Sat, 16 Jan 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/LSTM-Autoencoder</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/LSTM-Autoencoder</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Time Series - Energy Production</title>
+        
+          <description>&lt;h1 id=&quot;energy-production&quot;&gt;Energy Production&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Fri, 15 Jan 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/energy-production</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/energy-production</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Autoencoder</title>
+        
+          <description>&lt;h1 id=&quot;autoencoder&quot;&gt;Autoencoder&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Wed, 13 Jan 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/autoencoder</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/autoencoder</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Time series - Alcohol Sales</title>
+        
+          <description>&lt;h1 id=&quot;alcohol-sales&quot;&gt;Alcohol Sales&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Mon, 11 Jan 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/alcohol-sales</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/alcohol-sales</guid>
       </item>
       
     

@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>Time Series - Energy Production</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+
+    <!-- 수식 -->
+
+    
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$'] ],
+    processEscapes: true,
+  }
+});
+MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
+	  alert("Math Processing Error: "+message[1]);
+	});
+</script>
+<script type="text/javascript" async
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+    
+
+
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="Deeplearning Archive" />
+    <link rel="shortcut icon" href="https://ilvnax24er.github.io/" type="image/png" />
+    <link rel="canonical" href="https://ilvnax24er.github.io/energy-production" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="Archive" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Time Series - Energy Production" />
+    <meta property="og:description" content="Energy Production import pandas as pd import numpy as np import matplotlib.pyplot as plt from pmdarima import auto_arima from statsmodels.tsa.holtwinters import ExponentialSmoothing from sklearn.metrics import mean_squared_error, mean_absolute_error import warnings warnings.filterwarnings('ignore') df = pd.read_csv('./Data/EnergyProduction.csv', index_col='DATE', parse_dates=True) df.plot(); len(df) 240 n_obs = 24 Exponential Smooting train_data = df.iloc[:-n_obs] test_data = df.iloc[-n_obs:] print(train_data.shape," />
+    <meta property="og:url" content="https://ilvnax24er.github.io/energy-production" />
+    <meta property="og:image" content="https://ilvnax24er.github.io/assets/built/images/cover.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2021-01-15T00:00:00+09:00" />
+    <meta property="article:modified_time" content="2021-01-15T00:00:00+09:00" />
+    <meta property="article:tag" content="Exercise" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Time Series - Energy Production" />
+    <meta name="twitter:description" content="Energy Production import pandas as pd import numpy as np import matplotlib.pyplot as plt from pmdarima import auto_arima from statsmodels.tsa.holtwinters import ExponentialSmoothing from sklearn.metrics import mean_squared_error, mean_absolute_error import warnings warnings.filterwarnings('ignore') df = pd.read_csv('./Data/EnergyProduction.csv', index_col='DATE', parse_dates=True) df.plot(); len(df) 240 n_obs = 24 Exponential Smooting train_data = df.iloc[:-n_obs] test_data = df.iloc[-n_obs:] print(train_data.shape," />
+    <meta name="twitter:url" content="https://ilvnax24er.github.io/" />
+    <meta name="twitter:image" content="https://ilvnax24er.github.io/assets/built/images/cover.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Archive" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Exercise" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Archive",
+        "logo": "https://ilvnax24er.github.io/"
+    },
+    "url": "https://ilvnax24er.github.io/energy-production",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://ilvnax24er.github.io/assets/built/images/cover.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ilvnax24er.github.io/energy-production"
+    },
+    "description": "Energy Production import pandas as pd import numpy as np import matplotlib.pyplot as plt from pmdarima import auto_arima from statsmodels.tsa.holtwinters import ExponentialSmoothing from sklearn.metrics import mean_squared_error, mean_absolute_error import warnings warnings.filterwarnings('ignore') df = pd.read_csv('./Data/EnergyProduction.csv', index_col='DATE', parse_dates=True) df.plot(); len(df) 240 n_obs = 24 Exponential Smooting train_data = df.iloc[:-n_obs] test_data = df.iloc[-n_obs:] print(train_data.shape,"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="Time Series - Energy Production" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://ilvnax24er.github.io/">Archive</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
+    <li class="nav-deeplearning" role="menuitem"><a href="/tag/deeplearning/">deeplearning</a></li>
+    <li class="nav-pytorch" role="menuitem"><a href="/tag/pytorch/">pytorch</a></li>
+    <li class="nav-reinforcement" role="menuitem"><a href="/tag/reinforcement/">reinforcement</a></li>
+    <li class="nav-timeseries" role="menuitem"><a href="/tag/timeseries/">timeseries</a></li>
+    <li class="nav-exercise" role="menuitem"><a href="/tag/exercise/">exercise</a></li>
+    <li class="nav-archive" role="menuitem">
+    <a href="/archive.html">All Posts</a>
+    </li>
+    <li class="nav-archive" role="menuitem">
+    <a href="/author_archive.html">Tag별 Posts</a>
+    </li>
+</ul>
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Subscribe</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-exercise post tag-exercise no-image">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="15 January 2021">15 January 2021</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/exercise/'>EXERCISE</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">Time Series - Energy Production</h1>
+            </header>
+
+            <!-- cover on/off
+                        
+            -->
+
+
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <h1 id="energy-production">Energy Production</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="kn">from</span> <span class="nn">pmdarima</span> <span class="kn">import</span> <span class="n">auto_arima</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.holtwinters</span> <span class="kn">import</span> <span class="n">ExponentialSmoothing</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="p">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">'ignore'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'./Data/EnergyProduction.csv'</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">'DATE'</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">plot</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\exercise\EnergyProduction\output_2_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>240
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">n_obs</span> <span class="o">=</span> <span class="mi">24</span>
+</code></pre></div></div>
+
+<h1 id="exponential-smooting">Exponential Smooting</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="n">n_obs</span><span class="p">]</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="n">n_obs</span><span class="p">:]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">train_data</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">test_data</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(216, 1) (24, 1)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'train'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'test'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\exercise\EnergyProduction\output_8_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">exp_smoothing</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">trend</span><span class="p">,</span> <span class="n">seasonal</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">test_data</span><span class="p">):</span>
+    <span class="n">fitted_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="n">seasonal</span><span class="p">,</span>
+                                       <span class="n">seasonal_periods</span><span class="o">=</span><span class="mi">12</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+    <span class="n">test_predictions</span> <span class="o">=</span> <span class="n">fitted_model</span><span class="p">.</span><span class="n">forecast</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'test'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_predictions</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'prediction'</span><span class="p">)</span>
+    
+    <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">test_predictions</span><span class="p">)</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">test_predictions</span><span class="p">)</span>
+    <span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">'mae :'</span><span class="p">,</span> <span class="n">mae</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'mse :'</span><span class="p">,</span> <span class="n">mse</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'rmse :'</span><span class="p">,</span> <span class="n">rmse</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">exp_smoothing</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="s">'mul'</span><span class="p">,</span> <span class="s">'mul'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mae : 2.7145989390490537
+mse : 11.860913777946623
+rmse : 3.443967737646017
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\exercise\EnergyProduction\output_10_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">exp_smoothing</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="s">'add'</span><span class="p">,</span><span class="s">'add'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mae : 2.768300423888428
+mse : 11.775533525016849
+rmse : 3.43154972643802
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\exercise\EnergyProduction\output_11_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">final_model</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s">'add'</span><span class="p">,</span><span class="n">seasonal</span><span class="o">=</span><span class="s">'add'</span><span class="p">,</span>
+                                  <span class="n">seasonal_periods</span><span class="o">=</span><span class="mi">12</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">forecast_prediction</span> <span class="o">=</span> <span class="n">final_model</span><span class="p">.</span><span class="n">forecast</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast_prediction</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\exercise\EnergyProduction\output_14_0.png" alt="png" /></p>
+
+<h1 id="arima">ARIMA</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">adfuller</span>
+<span class="kn">from</span> <span class="nn">pmdarima</span> <span class="kn">import</span> <span class="n">auto_arima</span>
+
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.arima_model</span> <span class="kn">import</span> <span class="n">ARIMA</span><span class="p">,</span> <span class="n">ARIMAResults</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.statespace.sarimax</span> <span class="kn">import</span> <span class="n">SARIMAX</span><span class="p">,</span> <span class="n">SARIMAXResults</span>
+<span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_acf</span><span class="p">,</span> <span class="n">plot_pacf</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.statespace.tools</span> <span class="kn">import</span> <span class="n">diff</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">seasonal_decompose</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tools.eval_measures</span> <span class="kn">import</span> <span class="n">rmse</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span> <span class="o">=</span> <span class="n">seasonal_decompose</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s">'add'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span><span class="p">.</span><span class="n">plot</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\exercise\EnergyProduction\output_18_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">adfuller</span><span class="p">(</span><span class="n">df</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.9830559056338348
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_diff</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">diff</span><span class="p">().</span><span class="n">dropna</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">adfuller</span><span class="p">(</span><span class="n">df_diff</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4.226559012395704e-06
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stepwise_fit</span> <span class="o">=</span> <span class="n">auto_arima</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Performing stepwise search to minimize aic
+ ARIMA(2,0,2)(1,1,1)[12] intercept   : AIC=842.617, Time=1.00 sec
+ ARIMA(0,0,0)(0,1,0)[12] intercept   : AIC=1055.546, Time=0.01 sec
+ ARIMA(1,0,0)(1,1,0)[12] intercept   : AIC=855.182, Time=0.15 sec
+ ARIMA(0,0,1)(0,1,1)[12] intercept   : AIC=909.065, Time=0.11 sec
+ ARIMA(0,0,0)(0,1,0)[12]             : AIC=1134.429, Time=0.01 sec
+ ARIMA(2,0,2)(0,1,1)[12] intercept   : AIC=840.759, Time=0.70 sec
+ ARIMA(2,0,2)(0,1,0)[12] intercept   : AIC=881.557, Time=0.19 sec
+ ARIMA(2,0,2)(0,1,2)[12] intercept   : AIC=842.577, Time=1.42 sec
+ ARIMA(2,0,2)(1,1,0)[12] intercept   : AIC=855.194, Time=0.43 sec
+ ARIMA(2,0,2)(1,1,2)[12] intercept   : AIC=844.166, Time=1.83 sec
+ ARIMA(1,0,2)(0,1,1)[12] intercept   : AIC=841.937, Time=0.28 sec
+ ARIMA(2,0,1)(0,1,1)[12] intercept   : AIC=843.582, Time=0.38 sec
+ ARIMA(3,0,2)(0,1,1)[12] intercept   : AIC=842.514, Time=0.90 sec
+ ARIMA(2,0,3)(0,1,1)[12] intercept   : AIC=842.693, Time=0.94 sec
+ ARIMA(1,0,1)(0,1,1)[12] intercept   : AIC=843.610, Time=0.18 sec
+ ARIMA(1,0,3)(0,1,1)[12] intercept   : AIC=841.805, Time=0.40 sec
+ ARIMA(3,0,1)(0,1,1)[12] intercept   : AIC=840.516, Time=0.75 sec
+ ARIMA(3,0,1)(0,1,0)[12] intercept   : AIC=inf, Time=0.44 sec
+ ARIMA(3,0,1)(1,1,1)[12] intercept   : AIC=842.397, Time=0.96 sec
+ ARIMA(3,0,1)(0,1,2)[12] intercept   : AIC=842.368, Time=1.75 sec
+ ARIMA(3,0,1)(1,1,0)[12] intercept   : AIC=855.891, Time=0.67 sec
+ ARIMA(3,0,1)(1,1,2)[12] intercept   : AIC=inf, Time=1.87 sec
+ ARIMA(3,0,0)(0,1,1)[12] intercept   : AIC=842.621, Time=0.20 sec
+ ARIMA(4,0,1)(0,1,1)[12] intercept   : AIC=842.514, Time=0.89 sec
+ ARIMA(2,0,0)(0,1,1)[12] intercept   : AIC=844.431, Time=0.16 sec
+ ARIMA(4,0,0)(0,1,1)[12] intercept   : AIC=843.014, Time=0.24 sec
+ ARIMA(4,0,2)(0,1,1)[12] intercept   : AIC=843.906, Time=0.78 sec
+ ARIMA(3,0,1)(0,1,1)[12]             : AIC=843.021, Time=0.51 sec
+
+Best model:  ARIMA(3,0,1)(0,1,1)[12] intercept
+Total fit time: 18.180 seconds
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stepwise_fit</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div></div>
+
+<table class="simpletable">
+<caption>SARIMAX Results</caption>
+<tr>
+  <th>Dep. Variable:</th>                  <td>y</td>               <th>  No. Observations:  </th>    <td>240</td>  
+</tr>
+<tr>
+  <th>Model:</th>           <td>SARIMAX(3, 0, 1)x(0, 1, 1, 12)</td> <th>  Log Likelihood     </th> <td>-413.258</td>
+</tr>
+<tr>
+  <th>Date:</th>                   <td>Sun, 23 May 2021</td>        <th>  AIC                </th>  <td>840.516</td>
+</tr>
+<tr>
+  <th>Time:</th>                       <td>23:55:22</td>            <th>  BIC                </th>  <td>864.522</td>
+</tr>
+<tr>
+  <th>Sample:</th>                         <td>0</td>               <th>  HQIC               </th>  <td>850.202</td>
+</tr>
+<tr>
+  <th></th>                             <td> - 240</td>             <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>               <td>opg</td>              <th>                     </th>     <td> </td>   
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P&gt;|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>intercept</th> <td>    0.0475</td> <td>    0.046</td> <td>    1.044</td> <td> 0.296</td> <td>   -0.042</td> <td>    0.137</td>
+</tr>
+<tr>
+  <th>ar.L1</th>     <td>    1.6309</td> <td>    0.166</td> <td>    9.801</td> <td> 0.000</td> <td>    1.305</td> <td>    1.957</td>
+</tr>
+<tr>
+  <th>ar.L2</th>     <td>   -0.8739</td> <td>    0.155</td> <td>   -5.640</td> <td> 0.000</td> <td>   -1.178</td> <td>   -0.570</td>
+</tr>
+<tr>
+  <th>ar.L3</th>     <td>    0.2156</td> <td>    0.091</td> <td>    2.376</td> <td> 0.017</td> <td>    0.038</td> <td>    0.394</td>
+</tr>
+<tr>
+  <th>ma.L1</th>     <td>   -0.7385</td> <td>    0.174</td> <td>   -4.248</td> <td> 0.000</td> <td>   -1.079</td> <td>   -0.398</td>
+</tr>
+<tr>
+  <th>ma.S.L12</th>  <td>   -0.5458</td> <td>    0.059</td> <td>   -9.265</td> <td> 0.000</td> <td>   -0.661</td> <td>   -0.430</td>
+</tr>
+<tr>
+  <th>sigma2</th>    <td>    2.1498</td> <td>    0.148</td> <td>   14.512</td> <td> 0.000</td> <td>    1.859</td> <td>    2.440</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Ljung-Box (L1) (Q):</th>     <td>0.00</td> <th>  Jarque-Bera (JB):  </th> <td>64.01</td>
+</tr>
+<tr>
+  <th>Prob(Q):</th>                <td>0.95</td> <th>  Prob(JB):          </th> <td>0.00</td> 
+</tr>
+<tr>
+  <th>Heteroskedasticity (H):</th> <td>2.07</td> <th>  Skew:              </th> <td>0.44</td> 
+</tr>
+<tr>
+  <th>Prob(H) (two-sided):</th>    <td>0.00</td> <th>  Kurtosis:          </th> <td>5.44</td> 
+</tr>
+</table>
+<p><br /><br />Warnings:<br />[1] Covariance matrix calculated using the outer product of gradients (complex-step).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">SARIMAX</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">seasonal_order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">results</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div></div>
+
+<table class="simpletable">
+<caption>SARIMAX Results</caption>
+<tr>
+  <th>Dep. Variable:</th>             <td>EnergyIndex</td>          <th>  No. Observations:  </th>    <td>216</td>  
+</tr>
+<tr>
+  <th>Model:</th>           <td>SARIMAX(3, 0, 1)x(0, 1, 1, 12)</td> <th>  Log Likelihood     </th> <td>-359.115</td>
+</tr>
+<tr>
+  <th>Date:</th>                   <td>Sun, 23 May 2021</td>        <th>  AIC                </th>  <td>730.230</td>
+</tr>
+<tr>
+  <th>Time:</th>                       <td>23:56:54</td>            <th>  BIC                </th>  <td>750.138</td>
+</tr>
+<tr>
+  <th>Sample:</th>                    <td>01-01-1970</td>           <th>  HQIC               </th>  <td>738.283</td>
+</tr>
+<tr>
+  <th></th>                          <td>- 12-01-1987</td>          <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>               <td>opg</td>              <th>                     </th>     <td> </td>   
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>        <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P&gt;|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>ar.L1</th>    <td>    1.7745</td> <td>    0.095</td> <td>   18.622</td> <td> 0.000</td> <td>    1.588</td> <td>    1.961</td>
+</tr>
+<tr>
+  <th>ar.L2</th>    <td>   -0.9883</td> <td>    0.113</td> <td>   -8.780</td> <td> 0.000</td> <td>   -1.209</td> <td>   -0.768</td>
+</tr>
+<tr>
+  <th>ar.L3</th>    <td>    0.2111</td> <td>    0.076</td> <td>    2.778</td> <td> 0.005</td> <td>    0.062</td> <td>    0.360</td>
+</tr>
+<tr>
+  <th>ma.L1</th>    <td>   -0.8565</td> <td>    0.080</td> <td>  -10.649</td> <td> 0.000</td> <td>   -1.014</td> <td>   -0.699</td>
+</tr>
+<tr>
+  <th>ma.S.L12</th> <td>   -0.5650</td> <td>    0.053</td> <td>  -10.651</td> <td> 0.000</td> <td>   -0.669</td> <td>   -0.461</td>
+</tr>
+<tr>
+  <th>sigma2</th>   <td>    1.9217</td> <td>    0.168</td> <td>   11.414</td> <td> 0.000</td> <td>    1.592</td> <td>    2.252</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Ljung-Box (L1) (Q):</th>     <td>0.01</td> <th>  Jarque-Bera (JB):  </th> <td>9.10</td>
+</tr>
+<tr>
+  <th>Prob(Q):</th>                <td>0.92</td> <th>  Prob(JB):          </th> <td>0.01</td>
+</tr>
+<tr>
+  <th>Heteroskedasticity (H):</th> <td>2.05</td> <th>  Skew:              </th> <td>0.10</td>
+</tr>
+<tr>
+  <th>Prob(H) (two-sided):</th>    <td>0.00</td> <th>  Kurtosis:          </th> <td>4.01</td>
+</tr>
+</table>
+<p><br /><br />Warnings:<br />[1] Covariance matrix calculated using the outer product of gradients (complex-step).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">start</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pred</span> <span class="o">=</span> <span class="n">results</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s">'level'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\exercise\EnergyProduction\output_29_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">error</span> <span class="o">=</span> <span class="n">rmse</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+<span class="n">error</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([ 8.31981553,  6.09823958,  6.79366971, 10.53638173, 11.99706146,
+        8.69493785,  6.05820751,  5.93929791,  7.96124573, 10.79105154,
+        9.2213997 ,  6.03056639,  9.51428606,  6.67546108,  6.18212862,
+        9.35946757, 10.76244513,  7.70125307,  5.87907598,  5.9064441 ,
+        7.08999389,  9.6500675 ,  8.20025993,  6.47869886])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">SARIMAX</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">seasonal_order</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">results</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div></div>
+
+<table class="simpletable">
+<caption>SARIMAX Results</caption>
+<tr>
+  <th>Dep. Variable:</th>             <td>EnergyIndex</td>          <th>  No. Observations:  </th>    <td>240</td>  
+</tr>
+<tr>
+  <th>Model:</th>           <td>SARIMAX(3, 0, 1)x(0, 1, 1, 12)</td> <th>  Log Likelihood     </th> <td>-415.510</td>
+</tr>
+<tr>
+  <th>Date:</th>                   <td>Sun, 23 May 2021</td>        <th>  AIC                </th>  <td>843.021</td>
+</tr>
+<tr>
+  <th>Time:</th>                       <td>23:58:43</td>            <th>  BIC                </th>  <td>863.597</td>
+</tr>
+<tr>
+  <th>Sample:</th>                    <td>01-01-1970</td>           <th>  HQIC               </th>  <td>851.322</td>
+</tr>
+<tr>
+  <th></th>                          <td>- 12-01-1989</td>          <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>               <td>opg</td>              <th>                     </th>     <td> </td>   
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>        <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P&gt;|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>ar.L1</th>    <td>    1.7509</td> <td>    0.094</td> <td>   18.681</td> <td> 0.000</td> <td>    1.567</td> <td>    1.935</td>
+</tr>
+<tr>
+  <th>ar.L2</th>    <td>   -0.9646</td> <td>    0.117</td> <td>   -8.235</td> <td> 0.000</td> <td>   -1.194</td> <td>   -0.735</td>
+</tr>
+<tr>
+  <th>ar.L3</th>    <td>    0.2119</td> <td>    0.084</td> <td>    2.523</td> <td> 0.012</td> <td>    0.047</td> <td>    0.377</td>
+</tr>
+<tr>
+  <th>ma.L1</th>    <td>   -0.8439</td> <td>    0.084</td> <td>  -10.022</td> <td> 0.000</td> <td>   -1.009</td> <td>   -0.679</td>
+</tr>
+<tr>
+  <th>ma.S.L12</th> <td>   -0.5587</td> <td>    0.057</td> <td>   -9.876</td> <td> 0.000</td> <td>   -0.670</td> <td>   -0.448</td>
+</tr>
+<tr>
+  <th>sigma2</th>   <td>    2.1795</td> <td>    0.153</td> <td>   14.279</td> <td> 0.000</td> <td>    1.880</td> <td>    2.479</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Ljung-Box (L1) (Q):</th>     <td>0.01</td> <th>  Jarque-Bera (JB):  </th> <td>49.80</td>
+</tr>
+<tr>
+  <th>Prob(Q):</th>                <td>0.93</td> <th>  Prob(JB):          </th> <td>0.00</td> 
+</tr>
+<tr>
+  <th>Heteroskedasticity (H):</th> <td>2.08</td> <th>  Skew:              </th> <td>0.40</td> 
+</tr>
+<tr>
+  <th>Prob(H) (two-sided):</th>    <td>0.00</td> <th>  Kurtosis:          </th> <td>5.14</td> 
+</tr>
+</table>
+<p><br /><br />Warnings:<br />[1] Covariance matrix calculated using the outer product of gradients (complex-step).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">forecast</span> <span class="o">=</span> <span class="n">results</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">+</span><span class="mi">11</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s">'levels'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'1983-01-01'</span><span class="p">:])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[&lt;matplotlib.lines.Line2D at 0x14301670908&gt;]
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\exercise\EnergyProduction\output_35_1.png" alt="png" /></p>
+
+<h1 id="lstm">LSTM</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.sequence</span> <span class="kn">import</span> <span class="n">TimeseriesGenerator</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">LSTM</span><span class="p">,</span> <span class="n">Input</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nobs</span> <span class="o">=</span> <span class="mi">12</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="n">nobs</span><span class="p">]</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="n">nobs</span><span class="p">:]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mm_scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">st_scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mm_scaler</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="n">st_scaler</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>StandardScaler()
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mm_scaled_train</span> <span class="o">=</span> <span class="n">mm_scaler</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="n">mm_scaled_test</span> <span class="o">=</span> <span class="n">mm_scaler</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="n">st_scaled_train</span> <span class="o">=</span> <span class="n">st_scaler</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="n">st_scaled_test</span> <span class="o">=</span> <span class="n">st_scaler</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">n_input</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">n_features</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mm_gen</span> <span class="o">=</span> <span class="n">TimeseriesGenerator</span><span class="p">(</span><span class="n">mm_scaled_train</span><span class="p">,</span> <span class="n">mm_scaled_train</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">n_input</span><span class="p">,</span>
+                         <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">st_gen</span> <span class="o">=</span> <span class="n">TimeseriesGenerator</span><span class="p">(</span><span class="n">st_scaled_train</span><span class="p">,</span> <span class="n">st_scaled_train</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">n_input</span><span class="p">,</span>
+                         <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inputs</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_input</span><span class="p">,</span> <span class="n">n_features</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">LSTM</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">)(</span><span class="n">inputs</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WARNING:tensorflow:Layer lstm will not use cuDNN kernel since it doesn't meet the cuDNN kernel criteria. It will use generic GPU kernel as fallback when running on GPU
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mm_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">st_model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mm_model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">'mse'</span><span class="p">)</span>
+<span class="n">st_model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">'mse'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mm_hist</span> <span class="o">=</span> <span class="n">mm_model</span><span class="p">.</span><span class="n">fit_generator</span><span class="p">(</span><span class="n">mm_gen</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">st_hist</span> <span class="o">=</span> <span class="n">st_model</span><span class="p">.</span><span class="n">fit_generator</span><span class="p">(</span><span class="n">st_gen</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WARNING:tensorflow:From &lt;ipython-input-23-6ebd85666877&gt;:1: Model.fit_generator (from tensorflow.python.keras.engine.training) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use Model.fit, which supports generators.
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mm_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'loss'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s">'MinMax'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">st_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'loss'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s">'Standard'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\exercise\EnergyProduction\output_49_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">first_eval_batch</span> <span class="o">=</span> <span class="n">mm_scaled_train</span><span class="p">[</span><span class="o">-</span><span class="mi">12</span><span class="p">:]</span>
+<span class="n">first_eval_batch</span> <span class="o">=</span> <span class="n">first_eval_batch</span><span class="p">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_input</span><span class="p">,</span> <span class="n">n_features</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mm_model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">first_eval_batch</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1.1262071]], dtype=float32)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test_predictions</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">first_eval_batch</span> <span class="o">=</span> <span class="n">mm_scaled_train</span><span class="p">[</span><span class="o">-</span><span class="n">n_input</span><span class="p">:]</span>
+<span class="n">current_batch</span> <span class="o">=</span> <span class="n">first_eval_batch</span><span class="p">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_input</span><span class="p">,</span> <span class="n">n_features</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">)):</span>
+    <span class="n">current_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">current_batch</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">test_predictions</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_pred</span><span class="p">)</span>
+    <span class="n">current_batch</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_batch</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="p">[[</span><span class="n">current_pred</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test_predictions</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[array([1.1262071], dtype=float32),
+ array([1.117718], dtype=float32),
+ array([0.83300537], dtype=float32),
+ array([0.5422754], dtype=float32),
+ array([0.5601636], dtype=float32),
+ array([0.8953703], dtype=float32),
+ array([1.2141159], dtype=float32),
+ array([1.146272], dtype=float32),
+ array([0.80624], dtype=float32),
+ array([0.52206135], dtype=float32),
+ array([0.63773364], dtype=float32),
+ array([1.1513337], dtype=float32)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">true_predictions</span> <span class="o">=</span> <span class="n">mm_scaler</span><span class="p">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">test_predictions</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span><span class="p">[</span><span class="s">'predictions'</span><span class="p">]</span> <span class="o">=</span> <span class="n">true_predictions</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='DATE'&gt;
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\exercise\EnergyProduction\output_57_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">rmse</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="s">'EnergyIndex'</span><span class="p">],</span> <span class="n">test</span><span class="p">[</span><span class="s">'predictions'</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6.790834064681344
+</code></pre></div></div>
+
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+
+            <!--
+            
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to Archive</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+                </section>
+            
+            -->
+
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/ilvnax24er">ilvnax24er</a></h4>
+                                
+                                    <p>Read <a href="/author/ilvnax24er">more posts</a> by this author.</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/ilvnax24er">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/built/images/cover.jpg)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; Archive &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/exercise/">Exercise</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/DAE">Denoising Autoencoder</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/CAE">Colorization Autoencoder</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/Time-Series-of-Price-Anomaly-Detection-with-LSTM">Time Series of Price Anomaly Detection with LSTM</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/exercise/">
+                                
+                                    See all 7 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template no-image">
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/LSTM-Autoencoder">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Exercise</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">LSTM Autoencoder</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p>LSTM Autoencoder
+
+</p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/ilvnax24er/">ilvnax24er</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      3 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template no-image">
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/autoencoder">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Exercise</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Autoencoder</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p>Autoencoder
+
+</p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/ilvnax24er/">ilvnax24er</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      4 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://ilvnax24er.github.io/">
+            
+            <span>Archive</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Time Series - Energy Production</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Time+Series+-+Energy+Production&amp;url=https://ilvnax24er.github.io/energy-production"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://ilvnax24er.github.io/energy-production"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://ilvnax24er.github.io/">Archive</a> &copy; 2021</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyllt/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                <h1 class="subscribe-overlay-title">Subscribe to Archive</h1>
+                <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
+                <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- syntax.css 추가 -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+
+    <!-- web font 추가 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+    <!-- custom css -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/custom.css" />
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-xxxxxxxx-x', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>
