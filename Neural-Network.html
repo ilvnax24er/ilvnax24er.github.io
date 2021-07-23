@@ -174,8 +174,6 @@ into the {body} of the default.hbs template -->
             
         </div>
         
-            <a class="subscribe-button" href="#subscribe">Subscribe</a>
-        
     </div>
 </nav>
 
@@ -564,6 +562,262 @@ softmax 함수를 개선해보면,
 Time saved 1.004986 seconde
 </code></pre></div></div>
 
+<h2 id="keras">Keras</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Input</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.utils</span> <span class="kn">import</span> <span class="n">to_categorical</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_train</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(60000, 784)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_train_categorical</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inputs</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="p">))</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span><span class="s">'sigmoid'</span><span class="p">)(</span><span class="n">inputs</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">)(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'softmax'</span><span class="p">)(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Model: "functional_10"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_7 (InputLayer)         [(None, 784)]             0         
+_________________________________________________________________
+dense_16 (Dense)             (None, 50)                39250     
+_________________________________________________________________
+dense_17 (Dense)             (None, 100)               5100      
+_________________________________________________________________
+dense_18 (Dense)             (None, 10)                1010      
+=================================================================
+Total params: 45,360
+Trainable params: 45,360
+Non-trainable params: 0
+_________________________________________________________________
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'mse'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">hist</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train_categorical</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'time elapsed </span><span class="si">{</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Epoch 1/20
+1875/1875 [==============================] - 2s 809us/step - loss: 0.0317
+Epoch 2/20
+1875/1875 [==============================] - 2s 812us/step - loss: 0.0202
+Epoch 3/20
+1875/1875 [==============================] - 2s 820us/step - loss: 0.0187
+Epoch 4/20
+1875/1875 [==============================] - 2s 823us/step - loss: 0.0177
+Epoch 5/20
+1875/1875 [==============================] - 2s 814us/step - loss: 0.0177
+Epoch 6/20
+1875/1875 [==============================] - 2s 829us/step - loss: 0.0173
+Epoch 7/20
+1875/1875 [==============================] - 2s 826us/step - loss: 0.0166
+Epoch 8/20
+1875/1875 [==============================] - 2s 819us/step - loss: 0.0159
+Epoch 9/20
+1875/1875 [==============================] - 2s 817us/step - loss: 0.0148
+Epoch 10/20
+1875/1875 [==============================] - 2s 823us/step - loss: 0.0152
+Epoch 11/20
+1875/1875 [==============================] - 2s 821us/step - loss: 0.0143
+Epoch 12/20
+1875/1875 [==============================] - 2s 841us/step - loss: 0.0142
+Epoch 13/20
+1875/1875 [==============================] - 2s 823us/step - loss: 0.0137
+Epoch 14/20
+1875/1875 [==============================] - 2s 844us/step - loss: 0.0133
+Epoch 15/20
+1875/1875 [==============================] - 2s 858us/step - loss: 0.0128
+Epoch 16/20
+1875/1875 [==============================] - 2s 854us/step - loss: 0.0128
+Epoch 17/20
+1875/1875 [==============================] - 2s 833us/step - loss: 0.0126
+Epoch 18/20
+1875/1875 [==============================] - 2s 826us/step - loss: 0.0129
+Epoch 19/20
+1875/1875 [==============================] - 2s 819us/step - loss: 0.0123
+Epoch 20/20
+1875/1875 [==============================] - 2s 830us/step - loss: 0.0122
+time elapsed 31.24882459640503
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predict</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predicted_label</span> <span class="o">=</span> <span class="n">predict</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">predicted_label</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">predicted_label</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">y_test</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Accuracy : </span><span class="si">{</span><span class="n">cnt</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">predicted_label</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Accuracy : 91.57
+</code></pre></div></div>
+
+<h2 id="torch">Torch</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">transforms</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">dnn</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">dnn</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">d1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">d2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">d3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nb">float</span><span class="p">()</span>
+        <span class="n">h1</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">d1</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">784</span><span class="p">)))</span>
+        <span class="n">h2</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">d2</span><span class="p">(</span><span class="n">h1</span><span class="p">))</span>
+        
+        <span class="k">return</span> <span class="n">F</span><span class="p">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">h2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">transforms</span><span class="p">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.1307</span><span class="p">,</span> <span class="p">),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,</span> <span class="p">))])</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="s">'../data'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">))</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="s">'../data'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">dnn</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">parameters</span><span class="p">())</span>
+<span class="n">no_cuda</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">use_cuda</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">no_cuda</span> <span class="ow">and</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">()</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">device</span><span class="p">(</span><span class="s">"cuda"</span> <span class="k">if</span> <span class="n">use_cuda</span> <span class="k">else</span> <span class="s">"cpu"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">interval</span> <span class="o">=</span> <span class="mi">20000</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="mi">10</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">target</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">nll_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">batch_idx</span> <span class="o">%</span> <span class="n">interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'Train Epoch: {} [{}/{} ({:.0f}%)]</span><span class="se">\t</span><span class="s">Loss: {:.6f}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">batch_idx</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">),</span><span class="mf">100.</span> <span class="o">*</span> <span class="n">batch_idx</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">),</span> <span class="n">loss</span><span class="p">.</span><span class="n">item</span><span class="p">()))</span>
+            
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">):</span>
+    <span class="n">model</span><span class="p">.</span><span class="nb">eval</span><span class="p">()</span>
+    <span class="n">test_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">target</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">test_loss</span> <span class="o">+=</span> <span class="n">F</span><span class="p">.</span><span class="n">nll_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="s">'sum'</span><span class="p">).</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">correct</span> <span class="o">+=</span> <span class="n">pred</span><span class="p">.</span><span class="n">eq</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">view_as</span><span class="p">(</span><span class="n">pred</span><span class="p">)).</span><span class="nb">sum</span><span class="p">().</span><span class="n">item</span><span class="p">()</span>
+            
+    <span class="n">test_loss</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">)</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">Test set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">test_loss</span><span class="p">,</span> <span class="n">correct</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">),</span><span class="mf">100.</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">)))</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="n">train</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Train Epoch: 1 [0/60000 (0%)]	Loss: -0.008938
+Train Epoch: 1 [20000/60000 (33%)]	Loss: -0.025429
+Train Epoch: 1 [40000/60000 (67%)]	Loss: -0.025821
+
+Test set: Average loss: -0.0254, Accuracy: 1034/10000 (10%)
+
+Train Epoch: 2 [0/60000 (0%)]	Loss: -0.025665
+Train Epoch: 2 [20000/60000 (33%)]	Loss: -0.026105
+Train Epoch: 2 [40000/60000 (67%)]	Loss: -0.025847
+
+Test set: Average loss: -0.0257, Accuracy: 8315/10000 (83%)
+
+Train Epoch: 3 [0/60000 (0%)]	Loss: -0.025708
+Train Epoch: 3 [20000/60000 (33%)]	Loss: -0.026541
+Train Epoch: 3 [40000/60000 (67%)]	Loss: -0.026278
+
+Test set: Average loss: -0.0259, Accuracy: 8550/10000 (86%)
+
+Train Epoch: 4 [0/60000 (0%)]	Loss: -0.026034
+Train Epoch: 4 [20000/60000 (33%)]	Loss: -0.026690
+Train Epoch: 4 [40000/60000 (67%)]	Loss: -0.026271
+
+Test set: Average loss: -0.0259, Accuracy: 8810/10000 (88%)
+
+Train Epoch: 5 [0/60000 (0%)]	Loss: -0.026035
+Train Epoch: 5 [20000/60000 (33%)]	Loss: -0.026684
+Train Epoch: 5 [40000/60000 (67%)]	Loss: -0.026274
+
+Test set: Average loss: -0.0259, Accuracy: 8695/10000 (87%)
+
+Train Epoch: 6 [0/60000 (0%)]	Loss: -0.026662
+Train Epoch: 6 [20000/60000 (33%)]	Loss: -0.026507
+Train Epoch: 6 [40000/60000 (67%)]	Loss: -0.026301
+
+Test set: Average loss: -0.0260, Accuracy: 8914/10000 (89%)
+
+Train Epoch: 7 [0/60000 (0%)]	Loss: -0.026341
+Train Epoch: 7 [20000/60000 (33%)]	Loss: -0.026646
+Train Epoch: 7 [40000/60000 (67%)]	Loss: -0.026506
+
+Test set: Average loss: -0.0260, Accuracy: 8853/10000 (89%)
+
+Train Epoch: 8 [0/60000 (0%)]	Loss: -0.026542
+Train Epoch: 8 [20000/60000 (33%)]	Loss: -0.026723
+Train Epoch: 8 [40000/60000 (67%)]	Loss: -0.026484
+
+Test set: Average loss: -0.0260, Accuracy: 8787/10000 (88%)
+
+Train Epoch: 9 [0/60000 (0%)]	Loss: -0.026377
+Train Epoch: 9 [20000/60000 (33%)]	Loss: -0.026722
+Train Epoch: 9 [40000/60000 (67%)]	Loss: -0.026350
+
+Test set: Average loss: -0.0260, Accuracy: 8703/10000 (87%)
+
+Train Epoch: 10 [0/60000 (0%)]	Loss: -0.026281
+Train Epoch: 10 [20000/60000 (33%)]	Loss: -0.026713
+Train Epoch: 10 [40000/60000 (67%)]	Loss: -0.026708
+
+Test set: Average loss: -0.0260, Accuracy: 8549/10000 (85%)
+</code></pre></div></div>
+
 <blockquote>
   <p>참고 : 사이토 고키, <strong>『</strong>DeepLearning from Scratch<strong>』</strong>, 한빛미디어(2020), p63-105</p>
 </blockquote>
@@ -574,21 +828,6 @@ Time saved 1.004986 seconde
             <!-- Email subscribe form at the bottom of the page -->
 
             <!--
-            
-                <section class="subscribe-form">
-                    <h3 class="subscribe-form-title">Subscribe to Archive</h3>
-                    <p>Get the latest posts delivered right to your inbox</p>
-                    <form method="post" action="/subscribe/" class="">
-    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
-
-    <div class="form-group">
-        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
-    </div>
-    <button class="" type="submit" disabled><span>Subscribe</span></button>
-    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
-</form>
-
-                </section>
             
             -->
 
@@ -905,25 +1144,6 @@ Time saved 1.004986 seconde
 
     <!-- The big email subscribe modal content -->
     
-        <div id="subscribe" class="subscribe-overlay">
-            <a class="subscribe-overlay-close" href="#"></a>
-            <div class="subscribe-overlay-content">
-                
-                <h1 class="subscribe-overlay-title">Subscribe to Archive</h1>
-                <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
-                <form method="post" action="/subscribe/" class="">
-    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
-
-    <div class="form-group">
-        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
-    </div>
-    <button class="" type="submit" disabled><span>Subscribe</span></button>
-    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
-</form>
-
-            </div>
-        </div>
-    
 
     <!-- highlight.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
@@ -979,6 +1199,7 @@ Time saved 1.004986 seconde
   ga('send', 'pageview');
 
  </script>
+
 
 
     <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
