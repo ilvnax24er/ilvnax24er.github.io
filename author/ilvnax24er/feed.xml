@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://ilvnax24er.github.io/author/ilvnax24er/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" />
-  <updated>2021-07-25T10:41:50+09:00</updated>
+  <updated>2021-07-25T13:28:19+09:00</updated>
   <id>https://ilvnax24er.github.io/author/ilvnax24er/feed.xml</id>
 
   
@@ -32,12 +32,2078 @@
 
   
     <entry>
+      <title type="html">Time Series Anomaly Detection with PyCaret</title>
+      <link href="https://ilvnax24er.github.io/Time-Series-Anomaly-Detection-with-PyCaret" rel="alternate" type="text/html" title="Time Series Anomaly Detection with PyCaret" />
+      <published>2021-07-25T00:00:00+09:00</published>
+      <updated>2021-07-25T00:00:00+09:00</updated>
+      <id>https://ilvnax24er.github.io/Time-Series-Anomaly-Detection-with-PyCaret</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/Time-Series-Anomaly-Detection-with-PyCaret">&lt;h1 id=&quot;anomaly-detection&quot;&gt;Anomaly Detection&lt;/h1&gt;
+
+&lt;p&gt;Anomaly Detection은 대부분의 데이터와 크게 다른 희귀한 데이터, 사건을 식별하는데 사용되는 기법이다. 세가지 그룹으로 분류할 수 있는데,&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Supervised : 데이터 셋에 비정상 데이터와 정상 데이터를 식별하는 레이블이 있는 경우 사용된다.&lt;/li&gt;
+  &lt;li&gt;Unsupervised : 전체 데이터에 대해 레이블이 없고, 대부분의 데이터가 정상 상태라고 가정한다.&lt;/li&gt;
+  &lt;li&gt;Semi-supervised : 이상 현상이 없는 데이터에 대해 학습하고, 훈련된 모형이 새 데이터에 사용되는 경우 훈련된 모형의 데이터 분포를 기반으로 새 데이터에 대해 예측한다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;data&quot;&gt;Data&lt;/h1&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;plotly.express&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'https://raw.githubusercontent.com/numenta/NAB/master/data/realKnownCause/nyc_taxi.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'timestamp'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'timestamp'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div&gt;
+&lt;style scoped=&quot;&quot;&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;timestamp&lt;/th&gt;
+      &lt;th&gt;value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;2014-07-01 00:00:00&lt;/td&gt;
+      &lt;td&gt;10844&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;2014-07-01 00:30:00&lt;/td&gt;
+      &lt;td&gt;8127&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;2014-07-01 01:00:00&lt;/td&gt;
+      &lt;td&gt;6210&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;2014-07-01 01:30:00&lt;/td&gt;
+      &lt;td&gt;4656&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;2014-07-01 02:00:00&lt;/td&gt;
+      &lt;td&gt;3820&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;ma&quot;&gt;MA&lt;/h2&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'MA48'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'value'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rolling&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'MA336'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'value'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rolling&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;336&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;plotly&quot;&gt;Plotly&lt;/h2&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;timestamp&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'value'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'MA48'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'MA336'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'NYC Taxi Trips'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;template&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'plotly_dark'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\exercise\pycaret\3_image_1.png&quot; alt=&quot;image1&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;data-preparation&quot;&gt;Data Preparation&lt;/h1&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'MA48'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'MA336'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'timestamp'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'H'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'day'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;day&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'day_name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;day_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'day_of_year'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dayofyear&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'week_of_year'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weekofyear&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'hour'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hour&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'is_weekday'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isoweekday&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div&gt;
+&lt;style scoped=&quot;&quot;&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;value&lt;/th&gt;
+      &lt;th&gt;day&lt;/th&gt;
+      &lt;th&gt;day_name&lt;/th&gt;
+      &lt;th&gt;day_of_year&lt;/th&gt;
+      &lt;th&gt;week_of_year&lt;/th&gt;
+      &lt;th&gt;hour&lt;/th&gt;
+      &lt;th&gt;is_weekday&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;timestamp&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 00:00:00&lt;/th&gt;
+      &lt;td&gt;18971&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 01:00:00&lt;/th&gt;
+      &lt;td&gt;10866&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 02:00:00&lt;/th&gt;
+      &lt;td&gt;6693&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 03:00:00&lt;/th&gt;
+      &lt;td&gt;4433&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 04:00:00&lt;/th&gt;
+      &lt;td&gt;4379&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;experiment-setup&quot;&gt;Experiment Setup&lt;/h1&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pycaret.anomaly&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1234&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;
+&lt;table id=&quot;T_d9638_&quot;&gt;&lt;thead&gt;    &lt;tr&gt;        &lt;th class=&quot;blank level0&quot;&gt;&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col0&quot;&gt;Description&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col1&quot;&gt;Value&lt;/th&gt;    &lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+                &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row0&quot; class=&quot;row_heading level0 row0&quot;&gt;0&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row0_col0&quot; class=&quot;data row0 col0&quot;&gt;session_id&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row0_col1&quot; class=&quot;data row0 col1&quot;&gt;1234&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row1&quot; class=&quot;row_heading level0 row1&quot;&gt;1&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row1_col0&quot; class=&quot;data row1 col0&quot;&gt;Original Data&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row1_col1&quot; class=&quot;data row1 col1&quot;&gt;(5160, 7)&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row2&quot; class=&quot;row_heading level0 row2&quot;&gt;2&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row2_col0&quot; class=&quot;data row2 col0&quot;&gt;Missing Values&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row2_col1&quot; class=&quot;data row2 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row3&quot; class=&quot;row_heading level0 row3&quot;&gt;3&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row3_col0&quot; class=&quot;data row3 col0&quot;&gt;Numeric Features&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row3_col1&quot; class=&quot;data row3 col1&quot;&gt;5&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row4&quot; class=&quot;row_heading level0 row4&quot;&gt;4&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row4_col0&quot; class=&quot;data row4 col0&quot;&gt;Categorical Features&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row4_col1&quot; class=&quot;data row4 col1&quot;&gt;2&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row5&quot; class=&quot;row_heading level0 row5&quot;&gt;5&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row5_col0&quot; class=&quot;data row5 col0&quot;&gt;Ordinal Features&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row5_col1&quot; class=&quot;data row5 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row6&quot; class=&quot;row_heading level0 row6&quot;&gt;6&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row6_col0&quot; class=&quot;data row6 col0&quot;&gt;High Cardinality Features&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row6_col1&quot; class=&quot;data row6 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row7&quot; class=&quot;row_heading level0 row7&quot;&gt;7&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row7_col0&quot; class=&quot;data row7 col0&quot;&gt;High Cardinality Method&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row7_col1&quot; class=&quot;data row7 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row8&quot; class=&quot;row_heading level0 row8&quot;&gt;8&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row8_col0&quot; class=&quot;data row8 col0&quot;&gt;Transformed Data&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row8_col1&quot; class=&quot;data row8 col1&quot;&gt;(5160, 19)&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row9&quot; class=&quot;row_heading level0 row9&quot;&gt;9&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row9_col0&quot; class=&quot;data row9 col0&quot;&gt;CPU Jobs&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row9_col1&quot; class=&quot;data row9 col1&quot;&gt;-1&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row10&quot; class=&quot;row_heading level0 row10&quot;&gt;10&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row10_col0&quot; class=&quot;data row10 col0&quot;&gt;Use GPU&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row10_col1&quot; class=&quot;data row10 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row11&quot; class=&quot;row_heading level0 row11&quot;&gt;11&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row11_col0&quot; class=&quot;data row11 col0&quot;&gt;Log Experiment&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row11_col1&quot; class=&quot;data row11 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row12&quot; class=&quot;row_heading level0 row12&quot;&gt;12&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row12_col0&quot; class=&quot;data row12 col0&quot;&gt;Experiment Name&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row12_col1&quot; class=&quot;data row12 col1&quot;&gt;anomaly-default-name&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row13&quot; class=&quot;row_heading level0 row13&quot;&gt;13&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row13_col0&quot; class=&quot;data row13 col0&quot;&gt;USI&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row13_col1&quot; class=&quot;data row13 col1&quot;&gt;f43c&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row14&quot; class=&quot;row_heading level0 row14&quot;&gt;14&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row14_col0&quot; class=&quot;data row14 col0&quot;&gt;Imputation Type&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row14_col1&quot; class=&quot;data row14 col1&quot;&gt;simple&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row15&quot; class=&quot;row_heading level0 row15&quot;&gt;15&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row15_col0&quot; class=&quot;data row15 col0&quot;&gt;Iterative Imputation Iteration&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row15_col1&quot; class=&quot;data row15 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row16&quot; class=&quot;row_heading level0 row16&quot;&gt;16&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row16_col0&quot; class=&quot;data row16 col0&quot;&gt;Numeric Imputer&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row16_col1&quot; class=&quot;data row16 col1&quot;&gt;mean&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row17&quot; class=&quot;row_heading level0 row17&quot;&gt;17&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row17_col0&quot; class=&quot;data row17 col0&quot;&gt;Iterative Imputation Numeric Model&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row17_col1&quot; class=&quot;data row17 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row18&quot; class=&quot;row_heading level0 row18&quot;&gt;18&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row18_col0&quot; class=&quot;data row18 col0&quot;&gt;Categorical Imputer&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row18_col1&quot; class=&quot;data row18 col1&quot;&gt;mode&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row19&quot; class=&quot;row_heading level0 row19&quot;&gt;19&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row19_col0&quot; class=&quot;data row19 col0&quot;&gt;Iterative Imputation Categorical Model&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row19_col1&quot; class=&quot;data row19 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row20&quot; class=&quot;row_heading level0 row20&quot;&gt;20&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row20_col0&quot; class=&quot;data row20 col0&quot;&gt;Unknown Categoricals Handling&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row20_col1&quot; class=&quot;data row20 col1&quot;&gt;least_frequent&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row21&quot; class=&quot;row_heading level0 row21&quot;&gt;21&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row21_col0&quot; class=&quot;data row21 col0&quot;&gt;Normalize&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row21_col1&quot; class=&quot;data row21 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row22&quot; class=&quot;row_heading level0 row22&quot;&gt;22&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row22_col0&quot; class=&quot;data row22 col0&quot;&gt;Normalize Method&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row22_col1&quot; class=&quot;data row22 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row23&quot; class=&quot;row_heading level0 row23&quot;&gt;23&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row23_col0&quot; class=&quot;data row23 col0&quot;&gt;Transformation&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row23_col1&quot; class=&quot;data row23 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row24&quot; class=&quot;row_heading level0 row24&quot;&gt;24&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row24_col0&quot; class=&quot;data row24 col0&quot;&gt;Transformation Method&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row24_col1&quot; class=&quot;data row24 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row25&quot; class=&quot;row_heading level0 row25&quot;&gt;25&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row25_col0&quot; class=&quot;data row25 col0&quot;&gt;PCA&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row25_col1&quot; class=&quot;data row25 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row26&quot; class=&quot;row_heading level0 row26&quot;&gt;26&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row26_col0&quot; class=&quot;data row26 col0&quot;&gt;PCA Method&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row26_col1&quot; class=&quot;data row26 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row27&quot; class=&quot;row_heading level0 row27&quot;&gt;27&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row27_col0&quot; class=&quot;data row27 col0&quot;&gt;PCA Components&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row27_col1&quot; class=&quot;data row27 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row28&quot; class=&quot;row_heading level0 row28&quot;&gt;28&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row28_col0&quot; class=&quot;data row28 col0&quot;&gt;Ignore Low Variance&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row28_col1&quot; class=&quot;data row28 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row29&quot; class=&quot;row_heading level0 row29&quot;&gt;29&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row29_col0&quot; class=&quot;data row29 col0&quot;&gt;Combine Rare Levels&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row29_col1&quot; class=&quot;data row29 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row30&quot; class=&quot;row_heading level0 row30&quot;&gt;30&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row30_col0&quot; class=&quot;data row30 col0&quot;&gt;Rare Level Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row30_col1&quot; class=&quot;data row30 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row31&quot; class=&quot;row_heading level0 row31&quot;&gt;31&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row31_col0&quot; class=&quot;data row31 col0&quot;&gt;Numeric Binning&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row31_col1&quot; class=&quot;data row31 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row32&quot; class=&quot;row_heading level0 row32&quot;&gt;32&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row32_col0&quot; class=&quot;data row32 col0&quot;&gt;Remove Outliers&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row32_col1&quot; class=&quot;data row32 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row33&quot; class=&quot;row_heading level0 row33&quot;&gt;33&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row33_col0&quot; class=&quot;data row33 col0&quot;&gt;Outliers Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row33_col1&quot; class=&quot;data row33 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row34&quot; class=&quot;row_heading level0 row34&quot;&gt;34&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row34_col0&quot; class=&quot;data row34 col0&quot;&gt;Remove Multicollinearity&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row34_col1&quot; class=&quot;data row34 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row35&quot; class=&quot;row_heading level0 row35&quot;&gt;35&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row35_col0&quot; class=&quot;data row35 col0&quot;&gt;Multicollinearity Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row35_col1&quot; class=&quot;data row35 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row36&quot; class=&quot;row_heading level0 row36&quot;&gt;36&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row36_col0&quot; class=&quot;data row36 col0&quot;&gt;Remove Perfect Collinearity&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row36_col1&quot; class=&quot;data row36 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row37&quot; class=&quot;row_heading level0 row37&quot;&gt;37&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row37_col0&quot; class=&quot;data row37 col0&quot;&gt;Clustering&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row37_col1&quot; class=&quot;data row37 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row38&quot; class=&quot;row_heading level0 row38&quot;&gt;38&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row38_col0&quot; class=&quot;data row38 col0&quot;&gt;Clustering Iteration&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row38_col1&quot; class=&quot;data row38 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row39&quot; class=&quot;row_heading level0 row39&quot;&gt;39&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row39_col0&quot; class=&quot;data row39 col0&quot;&gt;Polynomial Features&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row39_col1&quot; class=&quot;data row39 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row40&quot; class=&quot;row_heading level0 row40&quot;&gt;40&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row40_col0&quot; class=&quot;data row40 col0&quot;&gt;Polynomial Degree&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row40_col1&quot; class=&quot;data row40 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row41&quot; class=&quot;row_heading level0 row41&quot;&gt;41&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row41_col0&quot; class=&quot;data row41 col0&quot;&gt;Trignometry Features&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row41_col1&quot; class=&quot;data row41 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row42&quot; class=&quot;row_heading level0 row42&quot;&gt;42&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row42_col0&quot; class=&quot;data row42 col0&quot;&gt;Polynomial Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row42_col1&quot; class=&quot;data row42 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row43&quot; class=&quot;row_heading level0 row43&quot;&gt;43&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row43_col0&quot; class=&quot;data row43 col0&quot;&gt;Group Features&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row43_col1&quot; class=&quot;data row43 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row44&quot; class=&quot;row_heading level0 row44&quot;&gt;44&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row44_col0&quot; class=&quot;data row44 col0&quot;&gt;Feature Selection&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row44_col1&quot; class=&quot;data row44 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row45&quot; class=&quot;row_heading level0 row45&quot;&gt;45&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row45_col0&quot; class=&quot;data row45 col0&quot;&gt;Feature Selection Method&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row45_col1&quot; class=&quot;data row45 col1&quot;&gt;classic&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row46&quot; class=&quot;row_heading level0 row46&quot;&gt;46&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row46_col0&quot; class=&quot;data row46 col0&quot;&gt;Features Selection Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row46_col1&quot; class=&quot;data row46 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row47&quot; class=&quot;row_heading level0 row47&quot;&gt;47&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row47_col0&quot; class=&quot;data row47 col0&quot;&gt;Feature Interaction&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row47_col1&quot; class=&quot;data row47 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row48&quot; class=&quot;row_heading level0 row48&quot;&gt;48&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row48_col0&quot; class=&quot;data row48 col0&quot;&gt;Feature Ratio&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row48_col1&quot; class=&quot;data row48 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_d9638_level0_row49&quot; class=&quot;row_heading level0 row49&quot;&gt;49&lt;/th&gt;
+                        &lt;td id=&quot;T_d9638_row49_col0&quot; class=&quot;data row49 col0&quot;&gt;Interaction Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_d9638_row49_col1&quot; class=&quot;data row49 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+    &lt;/tbody&gt;&lt;/table&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div&gt;
+&lt;style scoped=&quot;&quot;&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Reference&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;ID&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;abod&lt;/th&gt;
+      &lt;td&gt;Angle-base Outlier Detection&lt;/td&gt;
+      &lt;td&gt;pyod.models.abod.ABOD&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;cluster&lt;/th&gt;
+      &lt;td&gt;Clustering-Based Local Outlier&lt;/td&gt;
+      &lt;td&gt;pyod.models.cblof.CBLOF&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;cof&lt;/th&gt;
+      &lt;td&gt;Connectivity-Based Local Outlier&lt;/td&gt;
+      &lt;td&gt;pyod.models.cof.COF&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;iforest&lt;/th&gt;
+      &lt;td&gt;Isolation Forest&lt;/td&gt;
+      &lt;td&gt;pyod.models.iforest.IForest&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;histogram&lt;/th&gt;
+      &lt;td&gt;Histogram-based Outlier Detection&lt;/td&gt;
+      &lt;td&gt;pyod.models.hbos.HBOS&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;knn&lt;/th&gt;
+      &lt;td&gt;K-Nearest Neighbors Detector&lt;/td&gt;
+      &lt;td&gt;pyod.models.knn.KNN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;lof&lt;/th&gt;
+      &lt;td&gt;Local Outlier Factor&lt;/td&gt;
+      &lt;td&gt;pyod.models.lof.LOF&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;svm&lt;/th&gt;
+      &lt;td&gt;One-class SVM detector&lt;/td&gt;
+      &lt;td&gt;pyod.models.ocsvm.OCSVM&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;pca&lt;/th&gt;
+      &lt;td&gt;Principal Component Analysis&lt;/td&gt;
+      &lt;td&gt;pyod.models.pca.PCA&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mcd&lt;/th&gt;
+      &lt;td&gt;Minimum Covariance Determinant&lt;/td&gt;
+      &lt;td&gt;pyod.models.mcd.MCD&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;sod&lt;/th&gt;
+      &lt;td&gt;Subspace Outlier Detection&lt;/td&gt;
+      &lt;td&gt;pyod.models.sod.SOD&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;sos&lt;/th&gt;
+      &lt;td&gt;Stochastic Outlier Selection&lt;/td&gt;
+      &lt;td&gt;pyod.models.sos.SOS&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;train-model&quot;&gt;Train model&lt;/h1&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;iforest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;create_model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'iforest'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fraction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;iforest_results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assign_model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iforest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;iforest_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div&gt;
+&lt;style scoped=&quot;&quot;&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;value&lt;/th&gt;
+      &lt;th&gt;day&lt;/th&gt;
+      &lt;th&gt;day_name&lt;/th&gt;
+      &lt;th&gt;day_of_year&lt;/th&gt;
+      &lt;th&gt;week_of_year&lt;/th&gt;
+      &lt;th&gt;hour&lt;/th&gt;
+      &lt;th&gt;is_weekday&lt;/th&gt;
+      &lt;th&gt;Anomaly&lt;/th&gt;
+      &lt;th&gt;Anomaly_Score&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;timestamp&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 00:00:00&lt;/th&gt;
+      &lt;td&gt;18971&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;-0.008181&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 01:00:00&lt;/th&gt;
+      &lt;td&gt;10866&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;-0.001049&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 02:00:00&lt;/th&gt;
+      &lt;td&gt;6693&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.002064&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 03:00:00&lt;/th&gt;
+      &lt;td&gt;4433&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.004900&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 04:00:00&lt;/th&gt;
+      &lt;td&gt;4379&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.004525&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;iforest_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iforest_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Anomaly'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div&gt;
+&lt;style scoped=&quot;&quot;&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;value&lt;/th&gt;
+      &lt;th&gt;day&lt;/th&gt;
+      &lt;th&gt;day_name&lt;/th&gt;
+      &lt;th&gt;day_of_year&lt;/th&gt;
+      &lt;th&gt;week_of_year&lt;/th&gt;
+      &lt;th&gt;hour&lt;/th&gt;
+      &lt;th&gt;is_weekday&lt;/th&gt;
+      &lt;th&gt;Anomaly&lt;/th&gt;
+      &lt;th&gt;Anomaly_Score&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;timestamp&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 02:00:00&lt;/th&gt;
+      &lt;td&gt;6693&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.002064&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 03:00:00&lt;/th&gt;
+      &lt;td&gt;4433&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.004900&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 04:00:00&lt;/th&gt;
+      &lt;td&gt;4379&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.004525&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-01 05:00:00&lt;/th&gt;
+      &lt;td&gt;6879&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;Tuesday&lt;/td&gt;
+      &lt;td&gt;182&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.002196&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2014-07-05 06:00:00&lt;/th&gt;
+      &lt;td&gt;5698&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;Saturday&lt;/td&gt;
+      &lt;td&gt;186&lt;/td&gt;
+      &lt;td&gt;27&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.000246&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;plotly.graph_objects&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;go&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# plot value on y-axis and date on x-axis
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iforest_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iforest_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;value&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'NYC TAXI TRIPS - UNSUPERVISED ANOMALY DETECTION'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;template&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'plotly_dark'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# create list of outlier_dates
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outlier_dates&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iforest_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iforest_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Anomaly'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# obtain y value of anomalies to plot
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y_values&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iforest_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'value'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outlier_dates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_trace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;go&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Scatter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outlier_dates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'markers'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Anomaly'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;marker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'red'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+        
+&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\exercise\pycaret\3_image_2.png&quot; alt=&quot;image2&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pca&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;create_model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'pca'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fraction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pca_results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assign_model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pca&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# plot value on y-axis and date on x-axis
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pca_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pca_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;value&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'NYC TAXI TRIPS - UNSUPERVISED ANOMALY DETECTION'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;template&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'plotly_dark'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# create list of outlier_dates
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outlier_dates&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pca_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pca_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Anomaly'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# obtain y value of anomalies to plot
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y_values&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pca_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'value'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outlier_dates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_trace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;go&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Scatter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outlier_dates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'markers'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Anomaly'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;marker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'red'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+        
+&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\exercise\pycaret\3_image_3.png&quot; alt=&quot;image3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://towardsdatascience.com/time-series-anomaly-detection-with-pycaret-706a6e2b2427&quot;&gt;Reference : Time Series Anomaly Detection with PyCaret&lt;/a&gt;&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>ilvnax24er</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="exercise" />
+      
+
+      
+        <summary type="html">Anomaly Detection</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">Multiple Time Series Forecasting with PyCaret</title>
+      <link href="https://ilvnax24er.github.io/Multiple-Time-Series-Forecasting-with-PyCaret" rel="alternate" type="text/html" title="Multiple Time Series Forecasting with PyCaret" />
+      <published>2021-07-24T00:00:00+09:00</published>
+      <updated>2021-07-24T00:00:00+09:00</updated>
+      <id>https://ilvnax24er.github.io/Multiple-Time-Series-Forecasting-with-PyCaret</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/Multiple-Time-Series-Forecasting-with-PyCaret">&lt;h1 id=&quot;multiple-time-series-forecasting-with-pycaret&quot;&gt;Multiple Time Series Forecasting with PyCaret&lt;/h1&gt;
+
+&lt;h1 id=&quot;imports&quot;&gt;Imports&lt;/h1&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;warnings&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;warnings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filterwarnings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'ignore'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;plotly.express&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pycaret.regression&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tqdm&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tqdm&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'../exercise/store_item/train.csv'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'store'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'store_'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'store'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'item'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'item_'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'item'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'time_series'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'store'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'item'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]].&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'_'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'store'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'item'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'month'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;month&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'year'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;year&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'day_of_week'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dayofweek&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'day_of_year'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dayofyear&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div&gt;
+&lt;style scoped=&quot;&quot;&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;date&lt;/th&gt;
+      &lt;th&gt;sales&lt;/th&gt;
+      &lt;th&gt;time_series&lt;/th&gt;
+      &lt;th&gt;month&lt;/th&gt;
+      &lt;th&gt;year&lt;/th&gt;
+      &lt;th&gt;day_of_week&lt;/th&gt;
+      &lt;th&gt;day_of_year&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;2013-01-01&lt;/td&gt;
+      &lt;td&gt;13&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;2013-01-02&lt;/td&gt;
+      &lt;td&gt;11&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;2013-01-03&lt;/td&gt;
+      &lt;td&gt;14&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;2013-01-04&lt;/td&gt;
+      &lt;td&gt;13&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;2013-01-05&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'time_series'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nunique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;500
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;plot&quot;&gt;Plot&lt;/h1&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'time_series'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;subset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'time_series'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;subset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'MA'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;subset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'sales'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rolling&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'sales'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'MA'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'plotly_dark'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\exercise\pycaret\1_2_image.png&quot; alt=&quot;image1&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;training-for-store_1_item_1&quot;&gt;Training for store_1_item_1&lt;/h1&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df_subset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'time_series'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df_subset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(1826, 7)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_subset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'sales'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.95&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data_split_shuffle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fold_strategy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'timeseries'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fold&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+         &lt;span class=&quot;n&quot;&gt;ignore_features&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'time_series'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numeric_features&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'day_of_year'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'year'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;categorical_features&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'month'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'day_of_week'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;session_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1234&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;style type=&quot;text/css&quot;&gt;
+#T_21f7f_row42_col1{
+            background-color:  lightgreen;
+        }&lt;/style&gt;
+&lt;table id=&quot;T_21f7f_&quot;&gt;&lt;thead&gt;    &lt;tr&gt;        &lt;th class=&quot;blank level0&quot;&gt;&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col0&quot;&gt;Description&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col1&quot;&gt;Value&lt;/th&gt;    &lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+                &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row0&quot; class=&quot;row_heading level0 row0&quot;&gt;0&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row0_col0&quot; class=&quot;data row0 col0&quot;&gt;session_id&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row0_col1&quot; class=&quot;data row0 col1&quot;&gt;1234&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row1&quot; class=&quot;row_heading level0 row1&quot;&gt;1&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row1_col0&quot; class=&quot;data row1 col0&quot;&gt;Target&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row1_col1&quot; class=&quot;data row1 col1&quot;&gt;sales&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row2&quot; class=&quot;row_heading level0 row2&quot;&gt;2&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row2_col0&quot; class=&quot;data row2 col0&quot;&gt;Original Data&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row2_col1&quot; class=&quot;data row2 col1&quot;&gt;(1826, 7)&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row3&quot; class=&quot;row_heading level0 row3&quot;&gt;3&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row3_col0&quot; class=&quot;data row3 col0&quot;&gt;Missing Values&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row3_col1&quot; class=&quot;data row3 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row4&quot; class=&quot;row_heading level0 row4&quot;&gt;4&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row4_col0&quot; class=&quot;data row4 col0&quot;&gt;Numeric Features&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row4_col1&quot; class=&quot;data row4 col1&quot;&gt;2&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row5&quot; class=&quot;row_heading level0 row5&quot;&gt;5&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row5_col0&quot; class=&quot;data row5 col0&quot;&gt;Categorical Features&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row5_col1&quot; class=&quot;data row5 col1&quot;&gt;2&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row6&quot; class=&quot;row_heading level0 row6&quot;&gt;6&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row6_col0&quot; class=&quot;data row6 col0&quot;&gt;Ordinal Features&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row6_col1&quot; class=&quot;data row6 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row7&quot; class=&quot;row_heading level0 row7&quot;&gt;7&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row7_col0&quot; class=&quot;data row7 col0&quot;&gt;High Cardinality Features&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row7_col1&quot; class=&quot;data row7 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row8&quot; class=&quot;row_heading level0 row8&quot;&gt;8&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row8_col0&quot; class=&quot;data row8 col0&quot;&gt;High Cardinality Method&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row8_col1&quot; class=&quot;data row8 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row9&quot; class=&quot;row_heading level0 row9&quot;&gt;9&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row9_col0&quot; class=&quot;data row9 col0&quot;&gt;Transformed Train Set&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row9_col1&quot; class=&quot;data row9 col1&quot;&gt;(1734, 21)&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row10&quot; class=&quot;row_heading level0 row10&quot;&gt;10&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row10_col0&quot; class=&quot;data row10 col0&quot;&gt;Transformed Test Set&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row10_col1&quot; class=&quot;data row10 col1&quot;&gt;(92, 21)&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row11&quot; class=&quot;row_heading level0 row11&quot;&gt;11&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row11_col0&quot; class=&quot;data row11 col0&quot;&gt;Shuffle Train-Test&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row11_col1&quot; class=&quot;data row11 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row12&quot; class=&quot;row_heading level0 row12&quot;&gt;12&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row12_col0&quot; class=&quot;data row12 col0&quot;&gt;Stratify Train-Test&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row12_col1&quot; class=&quot;data row12 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row13&quot; class=&quot;row_heading level0 row13&quot;&gt;13&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row13_col0&quot; class=&quot;data row13 col0&quot;&gt;Fold Generator&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row13_col1&quot; class=&quot;data row13 col1&quot;&gt;TimeSeriesSplit&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row14&quot; class=&quot;row_heading level0 row14&quot;&gt;14&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row14_col0&quot; class=&quot;data row14 col0&quot;&gt;Fold Number&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row14_col1&quot; class=&quot;data row14 col1&quot;&gt;3&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row15&quot; class=&quot;row_heading level0 row15&quot;&gt;15&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row15_col0&quot; class=&quot;data row15 col0&quot;&gt;CPU Jobs&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row15_col1&quot; class=&quot;data row15 col1&quot;&gt;-1&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row16&quot; class=&quot;row_heading level0 row16&quot;&gt;16&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row16_col0&quot; class=&quot;data row16 col0&quot;&gt;Use GPU&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row16_col1&quot; class=&quot;data row16 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row17&quot; class=&quot;row_heading level0 row17&quot;&gt;17&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row17_col0&quot; class=&quot;data row17 col0&quot;&gt;Log Experiment&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row17_col1&quot; class=&quot;data row17 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row18&quot; class=&quot;row_heading level0 row18&quot;&gt;18&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row18_col0&quot; class=&quot;data row18 col0&quot;&gt;Experiment Name&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row18_col1&quot; class=&quot;data row18 col1&quot;&gt;reg-default-name&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row19&quot; class=&quot;row_heading level0 row19&quot;&gt;19&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row19_col0&quot; class=&quot;data row19 col0&quot;&gt;USI&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row19_col1&quot; class=&quot;data row19 col1&quot;&gt;cd06&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row20&quot; class=&quot;row_heading level0 row20&quot;&gt;20&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row20_col0&quot; class=&quot;data row20 col0&quot;&gt;Imputation Type&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row20_col1&quot; class=&quot;data row20 col1&quot;&gt;simple&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row21&quot; class=&quot;row_heading level0 row21&quot;&gt;21&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row21_col0&quot; class=&quot;data row21 col0&quot;&gt;Iterative Imputation Iteration&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row21_col1&quot; class=&quot;data row21 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row22&quot; class=&quot;row_heading level0 row22&quot;&gt;22&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row22_col0&quot; class=&quot;data row22 col0&quot;&gt;Numeric Imputer&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row22_col1&quot; class=&quot;data row22 col1&quot;&gt;mean&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row23&quot; class=&quot;row_heading level0 row23&quot;&gt;23&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row23_col0&quot; class=&quot;data row23 col0&quot;&gt;Iterative Imputation Numeric Model&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row23_col1&quot; class=&quot;data row23 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row24&quot; class=&quot;row_heading level0 row24&quot;&gt;24&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row24_col0&quot; class=&quot;data row24 col0&quot;&gt;Categorical Imputer&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row24_col1&quot; class=&quot;data row24 col1&quot;&gt;constant&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row25&quot; class=&quot;row_heading level0 row25&quot;&gt;25&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row25_col0&quot; class=&quot;data row25 col0&quot;&gt;Iterative Imputation Categorical Model&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row25_col1&quot; class=&quot;data row25 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row26&quot; class=&quot;row_heading level0 row26&quot;&gt;26&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row26_col0&quot; class=&quot;data row26 col0&quot;&gt;Unknown Categoricals Handling&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row26_col1&quot; class=&quot;data row26 col1&quot;&gt;least_frequent&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row27&quot; class=&quot;row_heading level0 row27&quot;&gt;27&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row27_col0&quot; class=&quot;data row27 col0&quot;&gt;Normalize&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row27_col1&quot; class=&quot;data row27 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row28&quot; class=&quot;row_heading level0 row28&quot;&gt;28&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row28_col0&quot; class=&quot;data row28 col0&quot;&gt;Normalize Method&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row28_col1&quot; class=&quot;data row28 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row29&quot; class=&quot;row_heading level0 row29&quot;&gt;29&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row29_col0&quot; class=&quot;data row29 col0&quot;&gt;Transformation&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row29_col1&quot; class=&quot;data row29 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row30&quot; class=&quot;row_heading level0 row30&quot;&gt;30&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row30_col0&quot; class=&quot;data row30 col0&quot;&gt;Transformation Method&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row30_col1&quot; class=&quot;data row30 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row31&quot; class=&quot;row_heading level0 row31&quot;&gt;31&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row31_col0&quot; class=&quot;data row31 col0&quot;&gt;PCA&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row31_col1&quot; class=&quot;data row31 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row32&quot; class=&quot;row_heading level0 row32&quot;&gt;32&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row32_col0&quot; class=&quot;data row32 col0&quot;&gt;PCA Method&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row32_col1&quot; class=&quot;data row32 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row33&quot; class=&quot;row_heading level0 row33&quot;&gt;33&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row33_col0&quot; class=&quot;data row33 col0&quot;&gt;PCA Components&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row33_col1&quot; class=&quot;data row33 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row34&quot; class=&quot;row_heading level0 row34&quot;&gt;34&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row34_col0&quot; class=&quot;data row34 col0&quot;&gt;Ignore Low Variance&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row34_col1&quot; class=&quot;data row34 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row35&quot; class=&quot;row_heading level0 row35&quot;&gt;35&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row35_col0&quot; class=&quot;data row35 col0&quot;&gt;Combine Rare Levels&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row35_col1&quot; class=&quot;data row35 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row36&quot; class=&quot;row_heading level0 row36&quot;&gt;36&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row36_col0&quot; class=&quot;data row36 col0&quot;&gt;Rare Level Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row36_col1&quot; class=&quot;data row36 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row37&quot; class=&quot;row_heading level0 row37&quot;&gt;37&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row37_col0&quot; class=&quot;data row37 col0&quot;&gt;Numeric Binning&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row37_col1&quot; class=&quot;data row37 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row38&quot; class=&quot;row_heading level0 row38&quot;&gt;38&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row38_col0&quot; class=&quot;data row38 col0&quot;&gt;Remove Outliers&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row38_col1&quot; class=&quot;data row38 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row39&quot; class=&quot;row_heading level0 row39&quot;&gt;39&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row39_col0&quot; class=&quot;data row39 col0&quot;&gt;Outliers Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row39_col1&quot; class=&quot;data row39 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row40&quot; class=&quot;row_heading level0 row40&quot;&gt;40&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row40_col0&quot; class=&quot;data row40 col0&quot;&gt;Remove Multicollinearity&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row40_col1&quot; class=&quot;data row40 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row41&quot; class=&quot;row_heading level0 row41&quot;&gt;41&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row41_col0&quot; class=&quot;data row41 col0&quot;&gt;Multicollinearity Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row41_col1&quot; class=&quot;data row41 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row42&quot; class=&quot;row_heading level0 row42&quot;&gt;42&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row42_col0&quot; class=&quot;data row42 col0&quot;&gt;Remove Perfect Collinearity&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row42_col1&quot; class=&quot;data row42 col1&quot;&gt;True&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row43&quot; class=&quot;row_heading level0 row43&quot;&gt;43&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row43_col0&quot; class=&quot;data row43 col0&quot;&gt;Clustering&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row43_col1&quot; class=&quot;data row43 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row44&quot; class=&quot;row_heading level0 row44&quot;&gt;44&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row44_col0&quot; class=&quot;data row44 col0&quot;&gt;Clustering Iteration&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row44_col1&quot; class=&quot;data row44 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row45&quot; class=&quot;row_heading level0 row45&quot;&gt;45&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row45_col0&quot; class=&quot;data row45 col0&quot;&gt;Polynomial Features&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row45_col1&quot; class=&quot;data row45 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row46&quot; class=&quot;row_heading level0 row46&quot;&gt;46&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row46_col0&quot; class=&quot;data row46 col0&quot;&gt;Polynomial Degree&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row46_col1&quot; class=&quot;data row46 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row47&quot; class=&quot;row_heading level0 row47&quot;&gt;47&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row47_col0&quot; class=&quot;data row47 col0&quot;&gt;Trignometry Features&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row47_col1&quot; class=&quot;data row47 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row48&quot; class=&quot;row_heading level0 row48&quot;&gt;48&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row48_col0&quot; class=&quot;data row48 col0&quot;&gt;Polynomial Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row48_col1&quot; class=&quot;data row48 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row49&quot; class=&quot;row_heading level0 row49&quot;&gt;49&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row49_col0&quot; class=&quot;data row49 col0&quot;&gt;Group Features&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row49_col1&quot; class=&quot;data row49 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row50&quot; class=&quot;row_heading level0 row50&quot;&gt;50&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row50_col0&quot; class=&quot;data row50 col0&quot;&gt;Feature Selection&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row50_col1&quot; class=&quot;data row50 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row51&quot; class=&quot;row_heading level0 row51&quot;&gt;51&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row51_col0&quot; class=&quot;data row51 col0&quot;&gt;Feature Selection Method&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row51_col1&quot; class=&quot;data row51 col1&quot;&gt;classic&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row52&quot; class=&quot;row_heading level0 row52&quot;&gt;52&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row52_col0&quot; class=&quot;data row52 col0&quot;&gt;Features Selection Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row52_col1&quot; class=&quot;data row52 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row53&quot; class=&quot;row_heading level0 row53&quot;&gt;53&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row53_col0&quot; class=&quot;data row53 col0&quot;&gt;Feature Interaction&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row53_col1&quot; class=&quot;data row53 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row54&quot; class=&quot;row_heading level0 row54&quot;&gt;54&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row54_col0&quot; class=&quot;data row54 col0&quot;&gt;Feature Ratio&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row54_col1&quot; class=&quot;data row54 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row55&quot; class=&quot;row_heading level0 row55&quot;&gt;55&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row55_col0&quot; class=&quot;data row55 col0&quot;&gt;Interaction Threshold&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row55_col1&quot; class=&quot;data row55 col1&quot;&gt;None&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row56&quot; class=&quot;row_heading level0 row56&quot;&gt;56&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row56_col0&quot; class=&quot;data row56 col0&quot;&gt;Transform Target&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row56_col1&quot; class=&quot;data row56 col1&quot;&gt;False&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_21f7f_level0_row57&quot; class=&quot;row_heading level0 row57&quot;&gt;57&lt;/th&gt;
+                        &lt;td id=&quot;T_21f7f_row57_col0&quot; class=&quot;data row57 col0&quot;&gt;Transform Target Method&lt;/td&gt;
+                        &lt;td id=&quot;T_21f7f_row57_col1&quot; class=&quot;data row57 col1&quot;&gt;box-cox&lt;/td&gt;
+            &lt;/tr&gt;
+    &lt;/tbody&gt;&lt;/table&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;best_model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;compare_models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'MAE'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;style type=&quot;text/css&quot;&gt;
+    #T_35e9b_ th {
+          text-align: left;
+    }#T_35e9b_row0_col0,#T_35e9b_row0_col6,#T_35e9b_row1_col0,#T_35e9b_row1_col1,#T_35e9b_row1_col2,#T_35e9b_row1_col3,#T_35e9b_row1_col4,#T_35e9b_row1_col5,#T_35e9b_row1_col6,#T_35e9b_row2_col0,#T_35e9b_row2_col1,#T_35e9b_row2_col2,#T_35e9b_row2_col3,#T_35e9b_row2_col4,#T_35e9b_row2_col5,#T_35e9b_row2_col6,#T_35e9b_row3_col0,#T_35e9b_row3_col1,#T_35e9b_row3_col2,#T_35e9b_row3_col3,#T_35e9b_row3_col4,#T_35e9b_row3_col5,#T_35e9b_row3_col6,#T_35e9b_row4_col0,#T_35e9b_row4_col1,#T_35e9b_row4_col2,#T_35e9b_row4_col3,#T_35e9b_row4_col4,#T_35e9b_row4_col5,#T_35e9b_row5_col0,#T_35e9b_row5_col1,#T_35e9b_row5_col2,#T_35e9b_row5_col3,#T_35e9b_row5_col4,#T_35e9b_row5_col5,#T_35e9b_row5_col6,#T_35e9b_row6_col0,#T_35e9b_row6_col1,#T_35e9b_row6_col2,#T_35e9b_row6_col3,#T_35e9b_row6_col4,#T_35e9b_row6_col5,#T_35e9b_row6_col6,#T_35e9b_row7_col0,#T_35e9b_row7_col1,#T_35e9b_row7_col2,#T_35e9b_row7_col3,#T_35e9b_row7_col4,#T_35e9b_row7_col5,#T_35e9b_row7_col6,#T_35e9b_row8_col0,#T_35e9b_row8_col1,#T_35e9b_row8_col2,#T_35e9b_row8_col3,#T_35e9b_row8_col4,#T_35e9b_row8_col5,#T_35e9b_row8_col6,#T_35e9b_row9_col0,#T_35e9b_row9_col1,#T_35e9b_row9_col2,#T_35e9b_row9_col3,#T_35e9b_row9_col4,#T_35e9b_row9_col5,#T_35e9b_row9_col6,#T_35e9b_row10_col0,#T_35e9b_row10_col1,#T_35e9b_row10_col2,#T_35e9b_row10_col3,#T_35e9b_row10_col4,#T_35e9b_row10_col5,#T_35e9b_row10_col6,#T_35e9b_row11_col0,#T_35e9b_row11_col1,#T_35e9b_row11_col2,#T_35e9b_row11_col3,#T_35e9b_row11_col4,#T_35e9b_row11_col5,#T_35e9b_row11_col6,#T_35e9b_row12_col0,#T_35e9b_row12_col1,#T_35e9b_row12_col2,#T_35e9b_row12_col3,#T_35e9b_row12_col4,#T_35e9b_row12_col5,#T_35e9b_row12_col6,#T_35e9b_row13_col0,#T_35e9b_row13_col1,#T_35e9b_row13_col2,#T_35e9b_row13_col3,#T_35e9b_row13_col4,#T_35e9b_row13_col5,#T_35e9b_row13_col6,#T_35e9b_row14_col0,#T_35e9b_row14_col1,#T_35e9b_row14_col2,#T_35e9b_row14_col3,#T_35e9b_row14_col4,#T_35e9b_row14_col5,#T_35e9b_row14_col6,#T_35e9b_row15_col0,#T_35e9b_row15_col1,#T_35e9b_row15_col2,#T_35e9b_row15_col3,#T_35e9b_row15_col4,#T_35e9b_row15_col5,#T_35e9b_row15_col6,#T_35e9b_row16_col0,#T_35e9b_row16_col1,#T_35e9b_row16_col2,#T_35e9b_row16_col3,#T_35e9b_row16_col4,#T_35e9b_row16_col5,#T_35e9b_row16_col6,#T_35e9b_row17_col0,#T_35e9b_row17_col1,#T_35e9b_row17_col2,#T_35e9b_row17_col3,#T_35e9b_row17_col4,#T_35e9b_row17_col5,#T_35e9b_row17_col6{
+            text-align:  left;
+            text-align:  left;
+        }#T_35e9b_row0_col1,#T_35e9b_row0_col2,#T_35e9b_row0_col3,#T_35e9b_row0_col4,#T_35e9b_row0_col5,#T_35e9b_row4_col6{
+            text-align:  left;
+            text-align:  left;
+            background-color:  yellow;
+        }#T_35e9b_row0_col7,#T_35e9b_row12_col7,#T_35e9b_row15_col7,#T_35e9b_row16_col7{
+            text-align:  left;
+            text-align:  left;
+            background-color:  yellow;
+            background-color:  lightgrey;
+        }#T_35e9b_row1_col7,#T_35e9b_row2_col7,#T_35e9b_row3_col7,#T_35e9b_row4_col7,#T_35e9b_row5_col7,#T_35e9b_row6_col7,#T_35e9b_row7_col7,#T_35e9b_row8_col7,#T_35e9b_row9_col7,#T_35e9b_row10_col7,#T_35e9b_row11_col7,#T_35e9b_row13_col7,#T_35e9b_row14_col7,#T_35e9b_row17_col7{
+            text-align:  left;
+            text-align:  left;
+            background-color:  lightgrey;
+        }&lt;/style&gt;
+&lt;table id=&quot;T_35e9b_&quot;&gt;&lt;thead&gt;    &lt;tr&gt;        &lt;th class=&quot;blank level0&quot;&gt;&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col0&quot;&gt;Model&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col1&quot;&gt;MAE&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col2&quot;&gt;MSE&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col3&quot;&gt;RMSE&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col4&quot;&gt;R2&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col5&quot;&gt;RMSLE&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col6&quot;&gt;MAPE&lt;/th&gt;        &lt;th class=&quot;col_heading level0 col7&quot;&gt;TT (Sec)&lt;/th&gt;    &lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+                &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row0&quot; class=&quot;row_heading level0 row0&quot;&gt;br&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row0_col0&quot; class=&quot;data row0 col0&quot;&gt;Bayesian Ridge&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row0_col1&quot; class=&quot;data row0 col1&quot;&gt;3.7656&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row0_col2&quot; class=&quot;data row0 col2&quot;&gt;22.3829&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row0_col3&quot; class=&quot;data row0 col3&quot;&gt;4.7245&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row0_col4&quot; class=&quot;data row0 col4&quot;&gt;0.4782&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row0_col5&quot; class=&quot;data row0 col5&quot;&gt;0.2346&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row0_col6&quot; class=&quot;data row0 col6&quot;&gt;0.2114&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row0_col7&quot; class=&quot;data row0 col7&quot;&gt;0.0067&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row1&quot; class=&quot;row_heading level0 row1&quot;&gt;ridge&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row1_col0&quot; class=&quot;data row1 col0&quot;&gt;Ridge Regression&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row1_col1&quot; class=&quot;data row1 col1&quot;&gt;3.7711&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row1_col2&quot; class=&quot;data row1 col2&quot;&gt;22.4091&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row1_col3&quot; class=&quot;data row1 col3&quot;&gt;4.7278&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row1_col4&quot; class=&quot;data row1 col4&quot;&gt;0.4772&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row1_col5&quot; class=&quot;data row1 col5&quot;&gt;0.2352&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row1_col6&quot; class=&quot;data row1 col6&quot;&gt;0.2124&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row1_col7&quot; class=&quot;data row1 col7&quot;&gt;0.5100&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row2&quot; class=&quot;row_heading level0 row2&quot;&gt;lr&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row2_col0&quot; class=&quot;data row2 col0&quot;&gt;Linear Regression&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row2_col1&quot; class=&quot;data row2 col1&quot;&gt;3.7802&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row2_col2&quot; class=&quot;data row2 col2&quot;&gt;22.4823&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row2_col3&quot; class=&quot;data row2 col3&quot;&gt;4.7364&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row2_col4&quot; class=&quot;data row2 col4&quot;&gt;0.4747&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row2_col5&quot; class=&quot;data row2 col5&quot;&gt;0.2360&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row2_col6&quot; class=&quot;data row2 col6&quot;&gt;0.2137&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row2_col7&quot; class=&quot;data row2 col7&quot;&gt;0.7267&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row3&quot; class=&quot;row_heading level0 row3&quot;&gt;lightgbm&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row3_col0&quot; class=&quot;data row3 col0&quot;&gt;Light Gradient Boosting Machine&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row3_col1&quot; class=&quot;data row3 col1&quot;&gt;3.9912&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row3_col2&quot; class=&quot;data row3 col2&quot;&gt;25.6055&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row3_col3&quot; class=&quot;data row3 col3&quot;&gt;5.0594&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row3_col4&quot; class=&quot;data row3 col4&quot;&gt;0.3971&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row3_col5&quot; class=&quot;data row3 col5&quot;&gt;0.2429&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row3_col6&quot; class=&quot;data row3 col6&quot;&gt;0.2038&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row3_col7&quot; class=&quot;data row3 col7&quot;&gt;0.0333&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row4&quot; class=&quot;row_heading level0 row4&quot;&gt;gbr&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row4_col0&quot; class=&quot;data row4 col0&quot;&gt;Gradient Boosting Regressor&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row4_col1&quot; class=&quot;data row4 col1&quot;&gt;4.0101&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row4_col2&quot; class=&quot;data row4 col2&quot;&gt;26.1919&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row4_col3&quot; class=&quot;data row4 col3&quot;&gt;5.1171&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row4_col4&quot; class=&quot;data row4 col4&quot;&gt;0.3830&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row4_col5&quot; class=&quot;data row4 col5&quot;&gt;0.2422&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row4_col6&quot; class=&quot;data row4 col6&quot;&gt;0.2001&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row4_col7&quot; class=&quot;data row4 col7&quot;&gt;0.0333&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row5&quot; class=&quot;row_heading level0 row5&quot;&gt;ada&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row5_col0&quot; class=&quot;data row5 col0&quot;&gt;AdaBoost Regressor&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row5_col1&quot; class=&quot;data row5 col1&quot;&gt;4.1772&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row5_col2&quot; class=&quot;data row5 col2&quot;&gt;28.3098&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row5_col3&quot; class=&quot;data row5 col3&quot;&gt;5.3089&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row5_col4&quot; class=&quot;data row5 col4&quot;&gt;0.3409&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row5_col5&quot; class=&quot;data row5 col5&quot;&gt;0.2481&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row5_col6&quot; class=&quot;data row5 col6&quot;&gt;0.2129&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row5_col7&quot; class=&quot;data row5 col7&quot;&gt;0.0433&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row6&quot; class=&quot;row_heading level0 row6&quot;&gt;rf&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row6_col0&quot; class=&quot;data row6 col0&quot;&gt;Random Forest Regressor&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row6_col1&quot; class=&quot;data row6 col1&quot;&gt;4.2648&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row6_col2&quot; class=&quot;data row6 col2&quot;&gt;29.6002&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row6_col3&quot; class=&quot;data row6 col3&quot;&gt;5.4396&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row6_col4&quot; class=&quot;data row6 col4&quot;&gt;0.3006&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row6_col5&quot; class=&quot;data row6 col5&quot;&gt;0.2641&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row6_col6&quot; class=&quot;data row6 col6&quot;&gt;0.2153&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row6_col7&quot; class=&quot;data row6 col7&quot;&gt;0.2800&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row7&quot; class=&quot;row_heading level0 row7&quot;&gt;huber&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row7_col0&quot; class=&quot;data row7 col0&quot;&gt;Huber Regressor&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row7_col1&quot; class=&quot;data row7 col1&quot;&gt;4.3631&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row7_col2&quot; class=&quot;data row7 col2&quot;&gt;31.2640&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row7_col3&quot; class=&quot;data row7 col3&quot;&gt;5.5737&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row7_col4&quot; class=&quot;data row7 col4&quot;&gt;0.2780&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row7_col5&quot; class=&quot;data row7 col5&quot;&gt;0.2552&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row7_col6&quot; class=&quot;data row7 col6&quot;&gt;0.2028&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row7_col7&quot; class=&quot;data row7 col7&quot;&gt;0.0200&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row8&quot; class=&quot;row_heading level0 row8&quot;&gt;xgboost&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row8_col0&quot; class=&quot;data row8 col0&quot;&gt;Extreme Gradient Boosting&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row8_col1&quot; class=&quot;data row8 col1&quot;&gt;4.5708&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row8_col2&quot; class=&quot;data row8 col2&quot;&gt;33.5601&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row8_col3&quot; class=&quot;data row8 col3&quot;&gt;5.7889&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row8_col4&quot; class=&quot;data row8 col4&quot;&gt;0.2151&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row8_col5&quot; class=&quot;data row8 col5&quot;&gt;0.2863&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row8_col6&quot; class=&quot;data row8 col6&quot;&gt;0.2276&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row8_col7&quot; class=&quot;data row8 col7&quot;&gt;0.2400&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row9&quot; class=&quot;row_heading level0 row9&quot;&gt;et&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row9_col0&quot; class=&quot;data row9 col0&quot;&gt;Extra Trees Regressor&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row9_col1&quot; class=&quot;data row9 col1&quot;&gt;4.5897&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row9_col2&quot; class=&quot;data row9 col2&quot;&gt;34.1530&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row9_col3&quot; class=&quot;data row9 col3&quot;&gt;5.8431&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row9_col4&quot; class=&quot;data row9 col4&quot;&gt;0.1910&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row9_col5&quot; class=&quot;data row9 col5&quot;&gt;0.2934&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row9_col6&quot; class=&quot;data row9 col6&quot;&gt;0.2352&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row9_col7&quot; class=&quot;data row9 col7&quot;&gt;0.2400&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row10&quot; class=&quot;row_heading level0 row10&quot;&gt;knn&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row10_col0&quot; class=&quot;data row10 col0&quot;&gt;K Neighbors Regressor&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row10_col1&quot; class=&quot;data row10 col1&quot;&gt;4.8785&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row10_col2&quot; class=&quot;data row10 col2&quot;&gt;37.8773&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row10_col3&quot; class=&quot;data row10 col3&quot;&gt;6.1444&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row10_col4&quot; class=&quot;data row10 col4&quot;&gt;0.1191&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row10_col5&quot; class=&quot;data row10 col5&quot;&gt;0.2891&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row10_col6&quot; class=&quot;data row10 col6&quot;&gt;0.2424&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row10_col7&quot; class=&quot;data row10 col7&quot;&gt;0.0467&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row11&quot; class=&quot;row_heading level0 row11&quot;&gt;dt&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row11_col0&quot; class=&quot;data row11 col0&quot;&gt;Decision Tree Regressor&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row11_col1&quot; class=&quot;data row11 col1&quot;&gt;5.1239&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row11_col2&quot; class=&quot;data row11 col2&quot;&gt;42.4573&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row11_col3&quot; class=&quot;data row11 col3&quot;&gt;6.5113&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row11_col4&quot; class=&quot;data row11 col4&quot;&gt;0.0035&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row11_col5&quot; class=&quot;data row11 col5&quot;&gt;0.3303&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row11_col6&quot; class=&quot;data row11 col6&quot;&gt;0.2628&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row11_col7&quot; class=&quot;data row11 col7&quot;&gt;0.0100&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row12&quot; class=&quot;row_heading level0 row12&quot;&gt;omp&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row12_col0&quot; class=&quot;data row12 col0&quot;&gt;Orthogonal Matching Pursuit&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row12_col1&quot; class=&quot;data row12 col1&quot;&gt;5.3050&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row12_col2&quot; class=&quot;data row12 col2&quot;&gt;45.5557&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row12_col3&quot; class=&quot;data row12 col3&quot;&gt;6.7185&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row12_col4&quot; class=&quot;data row12 col4&quot;&gt;-0.0503&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row12_col5&quot; class=&quot;data row12 col5&quot;&gt;0.3137&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row12_col6&quot; class=&quot;data row12 col6&quot;&gt;0.2706&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row12_col7&quot; class=&quot;data row12 col7&quot;&gt;0.0067&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row13&quot; class=&quot;row_heading level0 row13&quot;&gt;en&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row13_col0&quot; class=&quot;data row13 col0&quot;&gt;Elastic Net&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row13_col1&quot; class=&quot;data row13 col1&quot;&gt;5.5900&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row13_col2&quot; class=&quot;data row13 col2&quot;&gt;50.1346&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row13_col3&quot; class=&quot;data row13 col3&quot;&gt;7.0523&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row13_col4&quot; class=&quot;data row13 col4&quot;&gt;-0.1647&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row13_col5&quot; class=&quot;data row13 col5&quot;&gt;0.3285&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row13_col6&quot; class=&quot;data row13 col6&quot;&gt;0.2809&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row13_col7&quot; class=&quot;data row13 col7&quot;&gt;0.5267&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row14&quot; class=&quot;row_heading level0 row14&quot;&gt;lasso&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row14_col0&quot; class=&quot;data row14 col0&quot;&gt;Lasso Regression&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row14_col1&quot; class=&quot;data row14 col1&quot;&gt;5.6448&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row14_col2&quot; class=&quot;data row14 col2&quot;&gt;51.1533&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row14_col3&quot; class=&quot;data row14 col3&quot;&gt;7.1169&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row14_col4&quot; class=&quot;data row14 col4&quot;&gt;-0.1856&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row14_col5&quot; class=&quot;data row14 col5&quot;&gt;0.3314&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row14_col6&quot; class=&quot;data row14 col6&quot;&gt;0.2824&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row14_col7&quot; class=&quot;data row14 col7&quot;&gt;0.5167&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row15&quot; class=&quot;row_heading level0 row15&quot;&gt;llar&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row15_col0&quot; class=&quot;data row15 col0&quot;&gt;Lasso Least Angle Regression&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row15_col1&quot; class=&quot;data row15 col1&quot;&gt;5.8939&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row15_col2&quot; class=&quot;data row15 col2&quot;&gt;56.1759&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row15_col3&quot; class=&quot;data row15 col3&quot;&gt;7.4654&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row15_col4&quot; class=&quot;data row15 col4&quot;&gt;-0.2946&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row15_col5&quot; class=&quot;data row15 col5&quot;&gt;0.3417&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row15_col6&quot; class=&quot;data row15 col6&quot;&gt;0.2815&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row15_col7&quot; class=&quot;data row15 col7&quot;&gt;0.0067&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row16&quot; class=&quot;row_heading level0 row16&quot;&gt;par&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row16_col0&quot; class=&quot;data row16 col0&quot;&gt;Passive Aggressive Regressor&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row16_col1&quot; class=&quot;data row16 col1&quot;&gt;6.3936&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row16_col2&quot; class=&quot;data row16 col2&quot;&gt;64.9179&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row16_col3&quot; class=&quot;data row16 col3&quot;&gt;8.0232&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row16_col4&quot; class=&quot;data row16 col4&quot;&gt;-0.5318&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row16_col5&quot; class=&quot;data row16 col5&quot;&gt;0.3753&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row16_col6&quot; class=&quot;data row16 col6&quot;&gt;0.2990&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row16_col7&quot; class=&quot;data row16 col7&quot;&gt;0.0067&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                        &lt;th id=&quot;T_35e9b_level0_row17&quot; class=&quot;row_heading level0 row17&quot;&gt;lar&lt;/th&gt;
+                        &lt;td id=&quot;T_35e9b_row17_col0&quot; class=&quot;data row17 col0&quot;&gt;Least Angle Regression&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row17_col1&quot; class=&quot;data row17 col1&quot;&gt;1084.2732&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row17_col2&quot; class=&quot;data row17 col2&quot;&gt;4596012.7859&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row17_col3&quot; class=&quot;data row17 col3&quot;&gt;1251.2497&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row17_col4&quot; class=&quot;data row17 col4&quot;&gt;-100016.0471&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row17_col5&quot; class=&quot;data row17 col5&quot;&gt;1.9992&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row17_col6&quot; class=&quot;data row17 col6&quot;&gt;53.5604&lt;/td&gt;
+                        &lt;td id=&quot;T_35e9b_row17_col7&quot; class=&quot;data row17 col7&quot;&gt;0.0100&lt;/td&gt;
+            &lt;/tr&gt;
+    &lt;/tbody&gt;&lt;/table&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;finalize_model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;generate-predictions&quot;&gt;Generate predictions&lt;/h1&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;all_dates&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;date_range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'2013-01-01'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'2019-12-31'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;freq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'D'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all_dates&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'month'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;month&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'year'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;year&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'day_of_week'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dayofweek&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'day_of_year'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dayofyear&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div&gt;
+&lt;style scoped=&quot;&quot;&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;date&lt;/th&gt;
+      &lt;th&gt;month&lt;/th&gt;
+      &lt;th&gt;year&lt;/th&gt;
+      &lt;th&gt;day_of_week&lt;/th&gt;
+      &lt;th&gt;day_of_year&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;2013-01-01&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;2013-01-02&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;2013-01-03&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;2013-01-04&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;2013-01-05&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2551&lt;/th&gt;
+      &lt;td&gt;2019-12-27&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;361&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2552&lt;/th&gt;
+      &lt;td&gt;2019-12-28&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;362&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2553&lt;/th&gt;
+      &lt;td&gt;2019-12-29&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;363&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2554&lt;/th&gt;
+      &lt;td&gt;2019-12-30&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;364&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2555&lt;/th&gt;
+      &lt;td&gt;2019-12-31&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;365&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;2556 rows × 5 columns&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pycaret.regression&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;predict_model&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;predict_model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'time_series'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div&gt;
+&lt;style scoped=&quot;&quot;&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;date&lt;/th&gt;
+      &lt;th&gt;month&lt;/th&gt;
+      &lt;th&gt;year&lt;/th&gt;
+      &lt;th&gt;day_of_week&lt;/th&gt;
+      &lt;th&gt;day_of_year&lt;/th&gt;
+      &lt;th&gt;Label&lt;/th&gt;
+      &lt;th&gt;time_series&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;2013-01-01&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;8.927565&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;2013-01-02&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;9.515175&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;2013-01-03&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;10.213244&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;2013-01-04&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;11.780002&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;2013-01-05&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;13.710251&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2551&lt;/th&gt;
+      &lt;td&gt;2019-12-27&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;361&lt;/td&gt;
+      &lt;td&gt;21.706059&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2552&lt;/th&gt;
+      &lt;td&gt;2019-12-28&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;362&lt;/td&gt;
+      &lt;td&gt;23.636309&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2553&lt;/th&gt;
+      &lt;td&gt;2019-12-29&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;363&lt;/td&gt;
+      &lt;td&gt;24.467096&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2554&lt;/th&gt;
+      &lt;td&gt;2019-12-30&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;364&lt;/td&gt;
+      &lt;td&gt;16.320039&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2555&lt;/th&gt;
+      &lt;td&gt;2019-12-31&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;365&lt;/td&gt;
+      &lt;td&gt;18.949996&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;2556 rows × 7 columns&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;final_df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;how&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'left'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;left_on&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'time_series'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right_on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'time_series'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;final_df&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div&gt;
+&lt;style scoped=&quot;&quot;&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;date&lt;/th&gt;
+      &lt;th&gt;month_x&lt;/th&gt;
+      &lt;th&gt;year_x&lt;/th&gt;
+      &lt;th&gt;day_of_week_x&lt;/th&gt;
+      &lt;th&gt;day_of_year_x&lt;/th&gt;
+      &lt;th&gt;Label&lt;/th&gt;
+      &lt;th&gt;time_series&lt;/th&gt;
+      &lt;th&gt;sales&lt;/th&gt;
+      &lt;th&gt;month_y&lt;/th&gt;
+      &lt;th&gt;year_y&lt;/th&gt;
+      &lt;th&gt;day_of_week_y&lt;/th&gt;
+      &lt;th&gt;day_of_year_y&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;2013-01-01&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;8.927565&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;13.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;2013.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;2013-01-02&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;9.515175&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;11.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;2013.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;2013-01-03&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;10.213244&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;14.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;2013.0&lt;/td&gt;
+      &lt;td&gt;3.0&lt;/td&gt;
+      &lt;td&gt;3.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;2013-01-04&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;11.780002&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;13.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;2013.0&lt;/td&gt;
+      &lt;td&gt;4.0&lt;/td&gt;
+      &lt;td&gt;4.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;2013-01-05&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2013&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;13.710251&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;10.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;2013.0&lt;/td&gt;
+      &lt;td&gt;5.0&lt;/td&gt;
+      &lt;td&gt;5.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2551&lt;/th&gt;
+      &lt;td&gt;2019-12-27&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;361&lt;/td&gt;
+      &lt;td&gt;21.706059&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2552&lt;/th&gt;
+      &lt;td&gt;2019-12-28&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;362&lt;/td&gt;
+      &lt;td&gt;23.636309&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2553&lt;/th&gt;
+      &lt;td&gt;2019-12-29&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;363&lt;/td&gt;
+      &lt;td&gt;24.467096&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2554&lt;/th&gt;
+      &lt;td&gt;2019-12-30&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;364&lt;/td&gt;
+      &lt;td&gt;16.320039&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2555&lt;/th&gt;
+      &lt;td&gt;2019-12-31&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;2019&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;365&lt;/td&gt;
+      &lt;td&gt;18.949996&lt;/td&gt;
+      &lt;td&gt;store_1_item_1&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;2556 rows × 12 columns&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;final_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'sales'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Label'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'plotly_dark'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\exercise\pycaret\1_2_image2.png&quot; alt=&quot;image2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://towardsdatascience.com/multiple-time-series-forecasting-with-pycaret-bc0a779a22fe&quot;&gt;Reference : Multiple Time Series Forecasting with PyCaret&lt;/a&gt;&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>ilvnax24er</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="exercise" />
+      
+
+      
+        <summary type="html">Multiple Time Series Forecasting with PyCaret</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
       <title type="html">Time Series Forecasting with PyCaret Regression Module</title>
       <link href="https://ilvnax24er.github.io/Time-Series-Forecasting-with-PyCaret-Regression-Module" rel="alternate" type="text/html" title="Time Series Forecasting with PyCaret Regression Module" />
       <published>2021-07-23T00:00:00+09:00</published>
       <updated>2021-07-23T00:00:00+09:00</updated>
       <id>https://ilvnax24er.github.io/Time-Series-Forecasting-with-PyCaret-Regression-Module</id>
-      <content type="html" xml:base="https://ilvnax24er.github.io/Time-Series-Forecasting-with-PyCaret-Regression-Module">&lt;h1 id=&quot;imports&quot;&gt;Imports&lt;/h1&gt;
+      <content type="html" xml:base="https://ilvnax24er.github.io/Time-Series-Forecasting-with-PyCaret-Regression-Module">&lt;h1 id=&quot;time-series-forecasting-with-pycaret-regression-module&quot;&gt;Time Series Forecasting with PyCaret Regression Module&lt;/h1&gt;
+
+&lt;h1 id=&quot;imports&quot;&gt;Imports&lt;/h1&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
@@ -849,7 +2915,7 @@
 
 &lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\exercise\Time-Series-Forecasting-with-PyCaret-Regression-Module\plot2.png&quot; alt=&quot;image2&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Reference : https://towardsdatascience.com/time-series-forecasting-with-pycaret-regression-module-237b703a0c63&lt;/p&gt;</content>
+&lt;p&gt;&lt;a href=&quot;https://towardsdatascience.com/time-series-forecasting-with-pycaret-regression-module-237b703a0c63&quot;&gt;Reference : Time Series Forecasting with PyCaret Regression Module&lt;/a&gt;&lt;/p&gt;</content>
 
       
       
@@ -870,7 +2936,7 @@
       
 
       
-        <summary type="html">Imports</summary>
+        <summary type="html">Time Series Forecasting with PyCaret Regression Module</summary>
       
 
       
@@ -2547,330 +4613,6 @@ x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다.
 
       
         <summary type="html">창고에서 일하는 로봇</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Reinforcement Learning - Q-learning</title>
-      <link href="https://ilvnax24er.github.io/qlearning" rel="alternate" type="text/html" title="Reinforcement Learning - Q-learning" />
-      <published>2021-07-06T00:00:00+09:00</published>
-      <updated>2021-07-06T00:00:00+09:00</updated>
-      <id>https://ilvnax24er.github.io/qlearning</id>
-      <content type="html" xml:base="https://ilvnax24er.github.io/qlearning">&lt;h1 id=&quot;q-learning-basic&quot;&gt;Q-Learning Basic&lt;/h1&gt;
-
-&lt;p&gt;Q-Learning은 강화학습 모델이다. 입력(상태)과 출력(행동) 원칙에 따라 작동한다. 상태, 행동, 보상이 사전에 정의된 환경에서 작동하며, 마르코프 결정 프로세스에 의해 모델링된다. 또한 훈련 모드와 추론 모드를 사용하고 훈련 모드 동안 Q-Value라 부르는 매개변수를 학습한다. 또한 상태와 행동의 수는 유한하다.&lt;/p&gt;
-
-&lt;h3 id=&quot;미로&quot;&gt;미로&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\maze.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;출발점에서 도착점까지 갈 수 있는 AI를 구성해보자. 첫번째로 환경을 구성해야한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;환경&quot;&gt;환경&lt;/h4&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;상태&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;상태는 AI의 입력이다. 그리고 AI가 최종 목표로 이끌 행동을 취하기 충분한 정보를 담고 있어야 한다. 즉 특정 시간에 AI가 위치한 지점을 나타내는 A부터 L까지의 문자가 될것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;행동&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;행동은 AI가 한 위치에서 다음 위치로 이동하는 움직임이 될것이다. 예를들어 J에 위치한다면 다음에 수행할 수 있는 행동은 I, F, K로 이동하는것이다. AI가 수행할 수 없는 작업에 보상으로 0을 부여하고 수행 가능한 작업에 보상으로 1을 부여할 수 있다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;보상&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;구체적으로 상태 $s$와 행동 $a$를 입력으로 취하고 AI가 상태 $s$에서 작업 $a$를 수행해 얻을 수 있는 숫자 보상 $r$을 반환하는 함수 $R$을 정의해야한다.&lt;/p&gt;
-
-&lt;center&gt;$R:(s,a) \rightarrow r \subseteq R$&lt;/center&gt;
-
-&lt;p&gt;함수에서 $s$는 행렬의 행 인덱스, $a$는 행렬의 열 인덱스, $r$은 이 행열에서 $(s,a)$ 인덱스에 해당하는 행렬을 만든다. A에서는 B로만 이동할 수 있다. 따라서 A의 인덱스는 0이고 B의 인덱스는 1이므로 보상 행렬의 첫번째 행에서는 두번째 열만 1을 갖고 나머지 열은 모두 0을 갖는다. 최종적으로 얻을 보상 행렬은 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table_no.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;만약 AI가 최우선 위치 G로 이동해야 한다는 것을 어떻게 알릴 수 있을까? G에 높은 보상을 부여하면 다른 위치의 보상보다 훨씬 크기 때문에 AI는 자동으로 높은 보상을 잡으려고 한다. 즉 AI는 항상 최고의 보상을 찾는다. 때문에 G에 도달하는 비결은 다른곳보다 높은 보상을 부여하는것이다. 이에따른 보상행렬은 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\qlearning\table1000.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;ai-구성&quot;&gt;AI 구성&lt;/h3&gt;
-
-&lt;h4 id=&quot;q-value&quot;&gt;Q-Value&lt;/h4&gt;
-
-&lt;p&gt;Q-Value는 상태와 행동의 쌍 $(s,a)$마다 숫자 값 $Q(s,a)$와 연결시킨다.&lt;/p&gt;
-
-&lt;center&gt;$Q:(s \subseteq S, a \subseteq A) \rightarrow Q(s,a) \subseteq R$&lt;/center&gt;
-
-&lt;p&gt;$Q(s,a)$는 상태 $s$에서 행동 $a$를 수행할 때 Q-value 이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;시간차&quot;&gt;시간차&lt;/h4&gt;
-
-&lt;p&gt;특정 시간 $t$에 특정상태 $t_{s}$에 있다고 하자. 선택할 수 있는 행동 중 임의의 행동을 수행하자. 그 결과 다음 상태 $s_{t+1}$로 바뀌고 보상으로 $R(s_{t}, a_{t})$를 얻는다.&lt;/p&gt;
-
-&lt;p&gt;시간 $t$에서 시간차를 나타내는 $TD_{t}(s_{t}, a_{t})$는 다음 둘 사이의 차이다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;상태 $s_{t}$에서 행동 $a_{t}$를 수행함으로써 얻는 보상 $R(s_{t},a_{t})$에 미래 상태 $s_{t+1}$에서 수행된 최고 행동의 Q-value에 할인 계수(discount factor) $\gamma \subseteq [0, 1]$에 의해 할인된 값을 더한 값&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;center&gt;$R(s_{t},a_{t}) + \gamma max_{a}(Q(s_{t+1},a))$&lt;/center&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;상태 $s_{t}$에서 행동 $a_{t}$를 수행할 때  Q-value인 $Q(s_{t},a_{t})$&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;그 결과 다음 식이 도출된다.&lt;/p&gt;
-
-&lt;center&gt;$TD_{t}(s_{t}, a_{t}) = R(s_{t}, a_{t}) + \gamma max_{a}(Q(s_{t+1}, a)) - Q(s_{t}, a_{t})$&lt;/center&gt;
-
-&lt;p&gt;훈련 초기에 Q-value는 0으로 설정된다.AI는 더 나은 보상을 얻으려고 하기 때문에 시간차가 가장 큰 경우를 찾는다. AI가 받는 보상이 크면 그 큰 보상으로 이어진 (상태, 행동)의 특정 Q-value가 증가하므로 AI는 높은 보상에 도달한 방법을 기억할 수 있다. 상태 $s_{t}$에서 높은 보상 $R(s_{t}, a_{t})$를 받을 수 있는 행동이 $a_{t}$라고 하자. 이는 Q-value $Q(s_{t}, a_{t})$이 자동으로 증가함을 뜻한다. 이렇게 증가한 Q-value는 AI에게 어디로 전이해야 좋은 보상을 받을 수 있는지 알려주기 때문에 중요한 정보가 된다.&lt;/p&gt;
-
-&lt;p&gt;AI를 만드는 다음 단계는 나은 보상을 찾는 것뿐 아니라 그와 동시에 높은 Q-value를 찾는 것이다. Q-value가 높으면 훌륭한 보상으로 이어지기 때문이다. 실제로 Q-value가 높으면 더 높은 Q-value로 이어지고 다시 그보다 더 높은 Q-value로 이어져 마지막에는 가장 높은 보상으로 이어진다. 시간차 공식에서 $\gamma max_{a}(Q(s_{t+1},a))$의 역할이다. 어느 시점에서 AI는 좋은 보상과 높은 Q-value로 이어지는 모든 전이를 알게 되며, 이 전이들의 Q-value는 시간이 지남에 따라 이미 증가되었고 결국 시간차는 감소한다. 즉 최종 목표에 가까워질수록 시간차는 작아진다.&lt;/p&gt;
-
-&lt;p&gt;결론적으로 시간차는 일시적인 내재적 보상과 같으며 AI는 훈련을 시작할 때 큰 값을 찾으려 한다. 결국 AI는 훈련이 끝날 때 이 보상을 최소화한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;벨만-방정식&quot;&gt;벨만 방정식&lt;/h4&gt;
-
-&lt;p&gt;AI가 목표를 달성하도록 이끄는 더 나은 행동을 수행하려면 높은 시간차를 발견했을 때 행동의 Q-value를 증가시켜야 한다. 이러한 Q-value를 업데이트하는 방법은 반복할 때마다 벨만 방정식이라는 다음 방정식을 통해 시간 $t-1$에서 $t$로 Q-value를 업데이트 한다.&lt;/p&gt;
-
-&lt;center&gt;$Q_{t}(s_{t},a_{t}) = Q_{t-1}(s_{t},a_{t}) + \alpha TD_{t}(s_{t},a_{t})$&lt;/center&gt;
-
-&lt;p&gt;여기에서 $\alpha \subseteq R$은 Q-value의 학습속도를 지정하는 학습률이다. 이 값은 일반적으로 0.75처럼 0과 1사이의 값을 갖는다. $\alpha$값이 작을수로 Q-value의 업데이트는 작아지고 Q-learning이 더 오래 걸린다. $\alpha$값이 클수록 Q-value의 업데이트가 커지고 Q-learning은 빨라진다. 이 방정식에서 알 수 있듯이 시간차 $TD_{t}(s_{t},a_{t})$가 크면 Q-vlaue $Q_{t}(s_{t},a_{t})$가 증가한다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;참고 : 아들랑 드 폰테베 &lt;strong&gt;『&lt;/strong&gt;강화학습/심층강화학습특강&lt;strong&gt;』&lt;/strong&gt;, 위키북스(2021), p72-85&lt;/p&gt;
-&lt;/blockquote&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>ilvnax24er</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="reinforcement" />
-      
-
-      
-        <summary type="html">Q-Learning Basic</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Reinforcement Learning - Slot machine</title>
-      <link href="https://ilvnax24er.github.io/2slotmachine" rel="alternate" type="text/html" title="Reinforcement Learning - Slot machine" />
-      <published>2021-07-05T00:00:00+09:00</published>
-      <updated>2021-07-05T00:00:00+09:00</updated>
-      <id>https://ilvnax24er.github.io/2slotmachine</id>
-      <content type="html" xml:base="https://ilvnax24er.github.io/2slotmachine">&lt;h2 id=&quot;첫-ai-모델-만들기---slot-machine&quot;&gt;첫 AI 모델 만들기 - Slot machine&lt;/h2&gt;
-
-&lt;h3 id=&quot;다중-슬롯머신-문제&quot;&gt;다중 슬롯머신 문제&lt;/h3&gt;
-
-&lt;p&gt;5개의 슬롯머신이 있는 방에 있다. 각 슬롯머신은 특정 금액을 걸고 손잡이를 당기면 판돈을 가져가거나 판돈의 두배를 되돌려 준다. 슬롯머신이 판돈을 가져가면 보상은 -1이 될것이고, 두배를 돌려주면 보상은 +1이 된다. 그중 하나가 다른 것보다 a+1 보상을 줄 확률이 높다고 가정한다. 게임을 1000번 했을 때 딸 수 있는 최대 금액을 얻으려면 어떤 전략을 사용해야할까?&lt;/p&gt;
-
-&lt;p&gt;첫번째 전략은 최소로 게임을 했을 때 5개 슬롯머신 중 어느 슬롯멋니이 보상으로 1을 줄 확률이 가장 높은지 파악하는 것이다. 즉 성공률이 가장 높은 슬롯머신을 &lt;strong&gt;빨리&lt;/strong&gt; 찾아야 한다. 그 후 이 슬롯머신에서 계속 게임을 하면 된다.&lt;/p&gt;
-
-&lt;p&gt;가장 어려운 부분은 &lt;strong&gt;최소한의 시도&lt;/strong&gt;로 최고의 슬롯머신을 찾아내야 한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;톰슨-샘플링-모델&quot;&gt;톰슨 샘플링 모델&lt;/h3&gt;
-
-&lt;p&gt;톰슨 샘플링이 2개의 인수를 취하는 베타분포함수를 사용한다고 하자. 첫번째 인수가 높을수록 슬롯머신이 더 좋고 두번째 인수가 높을수록 슬롯머신이 더 나빠진다고 가정하자. 이 함수를 정의하면,&lt;/p&gt;
-
-&lt;center&gt;$x=\beta(a,b)$&lt;/center&gt;
-
-&lt;p&gt;이다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;conversionRates&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.04&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2000&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conversionRates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;다섯개의 슬롯머신의 승률이 있다. 그후 샘플 수 N을 생성한다.
-다음으로 각 샘플마다 모든 슬롯머신에 대한 승패의 집합을 정의한다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;conversionRates&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;데이터셋 X의 N개 샘플 중 하나가 [0, 1, 0, 0, 1]이라고 한다면 2번이나 5번 슬롯머신에서 게임을 하면 된다.
-다음으로 슬롯머신마다 게임한 결과 승패의 수를 셀 두 개의 배열을 생성하고 이긴횟수와 진횟수로 이름을 부여한다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;nPosReward&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;nNegReward&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;다음으로 데이터셋의 샘플마다 반복할 for 루프를 초기화하고 가장 좋은 슬롯머신을 선택한다. 그후 베타분포에서 난수를 취해 전체 슬롯머신에서 가장 높은 값을 찾는다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;selected&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;maxRandom&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;randomBeta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;beta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nPosReward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nNegReward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;randomBeta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxRandom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;maxRandom&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;randomBeta&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;selected&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;
-            
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;selected&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nPosReward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;selected&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nNegReward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;selected&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;nSelected&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nPosReward&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nNegReward&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Machine number '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;' ws selected '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nSelected&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;' times'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Best machine is '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argmax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nSelected&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Machine number 1 ws selected 9398.0 times
-Machine number 2 ws selected 136.0 times
-Machine number 3 ws selected 318.0 times
-Machine number 4 ws selected 103.0 times
-Machine number 5 ws selected 45.0 times
-Best machine is 1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;이 문제를 해결할 때 처음으로 할 일은 다섯대의 슬롯머신을 차례로 시도하는것이다.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;라운드&lt;/th&gt;
-      &lt;th&gt;Machine Number&lt;/th&gt;
-      &lt;th&gt;보상&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;+1&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;3&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;+1&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;라고 가정하면,&lt;/p&gt;
-
-&lt;p&gt;각 슬롯머신에 대해 두 개의 새 변수를 도입한다. 하나는 슬롯머신이 보상으로 0을 반환한 횟수를 세고 다른 변수는 그 슬롯머신이 보상으로 1을 반환한 횟수를 센다.&lt;/p&gt;
-
-&lt;p&gt;이 변수들을 $N_{i}^{0}(n)$과 $N_{i}^{1}(n)$으로 표기하며 여기에서 $N_{i}^{0}(n)$은 $i$번째 슬롯머신이 $n$번째 라운드까지 보상으로 0을 반환한 횟수이며, $N_{i}^{1}(n)$은 $i$번째 슬롬섯니이 $n$번째 라운드까지 보상으로 1을 반환한 횟수이다. 구체적으로 살펴보면&lt;/p&gt;
-
-&lt;p&gt;$N_{1}^{0}(1) = 1$은 슬롯머신 1이 1라운드에 1패를 반환함을 뜻한다.&lt;/p&gt;
-
-&lt;p&gt;$N_{1}^{0}(1) = 0$은 슬롯머신 1이 1라운드에 0승을 반환함을 뜻한다.&lt;/p&gt;
-
-&lt;p&gt;$N_{5}^{1}(4) = 1$은 슬롯머신 5가 4라운드에 1승을 반환함을 뜻한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;분포&quot;&gt;분포&lt;/h3&gt;
-
-&lt;p&gt;변수의 분포는 변수가 취할 수 있는 가능한 값 범위의 각 값에 대해 이 변수가 해당 값과 같을 확률을 제공하는 함수다.
-매 회 게임에서 각 슬롯머신을 특정 베터 분포와 연결시키면&lt;/p&gt;
-
-&lt;center&gt;$\beta(N_{i}^{1}(n)+1, N_{i}^{0}(n)+1)$&lt;/center&gt;
-
-&lt;p&gt;베타분포 $\beta(a,b)$에서 매개변수 a가 클수록 분포가 오른쪽으로 더 많이 이동한다. 매개변수 $b$가 클수록 분포는 왼쪽으로 더 많이 이동한다. 따라서 매 게임 $n$마다 각 슬롯머신에 대해 매개변수 $a$는 $n$번째 게임까지 그 슬롯머신이 1을 반환한 횟수(+1)이고 매개변수 $b$는 $n$번째 게임까지 그 슬롯머신이 0을 반환할 횟수(+1)이다.
-정리하면 슬롯머신이 1(성공)을 더 많이 반환하면 분포가 오른쪽으로 더 많이 이동하고, 슬롯머신이 0(실패)을 더 많이 반환하면 분포가 왼쪽으로 더 많이 이동한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;톰슨-샘플링-전략&quot;&gt;톰슨 샘플링 전략&lt;/h3&gt;
-&lt;p&gt;처음 다섯 번의 게임에서 다섯대의 슬롯머신 각각으로 게임한 다음 매 게임 $n$마다 AI가 할 일은&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;각 슬롯머신 $i(i=1,2,3,4,5)$에 대해 해당 슬롯머신의 베타 분포에서 무작위 추첨한 값 $\theta_{i}(n)$을 취한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;center&gt;$\theta_{i}(n) \sim \beta(N_{i}^{1}(n)+1, N_{i}^{0}(n)+1)$&lt;/center&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;가장 높은ㅇ 샘플링된 값 $\theta_{i}(n)$을 가진 슬롯머신 $s(n)$에서 게임한다&lt;/li&gt;
-&lt;/ol&gt;
-&lt;center&gt;$s(n) = argmax_{i=1,2,3,4,5}(\theta_{i}(n))$&lt;/center&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;$N_{s(n)}^{i}(n)$ 이나 $N_{s(n)}^{0}(n)$을 업데이트한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;게임했던 슬롯머신 $s(n)$이 보상으로 1을 반환하면,&lt;/p&gt;
-
-&lt;center&gt;$N_{s(n)}^{1}(n) : = N_{s(n)}^{1}(n) + 1$&lt;/center&gt;
-
-&lt;p&gt;게임했던 슬롯머신 $s(n)$이 보상으로 0을 반환하면,&lt;/p&gt;
-
-&lt;center&gt;$N_{s(n)}^{0}(n) : = N_{s(n)}^{0}(n) + 1$&lt;/center&gt;
-
-&lt;p&gt;그 다음 모든 돈을 쓸때까지 매 게임에서 이 세단계를 반복한다. 이 전략은 톰슨 샘플링이라 하며 기본적이지만 강력한 모델이다.&lt;/p&gt;
-
-&lt;h3 id=&quot;톰슨-샘플링-마무리&quot;&gt;톰슨 샘플링 마무리&lt;/h3&gt;
-&lt;p&gt;각 슬롯머신에는 자체 베타 분포가 있다. 게임이 진행되는 동안 전환율이 가장 높은 해당 슬롯머신의 베타 분포는 점차 오른쪽으로 이동하고 전환율이 낮은 전략의 베타 분포는 점차 왼쪽으로 이동한다. 따라서 이러한 단계를 반복해 전환율이 가장 높은 슬롯머신이 점점 더 많이 선택된다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;참고 : 아들랑 드 폰테베 &lt;strong&gt;『&lt;/strong&gt;강화학습/심층강화학습특강&lt;strong&gt;』&lt;/strong&gt;, 위키북스(2021), p38-54&lt;/p&gt;
-&lt;/blockquote&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>ilvnax24er</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="reinforcement" />
-      
-
-      
-        <summary type="html">첫 AI 모델 만들기 - Slot machine</summary>
       
 
       
