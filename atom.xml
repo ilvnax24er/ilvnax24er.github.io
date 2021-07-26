@@ -8,13 +8,28 @@
     
       
       <item>
+        <title>Pytorch - Mini Batch and Data Load</title>
+        
+          <description>&lt;h1 id=&quot;mini-batch&quot;&gt;Mini Batch&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Mon, 26 Jul 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/Pytorch-Mini-Batch-and-Data-Load</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/Pytorch-Mini-Batch-and-Data-Load</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Pytorch - Simple Regression</title>
         
           <description>&lt;h1 id=&quot;simple-linear-regression&quot;&gt;Simple Linear Regression&lt;/h1&gt;
 
 </description>
         
-        <pubDate>Tue, 27 Jul 2021 00:00:00 +0900</pubDate>
+        <pubDate>Sun, 25 Jul 2021 00:00:00 +0900</pubDate>
         <link>
         https://ilvnax24er.github.io/Pytorch-Simple-Regression</link>
         <guid isPermaLink="true">https://ilvnax24er.github.io/Pytorch-Simple-Regression</guid>
