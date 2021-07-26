@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>Pytorch - Simple Regression</title>
+        
+          <description>&lt;h1 id=&quot;simple-linear-regression&quot;&gt;Simple Linear Regression&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Tue, 27 Jul 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/Pytorch-Simple-Regression</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/Pytorch-Simple-Regression</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Time Series Anomaly Detection with PyCaret</title>
         
           <description>&lt;h1 id=&quot;anomaly-detection&quot;&gt;Anomaly Detection&lt;/h1&gt;
@@ -233,7 +248,7 @@
     
       
       <item>
-        <title>pytorch - MNIST</title>
+        <title>Pytorch - MNIST</title>
         
           <description>&lt;h1 id=&quot;mnist&quot;&gt;MNIST&lt;/h1&gt;
 
