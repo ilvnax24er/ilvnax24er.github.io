@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://ilvnax24er.github.io/tag/pytorch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" />
-  <updated>2021-08-21T18:08:29+09:00</updated>
+  <updated>2021-08-24T14:34:09+09:00</updated>
   <id>https://ilvnax24er.github.io/tag/pytorch/feed.xml</id>
 
   
@@ -1220,7 +1220,12 @@ tensor([[[ 0.3372, -0.4791,  0.2125]]], requires_grad=True)
       <published>2021-06-29T00:00:00+09:00</published>
       <updated>2021-06-29T00:00:00+09:00</updated>
       <id>https://ilvnax24er.github.io/pytorch-tutorial</id>
-      <content type="html" xml:base="https://ilvnax24er.github.io/pytorch-tutorial"></content>
+      <content type="html" xml:base="https://ilvnax24er.github.io/pytorch-tutorial">&lt;ul&gt;
+  &lt;li&gt;$\sum_{k=1}^{\infty} \epsilon_{k} = \infty$&lt;/li&gt;
+  &lt;li&gt;$\sum_{k=1}^{\infty} \epsilon_{k}^{2} &amp;lt; \infty$&lt;/li&gt;
+  &lt;li&gt;$\alpha \in [0,1)$&lt;/li&gt;
+  &lt;li&gt;$v \leftarrow \alpha v - \epsilon \nabla_{\theta}(\frac{1}{m} \sum_{i=1}^{m} L(f(x^{(i)};\theta), y^{(i)}))$&lt;/li&gt;
+&lt;/ul&gt;</content>
 
       
       
@@ -1241,7 +1246,7 @@ tensor([[[ 0.3372, -0.4791,  0.2125]]], requires_grad=True)
       
 
       
-        <summary type="html"></summary>
+        <summary type="html">$\sum_{k=1}^{\infty} \epsilon_{k} = \infty$ $\sum_{k=1}^{\infty} \epsilon_{k}^{2} &amp;lt; \infty$ $\alpha \in [0,1)$ $v \leftarrow \alpha v - \epsilon \nabla_{\theta}(\frac{1}{m} \sum_{i=1}^{m} L(f(x^{(i)};\theta), y^{(i)}))$</summary>
       
 
       

@@ -11,7 +11,7 @@
 
 
 
-    <title>Deep Learning from Scratch - Perceptron</title>
+    <title>Deep Learning - Stochastic Gradient Descent</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -66,26 +66,26 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     <!-- This tag outputs SEO meta+structured data and other important settings -->
     <meta name="description" content="Deeplearning Archive" />
     <link rel="shortcut icon" href="https://ilvnax24er.github.io/" type="image/png" />
-    <link rel="canonical" href="https://ilvnax24er.github.io/perceptron" />
+    <link rel="canonical" href="https://ilvnax24er.github.io/Stochastic-Gradient-Descent" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Archive" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Deep Learning from Scratch - Perceptron" />
-    <meta property="og:description" content="Perceptron perceptron은 다수의 신호를 입력받아 하나의 신호를 출력한다. x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다. 그림의 원을 뉴런 혹은 노드라고 부르며, 입력 신호가 뉴런에 보내질 때는 각 고유한 가중치가 곱해진다. 뉴런에서 보내온 신호의 총합이 정해진 한계를 넘어설 때만 1을 출력하며, 그 한계값을 임계값($\theta$)이라고 한다. Perceptron 구현 def AND(x1," />
-    <meta property="og:url" content="https://ilvnax24er.github.io/perceptron" />
-    <meta property="og:image" content="https://ilvnax24er.github.io/assets/built/images/scratch-cover.png" />
+    <meta property="og:title" content="Deep Learning - Stochastic Gradient Descent" />
+    <meta property="og:description" content="Stochastic Gradient Descent 자료 분포로부터 독집적으로 추출한 $m$개의 견본으로 이루어진 미니배치의 평균 기울기를 취함으로써 훈련 집합 전체의 기울기의 불편추정량을 구할 수 있다. SGD 알고리즘의 핵심적인 매개변수는 학습 속도인데, 시간에 따라 학습 속도를 점차 줄일 필요가 있다. 왜냐하면 SGD의 기울기 추정에 의해 잡음이 도입되기 때문이다. 학습 과정에서 $m$개의 훈련 견본을 무작위로" />
+    <meta property="og:url" content="https://ilvnax24er.github.io/Stochastic-Gradient-Descent" />
+    <meta property="og:image" content="https://ilvnax24er.github.io/assets/built/images/deeplearning-book.jpg" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2021-07-12T00:00:00+09:00" />
-    <meta property="article:modified_time" content="2021-07-12T00:00:00+09:00" />
+    <meta property="article:published_time" content="2021-08-24T00:00:00+09:00" />
+    <meta property="article:modified_time" content="2021-08-24T00:00:00+09:00" />
     <meta property="article:tag" content="Deeplearning" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Deep Learning from Scratch - Perceptron" />
-    <meta name="twitter:description" content="Perceptron perceptron은 다수의 신호를 입력받아 하나의 신호를 출력한다. x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다. 그림의 원을 뉴런 혹은 노드라고 부르며, 입력 신호가 뉴런에 보내질 때는 각 고유한 가중치가 곱해진다. 뉴런에서 보내온 신호의 총합이 정해진 한계를 넘어설 때만 1을 출력하며, 그 한계값을 임계값($\theta$)이라고 한다. Perceptron 구현 def AND(x1," />
+    <meta name="twitter:title" content="Deep Learning - Stochastic Gradient Descent" />
+    <meta name="twitter:description" content="Stochastic Gradient Descent 자료 분포로부터 독집적으로 추출한 $m$개의 견본으로 이루어진 미니배치의 평균 기울기를 취함으로써 훈련 집합 전체의 기울기의 불편추정량을 구할 수 있다. SGD 알고리즘의 핵심적인 매개변수는 학습 속도인데, 시간에 따라 학습 속도를 점차 줄일 필요가 있다. 왜냐하면 SGD의 기울기 추정에 의해 잡음이 도입되기 때문이다. 학습 과정에서 $m$개의 훈련 견본을 무작위로" />
     <meta name="twitter:url" content="https://ilvnax24er.github.io/" />
-    <meta name="twitter:image" content="https://ilvnax24er.github.io/assets/built/images/scratch-cover.png" />
+    <meta name="twitter:image" content="https://ilvnax24er.github.io/assets/built/images/deeplearning-book.jpg" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Archive" />
     <meta name="twitter:label2" content="Filed under" />
@@ -104,18 +104,18 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
         "name": "Archive",
         "logo": "https://ilvnax24er.github.io/"
     },
-    "url": "https://ilvnax24er.github.io/perceptron",
+    "url": "https://ilvnax24er.github.io/Stochastic-Gradient-Descent",
     "image": {
         "@type": "ImageObject",
-        "url": "https://ilvnax24er.github.io/assets/built/images/scratch-cover.png",
+        "url": "https://ilvnax24er.github.io/assets/built/images/deeplearning-book.jpg",
         "width": 2000,
         "height": 666
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://ilvnax24er.github.io/perceptron"
+        "@id": "https://ilvnax24er.github.io/Stochastic-Gradient-Descent"
     },
-    "description": "Perceptron perceptron은 다수의 신호를 입력받아 하나의 신호를 출력한다. x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다. 그림의 원을 뉴런 혹은 노드라고 부르며, 입력 신호가 뉴런에 보내질 때는 각 고유한 가중치가 곱해진다. 뉴런에서 보내온 신호의 총합이 정해진 한계를 넘어설 때만 1을 출력하며, 그 한계값을 임계값($\theta$)이라고 한다. Perceptron 구현 def AND(x1,"
+    "description": "Stochastic Gradient Descent 자료 분포로부터 독집적으로 추출한 $m$개의 견본으로 이루어진 미니배치의 평균 기울기를 취함으로써 훈련 집합 전체의 기울기의 불편추정량을 구할 수 있다. SGD 알고리즘의 핵심적인 매개변수는 학습 속도인데, 시간에 따라 학습 속도를 점차 줄일 필요가 있다. 왜냐하면 SGD의 기울기 추정에 의해 잡음이 도입되기 때문이다. 학습 과정에서 $m$개의 훈련 견본을 무작위로"
 }
     </script>
 
@@ -128,7 +128,7 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="Deep Learning from Scratch - Perceptron" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Deep Learning - Stochastic Gradient Descent" href="/feed.xml" />
 
 
 </head>
@@ -190,7 +190,7 @@ into the {body} of the default.hbs template -->
 
             <header class="post-full-header">
                 <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime="12 July 2021">12 July 2021</time>
+                    <time class="post-full-meta-date" datetime="24 August 2021">24 August 2021</time>
                     
                         <span class="date-divider">/</span>
                         
@@ -200,12 +200,12 @@ into the {body} of the default.hbs template -->
                         
                     
                 </section>
-                <h1 class="post-full-title">Deep Learning from Scratch - Perceptron</h1>
+                <h1 class="post-full-title">Deep Learning - Stochastic Gradient Descent</h1>
             </header>
 
             <!-- cover on/off
                         
-            <figure class="post-full-image" style="background-image: url(/assets/built/images/scratch-cover.png)">
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/deeplearning-book.jpg)">
             </figure>
             
             -->
@@ -214,125 +214,29 @@ into the {body} of the default.hbs template -->
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <h1 id="perceptron">Perceptron</h1>
+                    <h1 id="stochastic-gradient-descent">Stochastic Gradient Descent</h1>
 
-<p>perceptron은 다수의 신호를 입력받아 하나의 신호를 출력한다.
-<img src="\assets\built\images\post_images\Scratch\perceptron\image_1.png" alt="" />
-x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다. 그림의 원을 뉴런 혹은 노드라고 부르며, 입력 신호가 뉴런에 보내질 때는 각 고유한 가중치가 곱해진다. 뉴런에서 보내온 신호의 총합이 정해진 한계를 넘어설 때만 1을 출력하며, 그 한계값을 임계값($\theta$)이라고 한다.</p>
-
-<h2 id="perceptron-구현">Perceptron 구현</h2>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">AND</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
-    <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span>
-    <span class="n">temp</span> <span class="o">=</span> <span class="n">x1</span><span class="o">*</span><span class="n">w1</span> <span class="o">+</span> <span class="n">x2</span><span class="o">*</span><span class="n">w2</span>
-    <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="n">theta</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="k">elif</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="n">theta</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">AND</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">AND</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">AND</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">AND</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 0 0 1
-</code></pre></div></div>
-
-<h3 id="가중치와-편향-도입">가중치와 편향 도입</h3>
-<p><img src="\assets\built\images\post_images\Scratch\perceptron\CodeCogsEqn.png" alt="" /></p>
-
-<p>여기에서 $b$를 bias, $w_{1}$과 $w_{2}$는 weight이다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([.</span><span class="mi">5</span><span class="p">,</span> <span class="p">.</span><span class="mi">5</span><span class="p">])</span>
-<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.7</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.5
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-0.19999999999999996
-</code></pre></div></div>
-
-<h3 id="가중치와-편향-구현">가중치와 편향 구현</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">AND</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">])</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([.</span><span class="mi">5</span><span class="p">,</span> <span class="p">.</span><span class="mi">5</span><span class="p">])</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.7</span>
-    <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
-    <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-</code></pre></div></div>
-
-<h3 id="nand-or">NAND, OR</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">NAND</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">])</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">])</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="mf">0.7</span>
-    <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
-    <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">OR</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">])</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([.</span><span class="mi">5</span><span class="p">,</span> <span class="p">.</span><span class="mi">5</span><span class="p">,])</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.2</span>
-    <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
-    <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">NAND</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">NAND</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">OR</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">OR</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 0 1 0
-</code></pre></div></div>
-
-<h2 id="perceptron-한계">Perceptron 한계</h2>
-<h3 id="xor-gate">XOR Gate</h3>
-<p>XOR의 경우 Perceptron으로 구현할 수 없다. 아래 그래프를 직선으로 나눌 수 없다.</p>
-
-<p>​  <br />
-<img src="\assets\built\images\post_images\Scratch\perceptron\output_16_0.png" alt="png" />
-​</p>
-
-<h2 id="multi-layer-perceptron">Multi-layer Perceptron</h2>
-<h3 id="기존-gate-조합하기">기존 Gate 조합하기</h3>
-<p><img src="\assets\built\images\post_images\Scratch\perceptron\xor.png" alt="" /></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">XOR</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
-    <span class="n">s1</span> <span class="o">=</span> <span class="n">NAND</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
-    <span class="n">s2</span> <span class="o">=</span> <span class="n">OR</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">AND</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">y</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">XOR</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">XOR</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">XOR</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">XOR</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 1 1 0
-</code></pre></div></div>
-
-<p>XOR를 뉴런을 이용한 Perceptron으로 표현하면
-<img src="\assets\built\images\post_images\Scratch\perceptron\mlp.png" alt="" />
-이처럼 층이 여러개인 Perceptron을 Multi-layer Perceptron이라고 한다.</p>
+<p>자료 분포로부터 독집적으로 추출한 $m$개의 견본으로 이루어진 미니배치의 평균 기울기를 취함으로써 훈련 집합 전체의 기울기의 불편추정량을 구할 수 있다. SGD 알고리즘의 핵심적인 매개변수는 학습 속도인데, 시간에 따라 학습 속도를 점차 줄일 필요가 있다. 왜냐하면 SGD의 기울기 추정에 의해 잡음이 도입되기 때문이다. 학습 과정에서 $m$개의 훈련 견본을 무작위로 추출하는 것이 하나의 잠음원으로 작용하는데, 이 잡음원은 알고리즘이 최솟값에 도달해도 사라지지 않는다.</p>
 
 <blockquote>
-  <p>참고 : 사이토 고키, <strong>『</strong>DeepLearning from Scratch<strong>』</strong>, 한빛미디어(2020), p47-62</p>
+  <p>SGD가 반드시 수렴할 충분조건</p>
+
+  <ul>
+    <li>$\sum_{k=1}^{\infty} \epsilon_{k} = \infty$</li>
+    <li>$\sum_{k=1}^{\infty} \epsilon_{k}^{2} &lt; \infty$</li>
+  </ul>
+</blockquote>
+
+<p>실제 응용에서는 $\tau$번째 반복까지는 학습속도 $\epsilon$을 선형으로 감소하고, $\tau$ 반복 이후에는 $\epsilon$을 그대로 두는 방법이 흔히 쓰인다.</p>
+
+<p>$\epsilon_{k} = (1 - \alpha)\epsilon_{0} + \alpha \epsilon_{\tau} (\alpha = \frac{k}{\tau})$</p>
+
+<p>학습 속도를 시행착오를 통해서 결정할 수 있지만, 보통의 경우 목적함수를 시간의 함수로 간주해서 함수의 곡선을 보고 결정하는 것이 최선이다. 선형 감소 방식을 사용할 때 결정해야 할 매개변수는 $\epsilon_{0}$과 $\epsilon_{\tau}$ 그리고 $\tau$이다. 일반적으로 $\epsilon_{\tau}$는 $\epsilon_{0}$의 값의 약 1% 정도로 잡아야 한다. $\epsilon_{0}$을 설정할 때 초기 학습 속도가 너무 높으면 비용함수가 크게 증가할 때가 많아서 학습 곡선이 요동칠 수 있다. 학습 속도가 너무 낮으면 학습이 느리게 진행되며, 초기학습속도가 너무 낮으면 큰 비용에 머무를 위험이 있다. 일반적으로, 최적의 초기 학습 속도는 처음 약 100회 반복 이후에 최고의 성과를 내는 학습 속도보다 높다. 따라서 알고리즘을 여러 번 반복해서 성과를 측정하고, 최고의 성과를 낸 학습 속도를 기록한 후 그보다 더 큰 값을 초기 학습 속도로 정하는 방법이 가장 바람직할 때가 많다.</p>
+
+<p>최적화 알고리즘의 수렴 속도를 파악할 때 흔히 사용하는 측도는 $J(\theta) - min_{\theta}J(\theta)$로 정의되는 초과 오차이다. 현재 비용함수가 가능한 최소 비용보다 얼마나 큰지를 나타낸 값이다.</p>
+
+<blockquote>
+  <p>참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, <strong>『</strong>심층학습<strong>』</strong>, Jpub(2018), p323-332</p>
 </blockquote>
 
                 </div>
@@ -407,11 +311,6 @@ x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다.
                                 
                                   
                                     
-                                        
-                                        
-                                            <li><a href="/Stochastic-Gradient-Descent">Deep Learning - Stochastic Gradient Descent</a></li>
-                                        
-                                    
                                   
                                 
                                   
@@ -436,12 +335,7 @@ x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다.
                                     
                                         
                                         
-                                    
-                                  
-                                
-                                  
-                                    
-                                        
+                                            <li><a href="/Training-Skills(2)">Deep Learning from Scratch - Training Skills(3)</a></li>
                                         
                                     
                                   
@@ -475,6 +369,13 @@ x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다.
                                   
                                 
                                   
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
                                 
                                   
                                 
@@ -503,6 +404,9 @@ x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다.
                                   
                                 
                                   
+                                    
+                                        
+                                        
                                     
                                   
                                 
@@ -611,57 +515,6 @@ x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다.
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
             
-                
-
-    <article class="post-card post-template">
-        
-            <a class="post-card-image-link" href="/minimize-cost">
-                <div class="post-card-image" style="background-image: url(/assets/built/images/reinforce-book-cover.jpg)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/minimize-cost">
-                <header class="post-card-header">
-                    
-                        
-                            
-                                <span class="post-card-tags">Reinforcement</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">Reinforcement Learning - Deep Q-Learning</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    
-                        <p>Deep Q-Learning - Minimize Cost of Air Conditioning
-
-</p>
-                    
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/built/images/river.jpg" alt="ilvnax24er" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/ilvnax24er/">ilvnax24er</a>
-                        </span>
-                    
-                
-                <span class="reading-time">
-                    
-                    
-                      2 min read
-                    
-                </span>
-            </footer>
-        </div>
-    </article>
-
-            
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
             
@@ -669,12 +522,12 @@ x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다.
 
     <article class="post-card post-template">
         
-            <a class="post-card-image-link" href="/RNN">
-                <div class="post-card-image" style="background-image: url(/assets/built/images/deeplearning-cover.jpg)"></div>
+            <a class="post-card-image-link" href="/Momentum">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/deeplearning-book.jpg)"></div>
             </a>
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/RNN">
+            <a class="post-card-content-link" href="/Momentum">
                 <header class="post-card-header">
                     
                         
@@ -684,11 +537,11 @@ x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다.
                         
                     
 
-                    <h2 class="post-card-title">Deep Learning - Recurrent Neural Network (1)</h2>
+                    <h2 class="post-card-title">Deep Learning - Momentum</h2>
                 </header>
                 <section class="post-card-excerpt">
                     
-                        <p>Recurrent Neural Network
+                        <p>Momentum
 
 </p>
                     
@@ -708,7 +561,7 @@ x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다.
                 <span class="reading-time">
                     
                     
-                      2 min read
+                      1 min read
                     
                 </span>
             </footer>
@@ -730,18 +583,18 @@ x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다.
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">Deep Learning from Scratch - Perceptron</div>
+    <div class="floating-header-title">Deep Learning - Stochastic Gradient Descent</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Deep+Learning+from+Scratch+-+Perceptron&amp;url=https://ilvnax24er.github.io/perceptron"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Deep+Learning+-+Stochastic+Gradient+Descent&amp;url=https://ilvnax24er.github.io/Stochastic-Gradient-Descent"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
         </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://ilvnax24er.github.io/perceptron"
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://ilvnax24er.github.io/Stochastic-Gradient-Descent"
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 

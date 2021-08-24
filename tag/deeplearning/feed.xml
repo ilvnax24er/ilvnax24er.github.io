@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://ilvnax24er.github.io/tag/deeplearning/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" />
-  <updated>2021-08-21T18:08:29+09:00</updated>
+  <updated>2021-08-24T14:34:09+09:00</updated>
   <id>https://ilvnax24er.github.io/tag/deeplearning/feed.xml</id>
 
   
@@ -30,6 +30,119 @@
   
   
 
+  
+    <entry>
+      <title type="html">Deep Learning - Momentum</title>
+      <link href="https://ilvnax24er.github.io/Momentum" rel="alternate" type="text/html" title="Deep Learning - Momentum" />
+      <published>2021-08-24T00:00:00+09:00</published>
+      <updated>2021-08-24T00:00:00+09:00</updated>
+      <id>https://ilvnax24er.github.io/Momentum</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/Momentum">&lt;h1 id=&quot;momentum&quot;&gt;Momentum&lt;/h1&gt;
+
+&lt;p&gt;Momentum은 학습을 가속하기 위해 고안된 것으로, 특히 높은 곡률이나 작지만 일관된 기울기들, 잡음 섞인 기울기들이 있는 상황에서 학습을 빠르게 해준다. 운동량 알고리즘은 이전 단계 기울기들의 지수적으로 감소하는 이동 평균을 누적해서, 그 기울기들의 방향으로 계속 이동한다.&lt;/p&gt;
+
+&lt;p&gt;운동량 알고리즘은 속도 역할을 하는 변수 $v$를 사용한다. 이 속도 변수는 매개변수들이 매개변수 공간에서 움직이는 방향과 빠르기를 결정한다. 매 반복에서 알고리즘은 이 속도를 음의 기울기의 지수 감소 평균으로 설정한다. 초매개변수 $\alpha \in [0,1)$은 이전 단계 기울기들의 기여가 지수적으로 얼마나 빠르게 감소하는지를 결정한다.&lt;/p&gt;
+
+&lt;p&gt;$v \leftarrow\alpha v - \epsilon \nabla_{\theta}(\frac{1}{m} \sum_{i=1}^{m} L(f(x^{(i)};\theta), y^{(i)}))$&lt;/p&gt;
+
+&lt;p&gt;$\theta \leftarrow \theta + v$&lt;/p&gt;
+
+&lt;p&gt;이를 통해 속도 $v$는 기울기 성분 $\nabla_{\theta}(\frac{1}{m} \sum_{i=1}^{m} L(f(x^{(i)};\theta), y^{(i)}))$들을 누적한다. $\alpha$가 $\epsilon$에 비해 클수록 이전 기울기들이 현재 방향에 더 큰 영향을 미친다.&lt;/p&gt;
+
+&lt;h2 id=&quot;nesterov-momentum&quot;&gt;Nesterov Momentum&lt;/h2&gt;
+
+&lt;p&gt;$v \leftarrow\alpha v - \epsilon \nabla_{\theta}(\frac{1}{m} \sum_{i=1}^{m} L(f(x^{(i)};\theta + \alpha v), y^{(i)}))$&lt;/p&gt;
+
+&lt;p&gt;$\theta \leftarrow \theta + v$&lt;/p&gt;
+
+&lt;p&gt;네스테로프 운동량은 현재 속도를 적용한 후에 기울기를 갱신한다. 따라서, 표준 운동량 방법에 하나의 보저인자를 더한 것으로 생각할 수 있다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p323-332&lt;/p&gt;
+&lt;/blockquote&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>ilvnax24er</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="deeplearning" />
+      
+
+      
+        <summary type="html">Momentum</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">Deep Learning - Stochastic Gradient Descent</title>
+      <link href="https://ilvnax24er.github.io/Stochastic-Gradient-Descent" rel="alternate" type="text/html" title="Deep Learning - Stochastic Gradient Descent" />
+      <published>2021-08-24T00:00:00+09:00</published>
+      <updated>2021-08-24T00:00:00+09:00</updated>
+      <id>https://ilvnax24er.github.io/Stochastic-Gradient-Descent</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/Stochastic-Gradient-Descent">&lt;h1 id=&quot;stochastic-gradient-descent&quot;&gt;Stochastic Gradient Descent&lt;/h1&gt;
+
+&lt;p&gt;자료 분포로부터 독집적으로 추출한 $m$개의 견본으로 이루어진 미니배치의 평균 기울기를 취함으로써 훈련 집합 전체의 기울기의 불편추정량을 구할 수 있다. SGD 알고리즘의 핵심적인 매개변수는 학습 속도인데, 시간에 따라 학습 속도를 점차 줄일 필요가 있다. 왜냐하면 SGD의 기울기 추정에 의해 잡음이 도입되기 때문이다. 학습 과정에서 $m$개의 훈련 견본을 무작위로 추출하는 것이 하나의 잠음원으로 작용하는데, 이 잡음원은 알고리즘이 최솟값에 도달해도 사라지지 않는다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;SGD가 반드시 수렴할 충분조건&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;$\sum_{k=1}^{\infty} \epsilon_{k} = \infty$&lt;/li&gt;
+    &lt;li&gt;$\sum_{k=1}^{\infty} \epsilon_{k}^{2} &amp;lt; \infty$&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;실제 응용에서는 $\tau$번째 반복까지는 학습속도 $\epsilon$을 선형으로 감소하고, $\tau$ 반복 이후에는 $\epsilon$을 그대로 두는 방법이 흔히 쓰인다.&lt;/p&gt;
+
+&lt;p&gt;$\epsilon_{k} = (1 - \alpha)\epsilon_{0} + \alpha \epsilon_{\tau} (\alpha = \frac{k}{\tau})$&lt;/p&gt;
+
+&lt;p&gt;학습 속도를 시행착오를 통해서 결정할 수 있지만, 보통의 경우 목적함수를 시간의 함수로 간주해서 함수의 곡선을 보고 결정하는 것이 최선이다. 선형 감소 방식을 사용할 때 결정해야 할 매개변수는 $\epsilon_{0}$과 $\epsilon_{\tau}$ 그리고 $\tau$이다. 일반적으로 $\epsilon_{\tau}$는 $\epsilon_{0}$의 값의 약 1% 정도로 잡아야 한다. $\epsilon_{0}$을 설정할 때 초기 학습 속도가 너무 높으면 비용함수가 크게 증가할 때가 많아서 학습 곡선이 요동칠 수 있다. 학습 속도가 너무 낮으면 학습이 느리게 진행되며, 초기학습속도가 너무 낮으면 큰 비용에 머무를 위험이 있다. 일반적으로, 최적의 초기 학습 속도는 처음 약 100회 반복 이후에 최고의 성과를 내는 학습 속도보다 높다. 따라서 알고리즘을 여러 번 반복해서 성과를 측정하고, 최고의 성과를 낸 학습 속도를 기록한 후 그보다 더 큰 값을 초기 학습 속도로 정하는 방법이 가장 바람직할 때가 많다.&lt;/p&gt;
+
+&lt;p&gt;최적화 알고리즘의 수렴 속도를 파악할 때 흔히 사용하는 측도는 $J(\theta) - min_{\theta}J(\theta)$로 정의되는 초과 오차이다. 현재 비용함수가 가능한 최소 비용보다 얼마나 큰지를 나타낸 값이다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p323-332&lt;/p&gt;
+&lt;/blockquote&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>ilvnax24er</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="deeplearning" />
+      
+
+      
+        <summary type="html">Stochastic Gradient Descent</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Deep Learning from Scratch - Training Skills(3)</title>
@@ -298,7 +411,11 @@ Best-19(val acc:0.35) | lr:0.002439221646167253, weight decay:1.0060022490906464
 Best-20(val acc:0.34) | lr:0.0020447818776639115, weight decay:1.584254866090977e-08
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\Scratch\optimization\ts2\output_19_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;</content>
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\Scratch\optimization\ts2\output_19_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 사이토 고키, &lt;strong&gt;『&lt;/strong&gt;DeepLearning from Scratch&lt;strong&gt;』&lt;/strong&gt;, 한빛미디어(2020), p215-226&lt;/p&gt;
+&lt;/blockquote&gt;</content>
 
       
       
@@ -320,6 +437,92 @@ Best-20(val acc:0.34) | lr:0.0020447818776639115, weight decay:1.584254866090977
 
       
         <summary type="html">Training Issue</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">Deep Learning from Scratch - CNN(1)</title>
+      <link href="https://ilvnax24er.github.io/CNN(1)" rel="alternate" type="text/html" title="Deep Learning from Scratch - CNN(1)" />
+      <published>2021-08-20T00:00:00+09:00</published>
+      <updated>2021-08-20T00:00:00+09:00</updated>
+      <id>https://ilvnax24er.github.io/CNN(1)</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/CNN(1)">&lt;h1 id=&quot;convolutional-neural-network&quot;&gt;Convolutional Neural Network&lt;/h1&gt;
+
+&lt;p&gt;완전연결 신경망은 데이터의 형상이 무시된다. 입력 데이터가 이미지인 경우, 이미지는 가로, 세로, 채널로 구성된 3차원 데이터이다. 그러나 오나전연결 계층에 입력할 때는 3차원 데이터를 평평한 1차원 데이터로 평탄화 해줘야한다. 이미지는 3차원 형상이며, 공간적으로 가까운 픽셀은 값이 비슷하거나, RGB채널은 서로 밀접하게 관련되어 있거나, 거리가 먼 픽셀끼리는 관련이 없는 등, 3차원 속에서 형상을 통한 패턴이 숨어있다. 하지만 완전연결 계층은 형상을 무시하고 모든 입력 데이터를 동등한 뉴런으로 취급하여 형상에 담긴 정보를 살릴 수 없다.&lt;/p&gt;
+
+&lt;p&gt;하지만 합성곱 계층은 형상을 유지한다. 3차원 데이터로 입력받으며, 다음 계층에도 3차원 데이터로 전달한다. 따라서 CNN은 이미지처럼 형상을 가진 데이터를 제대로 이해할 가능성이 높다.&lt;/p&gt;
+
+&lt;p&gt;CNN에서는 합성곱 계층의 입출력 데이터를 feature map이라고 한다. 합성곱 계층의 입력 데이터를 input feature map, 출력 데이터를 output feature map이라고 한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;합성곱-연산&quot;&gt;합성곱 연산&lt;/h2&gt;
+&lt;p&gt;합성곱 연산은 입력 데이터에 필터를 적용한다. 합성곱 연산은 필터의 window를 일정 간격으로 이동해가며 입력 데이터에 적용한다. 입력과 필터에서 대응하는 원소끼리 곱한 후 그 총합을 구한다. 이 과정을 모든 장소에서 수행하면 합성곱 연산의 출력이 완성되며 편향을 적용하면 출력 데이터가 완성된다.
+&lt;img src=&quot;\assets\built\images\post_images\Scratch\cnn\cnn_1.png&quot; alt=&quot;cnn_1&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;padding&quot;&gt;Padding&lt;/h2&gt;
+&lt;p&gt;합성곱 연산을 수행하기 전에 입력 데이터 주변을 특정 값으로 채워준다. 이를 padding이라고 하며, 합성곱 연산에서 주로 사용한다. 패딩은 주로 출력 크기를 조정할 목적으로 사용되는데, 합성곱 연산을 거칠 때마다 크기가 작아지면 어느 시점에서는 출력의 크기가 1이 되버린다. 이 문제를 해결하기 위해 패딩을 사용하며, 폭을 1로 설정한 패딩은 입력에 대한 출력이 같은 크기로 유지되게 한다.
+&lt;img src=&quot;\assets\built\images\post_images\Scratch\cnn\cnn_2.png&quot; alt=&quot;cnn_2&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;stride&quot;&gt;Stride&lt;/h2&gt;
+&lt;p&gt;필터를 적용하는 위치의 간격을 Stride라고 한다. Stride를 2로 하면 필터를 적용하는 윈도우가 두칸씩 이동한다.
+&lt;img src=&quot;\assets\built\images\post_images\Scratch\cnn\cnn_3.png&quot; alt=&quot;cnn_3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;입력 크기를 (H, W), 필터 크기를 (FH, FW), 출력 크기를 (OH, OW), 패딩을 P, 스트라이드를 S라 하면, 출력의 크기를 다음과 같이 나타낼 수 있다.
+$OH = \frac{H + 2P - FH}{S} + 1$, $OW = \frac{W + 2P - FW}{s} + 1$&lt;/p&gt;
+
+&lt;h2 id=&quot;3차원-데이터-합성곱-연산&quot;&gt;3차원 데이터 합성곱 연산&lt;/h2&gt;
+&lt;p&gt;3차원 합성곱 연산에서 주의할 점은 입력 데이터의 채널 수와 필터의 채널 수가 같아야 한다는 것이다.
+&lt;img src=&quot;\assets\built\images\post_images\Scratch\cnn\cnn_4.png&quot; alt=&quot;cnn_4&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;pooling-계층&quot;&gt;Pooling 계층&lt;/h2&gt;
+&lt;p&gt;Pooling은 세로, 가로 방향의 공간을 줄이는 연산이다. Max Pooling을 Stride 2로 처리하는 순서를 나타낸다. Max Pooling은 최대값을 구하는 연산으로 2X2 영역에서 가장 큰 원소를 선택한다.
+&lt;img src=&quot;\assets\built\images\post_images\Scratch\cnn\cnn_5.png&quot; alt=&quot;cnn_5&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Pooling 계층의 특징으로는&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;학습해야 할 매개변수가 없다.
+    &lt;ul&gt;
+      &lt;li&gt;풀링 계층은 합성곱 계층과 달리 학습해야 할 매개변수가 없다. 풀리은 대상 영역에서 최댓값이나 평균을 취하는 명확한 처리이므로 학습할 것이 없다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;채널 수가 변하지 않는다.
+    &lt;ul&gt;
+      &lt;li&gt;풀링 연산은 입력 데이터의 채널 수 그대로 출력 데이터로 내보낸다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;입력의 변화에 영향을 적게 받는다.
+    &lt;ul&gt;
+      &lt;li&gt;입력 데이터가 조금 변해도 풀링의 결과는 잘 변하지 않는다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 사이토 고키, &lt;strong&gt;『&lt;/strong&gt;DeepLearning from Scratch&lt;strong&gt;』&lt;/strong&gt;, 한빛미디어(2020), p189-241&lt;/p&gt;
+&lt;/blockquote&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>ilvnax24er</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="deeplearning" />
+      
+
+      
+        <summary type="html">Convolutional Neural Network</summary>
       
 
       
@@ -687,7 +890,11 @@ $y_{i} \leftarrow \gamma \hat{x_|{i}} + \beta$&lt;br /&gt;
 &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\Scratch\optimization\ts\output_24_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;</content>
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\Scratch\optimization\ts\output_24_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 사이토 고키, &lt;strong&gt;『&lt;/strong&gt;DeepLearning from Scratch&lt;strong&gt;』&lt;/strong&gt;, 한빛미디어(2020), 190-214&lt;/p&gt;
+&lt;/blockquote&gt;</content>
 
       
       
@@ -2784,341 +2991,6 @@ Test set: Average loss: -0.0260, Accuracy: 8549/10000 (85%)
 
       
         <summary type="html">Activation Function</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">심층학습-Deep Feedforward Neural Network(5)</title>
-      <link href="https://ilvnax24er.github.io/back-propagation" rel="alternate" type="text/html" title="심층학습-Deep Feedforward Neural Network(5)" />
-      <published>2021-07-15T00:00:00+09:00</published>
-      <updated>2021-07-15T00:00:00+09:00</updated>
-      <id>https://ilvnax24er.github.io/back-propagation</id>
-      <content type="html" xml:base="https://ilvnax24er.github.io/back-propagation">&lt;h2 id=&quot;back-propagation&quot;&gt;Back Propagation&lt;/h2&gt;
-
-&lt;p&gt;입력 $x$를 받아서 출력 $\hat{y}$를 산출하는 순방향 신경망에서 정보는 신경망을 따라 앞으로 흘러간다. 입력 $x$는 초기 정보에 해당하고, 그 초기 정보는 각 층의 은닉단위들로 전파되어서 결국 출력층에 도달하며, 거기서 최종적으로 $\hat{y}$가 출력된다. 이러한 전파 과정을 순방향 전파라고 부른다.&lt;/p&gt;
-
-&lt;p&gt;훈련과정에서 이러한 순전파를 반복해서 하나의 스칼라 비용 $J(\theta)$를 얻는다. 한편, 역방향 전파 알고리즘은 그러한 비용에서 나온 정보를 신경망을 따라 거꾸로 흐르게 해서 기울기를 계산한다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;$f$의 기울기 $\nabla_{x}f(x,y)$&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;여기서 $x$는 우리가 그 미분들을 구하고자 하는 변수들의 집합이고 $y$는 함수의 입력들이긴 하지만 미분들을 구할 필요는 없는 변수들의 집합이다. 학습 알고리즘에 가장 요구되는 기울기는 비용함수의 매개변수들에 대한 기울기 $\nabla_{\theta}J(\theta)$이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;계산-그래프&quot;&gt;계산 그래프&lt;/h4&gt;
-
-&lt;p&gt;역전파 알고리즘을 정확하게 설명하려면 엄밀한 computational graph 언어가 필요하다. 그래프를 공식화하려면 연산(operation)이라는 개념도 도입해야한다. 연산이란 하나 이상의 변수들의 함수이다. 변수 $x$에 어떤 연산을 적용해서 변수 $y$를 계산한다고 할 때, 그래프에서는 이를 $x$에서 $y$로의 유향간선으로 표시한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;미분의-연쇄법칙&quot;&gt;미분의 연쇄법칙&lt;/h4&gt;
-
-&lt;p&gt;도함수가 알려진 여러 함수를 결합해서 만든 함수의 미분을 계산하는 데 쓰인다. 역전파는 그러한 연쇄법칙을 고도로 효율적인 특정한 연산 순서로 계산하는 알고리즘이다.&lt;/p&gt;
-
-&lt;p&gt;$x$가 하나의 실수이고 $f$와 $g$가 실수를 실수로 사상하는 함수들이라고 하자. $y=g(x)$이고 $z=f(g(x)) = f(x)$라고 하면, 연쇄법칙에 의해 다음이 성립한다.&lt;/p&gt;
-
-&lt;center&gt;$\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dz}$&lt;/center&gt;
-
-&lt;p&gt;이를 스칼라가 아닌 복합적인 값들로 일반화 할 수 있다. $x \in R^{m}, y \in R^{n}$이고 $g$가 $R^{m}$에서 $R^{n}$으로의 사상이라고 하자. 그리고 $f$는 $R^{n}$을 $R$로 사상한다고 하자. $y=g(x)$이고 $z=f(y)$라고 할 때 다음이 성립한다.&lt;/p&gt;
-
-&lt;center&gt;$\frac{\partial z}{\partial x_{i}} = \sum_{j} \frac{\partial z}{\partial y_{j}} \frac{\partial y_{j}}{\partial x_{i}}$&lt;/center&gt;
-
-&lt;p&gt;이를 벡터 표기법으로 표현하면 다음과 같다.&lt;/p&gt;
-
-&lt;center&gt;$\nabla_{x} z = (\frac{\partial y}{\partial x})^{T} \nabla_{y}z$&lt;/center&gt;
-
-&lt;p&gt;여기서 $\frac{\partial y}{\partial x}$는 $g$의 $n \times m$ Jacobian matrix이다.&lt;/p&gt;
-
-&lt;p&gt;위의 공식들에서, 변수 $x$의 기울기는 야코비 행렬 $\frac{\partial y}{\partial x}$에 기울기 벡터 $\nabla_{y} z$를 곱해서 구할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;이를 임의의 차원의 텐서엥 적용하면, 각 텐서를 벡터 형태로 평평하게 펼친 후 벡터 값 기울기를 계산하고 그것을 다시 텐서 형태로 재조립한다. 이러한 재배치 접근 방식에서 역전파 알고리즘은 여전히 야코비 행렬을 기울기 벡터에 곱한다.&lt;/p&gt;
-
-&lt;p&gt;값 $z$의 텐서 $X$에 대한 기울기를, $X$를 벡터처럼 취급하여 $\nabla_{X}z$로 표기한다. 그러나 벡터의 경우와는 달리 $X$의 아래첨자에는 좌표성분이 여러개 있다. 색인 튜플 전체를 하나의 변수 $i$로 표기하면, 모든 가능한 튜플 $i$에 대해, $(\nabla_{X}z)_{i}$는 
-$\frac {\partial z}{\partial x{i}}$를 뜻한다. 이것을 연쇄법칙으로 표현하면,
-$Y = g(X)$이고 $z = f(X)$라 할때 다음이 성립한다.&lt;/p&gt;
-
-&lt;center&gt;$\nabla_{X}z = \sum_{j}(\nabla_{X}Y_{j}) \frac{\partial z}{\partial Y_{j}}$&lt;/center&gt;
-
-&lt;h4 id=&quot;연쇄법칙을-재귀적으로-적용해서-역전파-구하기&quot;&gt;연쇄법칙을 재귀적으로 적용해서 역전파 구하기&lt;/h4&gt;
-
-&lt;p&gt;기울기에 대한 전체 수식 안에 다수의 부분식이 여러번 되풀이될 수 있다. 기울기를 계산하는 절차를 설계할 때는 그러한 부분식들의 결과를 저장할 것인지 아니면 매번 다시 계산할 것인지 결정해야한다. 복잡한 그래프에서는 반복 계산 사례가 지수적으로 증가해서 연쇄법칙을 적용하기가 불가능할 수도 있다.&lt;/p&gt;
-
-&lt;p&gt;우선 하나의 스칼라 $u^{(n)}$을 계산하는 방법을 서술하는 그래프를 살펴보자. 알고리즘의 목표는 이 스칼라의 $u^{(1)}$에서 $u^{(n_{i})}$까지의 $n_{i}$개의 입력 노드들에 대한 기울기를 구하는 것이다. 즉 모든 $i \in {1,2,\dots , n_{i}}$에 대해 $\frac {\partial u^{(n)}}{\partial u^{(i)}}$를 계산하고자 한다.&lt;/p&gt;
-
-&lt;p&gt;그래프의 노드들이 $u^{(n_{i} + 1)}$에서 $u^{(n)}$으로 거슬러 올라가는 순서로 출력을 계산하는 형태라고 가정한다. 각 노드 $u^{(i)}$에는 하나의 연산 $f^{i}$가 ㅜㅂ여되어 있다. 각 노드는 다음을 계산한다.&lt;/p&gt;
-
-&lt;center&gt;$u^{(i)} = f(A^{(i)})$&lt;/center&gt;
-
-&lt;p&gt;순전파 계산들을 명시하는 계산 그래프가 $\zeta$라고 하자. 역전파를 수행할 때는, 그 $\zeta$에 의존하되 또 다른 노드들이 추가된 하나의 계산 그래프를 구축한다. $\zeta$의 노드당 하나의 추가 노드로 이루어진 부분 그래프를 $B$라고하면, $B$의 계산은 $\zeta$의 계산과 정확히 반대 순서로 진행되며, $B$의 각 노드는 순방향 그래프 노드 $u^{(i)}$와 연관된 미분 $\frac {\partial u^{(n)}}{\partial u^{(i)}}$를 계산한다. 이러한 모든 계산은 미분의 연쇄법칙을 따른다.&lt;/p&gt;
-
-&lt;center&gt;$\frac {\partial u^{(n)}}{\partial u^{(j)}} = \sum_{i : j \in pa(u^{(i)})} \frac {\partial u^{(n)}}{\partial u^{(i)}} \frac {\partial u^{(i)}}{\partial u^{(j)}}$&lt;/center&gt;
-
-&lt;h4 id=&quot;일반-역전파-알고리즘&quot;&gt;일반 역전파 알고리즘&lt;/h4&gt;
-
-&lt;p&gt;어떤 스칼라 $z$의 조상들$(x)$ 중 하나에 대한 기울기를 계산하는 과정을 살펴보면, 알고리즘은 우선 $z$의 자신에 대한 기울기인 $\frac{dz}{dz} = 1$로 시작한다. 그 후 그래프에서 $z$의 각 부모에 대한 기울기를 계산한다. 이 계산은 현재의 기울기에 $z$를 산출한 연산의 야코비 행렬을 곱해 나가다가, $x$에 도달하면 멈춘다. $z$에서 시작해서 도달한 역방향 경로가 둘 이상인 노드에 대해서는, 그 노드로 이어진 기울기들을 모두 합한 결과를 그 노드의 최종 기울기로 사용한다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p225-240&lt;/p&gt;
-&lt;/blockquote&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>ilvnax24er</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="deeplearning" />
-      
-
-      
-        <summary type="html">Back Propagation</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Deep Learning from Scratch - Perceptron</title>
-      <link href="https://ilvnax24er.github.io/perceptron" rel="alternate" type="text/html" title="Deep Learning from Scratch - Perceptron" />
-      <published>2021-07-12T00:00:00+09:00</published>
-      <updated>2021-07-12T00:00:00+09:00</updated>
-      <id>https://ilvnax24er.github.io/perceptron</id>
-      <content type="html" xml:base="https://ilvnax24er.github.io/perceptron">&lt;h1 id=&quot;perceptron&quot;&gt;Perceptron&lt;/h1&gt;
-
-&lt;p&gt;perceptron은 다수의 신호를 입력받아 하나의 신호를 출력한다.
-&lt;img src=&quot;\assets\built\images\post_images\Scratch\perceptron\image_1.png&quot; alt=&quot;&quot; /&gt;
-x1과 x2는 입력신호, y는 출력신호, w1과 w2는 가중치를 뜻한다. 그림의 원을 뉴런 혹은 노드라고 부르며, 입력 신호가 뉴런에 보내질 때는 각 고유한 가중치가 곱해진다. 뉴런에서 보내온 신호의 총합이 정해진 한계를 넘어설 때만 1을 출력하며, 그 한계값을 임계값($\theta$)이라고 한다.&lt;/p&gt;
-
-&lt;h2 id=&quot;perceptron-구현&quot;&gt;Perceptron 구현&lt;/h2&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;AND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;w1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.7&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w2&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0 0 0 1
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;가중치와-편향-도입&quot;&gt;가중치와 편향 도입&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\Scratch\perceptron\CodeCogsEqn.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;여기에서 $b$를 bias, $w_{1}$과 $w_{2}$는 weight이다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.7&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0.5
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-0.19999999999999996
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;가중치와-편향-구현&quot;&gt;가중치와 편향 구현&lt;/h3&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;AND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.7&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;nand-or&quot;&gt;NAND, OR&lt;/h3&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;NAND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.7&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;OR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,])&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.2&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NAND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NAND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1 0 1 0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;perceptron-한계&quot;&gt;Perceptron 한계&lt;/h2&gt;
-&lt;h3 id=&quot;xor-gate&quot;&gt;XOR Gate&lt;/h3&gt;
-&lt;p&gt;XOR의 경우 Perceptron으로 구현할 수 없다. 아래 그래프를 직선으로 나눌 수 없다.&lt;/p&gt;
-
-&lt;p&gt;​  &lt;br /&gt;
-&lt;img src=&quot;\assets\built\images\post_images\Scratch\perceptron\output_16_0.png&quot; alt=&quot;png&quot; /&gt;
-​&lt;/p&gt;
-
-&lt;h2 id=&quot;multi-layer-perceptron&quot;&gt;Multi-layer Perceptron&lt;/h2&gt;
-&lt;h3 id=&quot;기존-gate-조합하기&quot;&gt;기존 Gate 조합하기&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\Scratch\perceptron\xor.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;XOR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NAND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;XOR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;XOR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;XOR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;XOR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0 1 1 0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;XOR를 뉴런을 이용한 Perceptron으로 표현하면
-&lt;img src=&quot;\assets\built\images\post_images\Scratch\perceptron\mlp.png&quot; alt=&quot;&quot; /&gt;
-이처럼 층이 여러개인 Perceptron을 Multi-layer Perceptron이라고 한다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;참고 : 사이토 고키, &lt;strong&gt;『&lt;/strong&gt;DeepLearning from Scratch&lt;strong&gt;』&lt;/strong&gt;, 한빛미디어(2020), p47-62&lt;/p&gt;
-&lt;/blockquote&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>ilvnax24er</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="deeplearning" />
-      
-
-      
-        <summary type="html">Perceptron</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Recurrent Neural Network (1)</title>
-      <link href="https://ilvnax24er.github.io/RNN" rel="alternate" type="text/html" title="Recurrent Neural Network (1)" />
-      <published>2021-07-09T00:00:00+09:00</published>
-      <updated>2021-07-09T00:00:00+09:00</updated>
-      <id>https://ilvnax24er.github.io/RNN</id>
-      <content type="html" xml:base="https://ilvnax24er.github.io/RNN">&lt;h1 id=&quot;recurrent-neural-network&quot;&gt;Recurrent Neural Network&lt;/h1&gt;
-
-&lt;h3 id=&quot;intro&quot;&gt;Intro&lt;/h3&gt;
-
-&lt;p&gt;RNN은 순차적인 자료를 처리하는 신경망의 한 종류로서 sequence를 처리하는데 특화되어 있다. 출력의 각 성분은 출력의 이전 성분의 함수이다. 출력의 각 성분은 이전 성분에 적용한 것과 동일한 규칙에 따라 산출되며, 점화식과 같은 방식이 된다.&lt;/p&gt;
-
-&lt;h3 id=&quot;계산-그래프-펼치기&quot;&gt;계산 그래프 펼치기&lt;/h3&gt;
-
-&lt;p&gt;다음과 같은 Dynamic ststem을 생각해보면,&lt;/p&gt;
-
-&lt;center&gt;$s^{t} = f(s^{s+1};\theta)$&lt;/center&gt;
-
-&lt;p&gt;여기서 $s^{t}$를 계의 상태(state)라고 부른다. 시간 $t$에서 상태 $s$의 정의가 시간 $t-1$에서의 동일한 정의를 참조한다. 즉 재귀적으로 정의되고, 이런 형태를 점화식(recurrenec formula)라고 부른다.&lt;/p&gt;
-
-&lt;p&gt;시간 단계의 수 $\tau$가 유한한 경우에는 이 정의를 $\tau -1$번 적용해서 그래프를 펼칠 수 있다.&lt;/p&gt;
-
-&lt;center&gt;$s^{(3)} = f(s^{(2)}; \theta) = f(f(s^{(1)};\theta);\theta)$&lt;/center&gt;
-
-&lt;p&gt;이런식으로 공식을 펼치면 순환관계가 없는 수식이 나온다. 이러한 수식은 유향 비순환 그래프로 표현할 수 있다.&lt;/p&gt;
-
-&lt;center&gt;$h^{(t)} = f(h^{(t-1), x^{t}; \theta})$&lt;/center&gt;
-
-&lt;p&gt;위 식은 순환 신경망의 은닉단위를 정의하는 공식이다.  순환 신경망을 훈련할 때, $h^{t}$를 일종의 손실 있는 과거 요약 함수, 즉 $t$까지의 지나간 입력 순차열을 요약하는 함수로서 활용할때가 많다. 이러한 요약함수는 시간 $t$까지의 입력 순차열의 모든 정보를 저장할 필요 없이 예측에 충분한 정보만 저장하면 된다.&lt;/p&gt;
-
-&lt;p&gt;위 식을 $t$단계로 펼쳐진 점화식 $g^{(t)}$로 표현하면,&lt;/p&gt;
-
-&lt;center&gt;$h^{(t)} = g^{(t)}(x^{(t)},x^{(t-1)},x^{(t-2)}, \dots , x^{(2)}, x^{(1)}) = f(h^{(t-1)}, x^{(t)};\theta)$&lt;/center&gt;
-
-&lt;p&gt;이러한 펼치기 과정은 두가지 장점을 제공한다. 첫번째는 학습된 모형은 길이가 가변적인 상태가 아니라 한 상태에서 다른 상태로의 전이를 명시하므로, 그 입력 크기는 순차열의 길이와는 무관하게 항상 동일하다. 두번째로, 모든 시간 단계에서 &lt;strong&gt;동일한&lt;/strong&gt; 전이 함수 $f$를 동일한 매개변수들과 함께 적용하는것이 가능하다.&lt;/p&gt;
-
-&lt;h3 id=&quot;재귀-신경망&quot;&gt;재귀 신경망&lt;/h3&gt;
-
-&lt;p&gt;Recursive Neural Network는 순환 신경망의 또 다른 일반화에 해당한다. RNN의 계산 그래프는 사슬 형태이지만 재귀 신경망의 계산 그래프는 깊은 트리 형태이다. 재귀 신경망의 한가지 장점은, 순차열의 길이가 $\tau$라고 할 때 순환 신경망의 깊이는 $\tau$이지만 재귀 신경망의 깊이는 $O(log\tau)$밖에 되지 않는다. 이 장점은 장기 의존관계를 다루는데 도움이 될 수 있다.&lt;/p&gt;
-
-&lt;h4 id=&quot;장기-의존성&quot;&gt;장기 의존성&lt;/h4&gt;
-
-&lt;p&gt;장기 의존성(long-term dependency)의 학습에서 나타나는 문제는 여러 단계에 걸쳐 전파되는 기울기들이 소멸하거나 폭발하는 경향이 이다는 것이다. 대부분 소멸이 발생하고, 폭발은 드물게 일어나지만 최적화에 미치는 악영향이 훨씬 크다. 매개변수들이 적당해서 순환 신경망이 안정적이라고 가정하는 경우에도, 단기 상호작용들에 주어지는 가중치들보다 지수적으로 작은 가중치들이 장기 상호작용들에 주어진다면 장기 의존성과 관련된 어려움이 발생할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;순환 신경망은 같은 함수를 시간 단계당 한번씩 여러 번 합성한다. 이런 다수의 합성 때문에 신경망이 극도로 비선형적인 방식으로 행동할 수 있다. 특히, 순환 신경망이 사용하는 함수 합성은 행렬 곱셈과 다소 비슷하다. 점화식&lt;/p&gt;
-
-&lt;center&gt;$h^{(t)} = W^{T}h^{(t-1)}$&lt;/center&gt;
-
-&lt;p&gt;을 비선형 활성화 함수가 없고 입력 $x$도 없는 아주 단순한 순환 신경망으로 간주할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;고윳값들이 $t$를 지수로 해서 거듭제곱되므로, 크기가 1보다 작은 고윳값은 0으로 소멸하고 크기가 1보다 큰 고윳값은 폭발한다. 결괒거으로, $h^{(0)}$의 성분 중 가장 큰 고유벡터와 방향이 맞지 않는 모든 성분은 결국 폐기된다.&lt;/p&gt;
-
-&lt;p&gt;###&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p411-443&lt;/p&gt;
-&lt;/blockquote&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>ilvnax24er</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="deeplearning" />
-      
-
-      
-        <summary type="html">Recurrent Neural Network</summary>
       
 
       

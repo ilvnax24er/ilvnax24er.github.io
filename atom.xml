@@ -8,6 +8,51 @@
     
       
       <item>
+        <title>Deep Learning - Stochastic Gradient Descent</title>
+        
+          <description>&lt;h1 id=&quot;stochastic-gradient-descent&quot;&gt;Stochastic Gradient Descent&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Tue, 24 Aug 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/Stochastic-Gradient-Descent</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/Stochastic-Gradient-Descent</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Deep Learning - Momentum</title>
+        
+          <description>&lt;h1 id=&quot;momentum&quot;&gt;Momentum&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Tue, 24 Aug 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/Momentum</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/Momentum</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Deep Learning from Scratch - CNN(1)</title>
+        
+          <description>&lt;h1 id=&quot;convolutional-neural-network&quot;&gt;Convolutional Neural Network&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Fri, 20 Aug 2021 00:00:00 +0900</pubDate>
+        <link>
+        https://ilvnax24er.github.io/CNN(1)</link>
+        <guid isPermaLink="true">https://ilvnax24er.github.io/CNN(1)</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Deep Learning from Scratch - Training Skills(3)</title>
         
           <description>&lt;h1 id=&quot;training-issue&quot;&gt;Training Issue&lt;/h1&gt;
@@ -203,7 +248,7 @@
     
       
       <item>
-        <title>심층학습-Deep Feedforward Neural Network(5)</title>
+        <title>Deep Learning - Deep Feedforward Neural Network(5)</title>
         
           <description>&lt;h2 id=&quot;back-propagation&quot;&gt;Back Propagation&lt;/h2&gt;
 
@@ -248,7 +293,7 @@
     
       
       <item>
-        <title>Recurrent Neural Network (1)</title>
+        <title>Deep Learning - Recurrent Neural Network (1)</title>
         
           <description>&lt;h1 id=&quot;recurrent-neural-network&quot;&gt;Recurrent Neural Network&lt;/h1&gt;
 
@@ -353,7 +398,7 @@
     
       
       <item>
-        <title>심층학습-Deep Feedforward Neural Network(4)</title>
+        <title>Deep Learning - Deep Feedforward Neural Network(4)</title>
         
           <description>&lt;h2 id=&quot;architecture-설계&quot;&gt;Architecture 설계&lt;/h2&gt;
 
@@ -383,7 +428,7 @@
     
       
       <item>
-        <title>심층학습-Deep Feedforward Neural Network(3)</title>
+        <title>Deep Learning - Deep Feedforward Neural Network(3)</title>
         
           <description>&lt;h3 id=&quot;hidden-unit&quot;&gt;Hidden Unit&lt;/h3&gt;
 
@@ -398,7 +443,7 @@
     
       
       <item>
-        <title>Convolutional Neural Network</title>
+        <title>Deep Learning - Convolutional Neural Network</title>
         
           <description>&lt;h1 id=&quot;convolutional-neural-network&quot;&gt;Convolutional Neural Network&lt;/h1&gt;
 
@@ -415,7 +460,12 @@
       <item>
         <title>Pytorch - Tutorial(1)</title>
         
-          <description>
+          <description>&lt;ul&gt;
+  &lt;li&gt;$\sum_{k=1}^{\infty} \epsilon_{k} = \infty$&lt;/li&gt;
+  &lt;li&gt;$\sum_{k=1}^{\infty} \epsilon_{k}^{2} &amp;lt; \infty$&lt;/li&gt;
+  &lt;li&gt;$\alpha \in [0,1)$&lt;/li&gt;
+  &lt;li&gt;$v \leftarrow \alpha v - \epsilon \nabla_{\theta}(\frac{1}{m} \sum_{i=1}^{m} L(f(x^{(i)};\theta), y^{(i)}))$&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         
         <pubDate>Tue, 29 Jun 2021 00:00:00 +0900</pubDate>
@@ -427,7 +477,7 @@
     
       
       <item>
-        <title>심층학습-Deep Feedforward Neural Network(2)</title>
+        <title>Deep Learning - Deep Feedforward Neural Network(2)</title>
         
           <description>&lt;h3 id=&quot;기울기-기반-학습&quot;&gt;기울기 기반 학습&lt;/h3&gt;
 
@@ -442,7 +492,7 @@
     
       
       <item>
-        <title>심층학습-Deep Feedforward Neural Network(1)</title>
+        <title>Deep Learning - Deep Feedforward Neural Network(1)</title>
         
           <description>&lt;h3 id=&quot;deep-feedforward-neural-network&quot;&gt;Deep Feedforward Neural Network&lt;/h3&gt;
 
