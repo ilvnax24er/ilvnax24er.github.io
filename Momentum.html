@@ -78,8 +78,8 @@ MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
     <meta property="og:image" content="https://ilvnax24er.github.io/assets/built/images/deeplearning-book.jpg" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2021-08-24T00:00:00+09:00" />
-    <meta property="article:modified_time" content="2021-08-24T00:00:00+09:00" />
+    <meta property="article:published_time" content="2021-08-26T00:00:00+09:00" />
+    <meta property="article:modified_time" content="2021-08-26T00:00:00+09:00" />
     <meta property="article:tag" content="Deeplearning" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Deep Learning - Momentum" />
@@ -190,7 +190,7 @@ into the {body} of the default.hbs template -->
 
             <header class="post-full-header">
                 <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime="24 August 2021">24 August 2021</time>
+                    <time class="post-full-meta-date" datetime="26 August 2021">26 August 2021</time>
                     
                         <span class="date-divider">/</span>
                         
@@ -233,6 +233,64 @@ into the {body} of the default.hbs template -->
 <p>$\theta \leftarrow \theta + v$</p>
 
 <p>네스테로프 운동량은 현재 속도를 적용한 후에 기울기를 갱신한다. 따라서, 표준 운동량 방법에 하나의 보저인자를 더한 것으로 생각할 수 있다.</p>
+
+<h2 id="fx--x_12--2x_22">$f(x) = x_{1}^{2} + 2x_{2}^{2}$</h2>
+<p>위 식에 대한 Gradient Descent를 수행하면 다음과 같다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">eta</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+<span class="k">def</span> <span class="nf">f_2d</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">x1</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x2</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">gd_2d</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">x2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">d2l</span><span class="p">.</span><span class="n">show_trace_2d</span><span class="p">(</span><span class="n">f_2d</span><span class="p">,</span> <span class="n">d2l</span><span class="p">.</span><span class="n">train_2d</span><span class="p">(</span><span class="n">gd_2d</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>epoch 20, x1: -0.943467, x2: -0.000073
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\deeplearning\momentum\output_3_1.svg" alt="svg" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">eta</span> <span class="o">=</span> <span class="mf">0.6</span>
+<span class="n">d2l</span><span class="p">.</span><span class="n">show_trace_2d</span><span class="p">(</span><span class="n">f_2d</span><span class="p">,</span> <span class="n">d2l</span><span class="p">.</span><span class="n">train_2d</span><span class="p">(</span><span class="n">gd_2d</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>epoch 20, x1: -0.387814, x2: -1673.365109
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\deeplearning\momentum\output_4_1.svg" alt="svg" /></p>
+
+<p>Momentum은 $x_{1}$ 방향에서는 단계마다 거리가 증가하며, $x_{2}$ 방향으로는 서로를 상쇄하는 진동으로 인해 스텝 크기가 줄어들며 학습한다.<br />
+$v_{t} \leftarrow \beta v_{t-1} + g_{t,t-1}$<br />
+$x_{t} \leftarrow x_{t-1} - \eta_{t} v_{t}$</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">momentum_2d</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+    <span class="n">v1</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">v1</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">x1</span>
+    <span class="n">v2</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">v2</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">x2</span>
+    <span class="k">return</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">v1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span>
+
+<span class="n">eta</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.5</span>
+<span class="n">d2l</span><span class="p">.</span><span class="n">show_trace_2d</span><span class="p">(</span><span class="n">f_2d</span><span class="p">,</span> <span class="n">d2l</span><span class="p">.</span><span class="n">train_2d</span><span class="p">(</span><span class="n">momentum_2d</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>epoch 20, x1: 0.007188, x2: 0.002553
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\deeplearning\momentum\output_6_1.svg" alt="svg" /></p>
+
+<p>만약 $\beta$값을 줄이면 궤적이 거의 수렴되지 않는다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">eta</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.25</span>
+<span class="n">d2l</span><span class="p">.</span><span class="n">show_trace_2d</span><span class="p">(</span><span class="n">f_2d</span><span class="p">,</span> <span class="n">d2l</span><span class="p">.</span><span class="n">train_2d</span><span class="p">(</span><span class="n">momentum_2d</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>epoch 20, x1: -0.126340, x2: -0.186632
+</code></pre></div></div>
+
+<p><img src="\assets\built\images\post_images\deeplearning\momentum\output_8_1.svg" alt="svg" /></p>
 
 <blockquote>
   <p>참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, <strong>『</strong>심층학습<strong>』</strong>, Jpub(2018), p323-332</p>

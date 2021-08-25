@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator>
   <link href="https://ilvnax24er.github.io/author/ilvnax24er/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://ilvnax24er.github.io/" rel="alternate" type="text/html" />
-  <updated>2021-08-24T17:10:22+09:00</updated>
+  <updated>2021-08-26T03:38:34+09:00</updated>
   <id>https://ilvnax24er.github.io/author/ilvnax24er/feed.xml</id>
 
   
@@ -34,8 +34,8 @@
     <entry>
       <title type="html">Deep Learning - Momentum</title>
       <link href="https://ilvnax24er.github.io/Momentum" rel="alternate" type="text/html" title="Deep Learning - Momentum" />
-      <published>2021-08-24T00:00:00+09:00</published>
-      <updated>2021-08-24T00:00:00+09:00</updated>
+      <published>2021-08-26T00:00:00+09:00</published>
+      <updated>2021-08-26T00:00:00+09:00</updated>
       <id>https://ilvnax24er.github.io/Momentum</id>
       <content type="html" xml:base="https://ilvnax24er.github.io/Momentum">&lt;h1 id=&quot;momentum&quot;&gt;Momentum&lt;/h1&gt;
 
@@ -56,6 +56,64 @@
 &lt;p&gt;$\theta \leftarrow \theta + v$&lt;/p&gt;
 
 &lt;p&gt;네스테로프 운동량은 현재 속도를 적용한 후에 기울기를 갱신한다. 따라서, 표준 운동량 방법에 하나의 보저인자를 더한 것으로 생각할 수 있다.&lt;/p&gt;
+
+&lt;h2 id=&quot;fx--x_12--2x_22&quot;&gt;$f(x) = x_{1}^{2} + 2x_{2}^{2}$&lt;/h2&gt;
+&lt;p&gt;위 식에 대한 Gradient Descent를 수행하면 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;eta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.4&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;f_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;gd_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;d2l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show_trace_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d2l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gd_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;epoch 20, x1: -0.943467, x2: -0.000073
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\deeplearning\momentum\output_3_1.svg&quot; alt=&quot;svg&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;eta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.6&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;d2l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show_trace_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d2l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gd_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;epoch 20, x1: -0.387814, x2: -1673.365109
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\deeplearning\momentum\output_4_1.svg&quot; alt=&quot;svg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Momentum은 $x_{1}$ 방향에서는 단계마다 거리가 증가하며, $x_{2}$ 방향으로는 서로를 상쇄하는 진동으로 인해 스텝 크기가 줄어들며 학습한다.&lt;br /&gt;
+$v_{t} \leftarrow \beta v_{t-1} + g_{t,t-1}$&lt;br /&gt;
+$x_{t} \leftarrow x_{t-1} - \eta_{t} v_{t}$&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;momentum_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;beta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;beta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v2&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;eta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;beta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;d2l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show_trace_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d2l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;momentum_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;epoch 20, x1: 0.007188, x2: 0.002553
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\deeplearning\momentum\output_6_1.svg&quot; alt=&quot;svg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;만약 $\beta$값을 줄이면 궤적이 거의 수렴되지 않는다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;eta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;beta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.25&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;d2l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show_trace_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d2l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;momentum_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;epoch 20, x1: -0.126340, x2: -0.186632
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\deeplearning\momentum\output_8_1.svg&quot; alt=&quot;svg&quot; /&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p323-332&lt;/p&gt;
@@ -81,6 +139,94 @@
 
       
         <summary type="html">Momentum</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">Deep Learning - Stochastic Gradient Descent</title>
+      <link href="https://ilvnax24er.github.io/Stochastic-Gradient-Descent" rel="alternate" type="text/html" title="Deep Learning - Stochastic Gradient Descent" />
+      <published>2021-08-26T00:00:00+09:00</published>
+      <updated>2021-08-26T00:00:00+09:00</updated>
+      <id>https://ilvnax24er.github.io/Stochastic-Gradient-Descent</id>
+      <content type="html" xml:base="https://ilvnax24er.github.io/Stochastic-Gradient-Descent">&lt;h1 id=&quot;stochastic-gradient-descent&quot;&gt;Stochastic Gradient Descent&lt;/h1&gt;
+
+&lt;p&gt;자료 분포로부터 독집적으로 추출한 $m$개의 견본으로 이루어진 미니배치의 평균 기울기를 취함으로써 훈련 집합 전체의 기울기의 불편추정량을 구할 수 있다. SGD 알고리즘의 핵심적인 매개변수는 학습 속도인데, 시간에 따라 학습 속도를 점차 줄일 필요가 있다. 왜냐하면 SGD의 기울기 추정에 의해 잡음이 도입되기 때문이다. 학습 과정에서 $m$개의 훈련 견본을 무작위로 추출하는 것이 하나의 잠음원으로 작용하는데, 이 잡음원은 알고리즘이 최솟값에 도달해도 사라지지 않는다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;SGD가 반드시 수렴할 충분조건&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;$\sum_{k=1}^{\infty} \epsilon_{k} = \infty$&lt;/li&gt;
+    &lt;li&gt;$\sum_{k=1}^{\infty} \epsilon_{k}^{2} &amp;lt; \infty$&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;실제 응용에서는 $\tau$번째 반복까지는 학습속도 $\epsilon$을 선형으로 감소하고, $\tau$ 반복 이후에는 $\epsilon$을 그대로 두는 방법이 흔히 쓰인다.&lt;/p&gt;
+
+&lt;p&gt;$\epsilon_{k} = (1 - \alpha)\epsilon_{0} + \alpha \epsilon_{\tau} (\alpha = \frac{k}{\tau})$&lt;/p&gt;
+
+&lt;p&gt;학습 속도를 시행착오를 통해서 결정할 수 있지만, 보통의 경우 목적함수를 시간의 함수로 간주해서 함수의 곡선을 보고 결정하는 것이 최선이다. 선형 감소 방식을 사용할 때 결정해야 할 매개변수는 $\epsilon_{0}$과 $\epsilon_{\tau}$ 그리고 $\tau$이다. 일반적으로 $\epsilon_{\tau}$는 $\epsilon_{0}$의 값의 약 1% 정도로 잡아야 한다. $\epsilon_{0}$을 설정할 때 초기 학습 속도가 너무 높으면 비용함수가 크게 증가할 때가 많아서 학습 곡선이 요동칠 수 있다. 학습 속도가 너무 낮으면 학습이 느리게 진행되며, 초기학습속도가 너무 낮으면 큰 비용에 머무를 위험이 있다. 일반적으로, 최적의 초기 학습 속도는 처음 약 100회 반복 이후에 최고의 성과를 내는 학습 속도보다 높다. 따라서 알고리즘을 여러 번 반복해서 성과를 측정하고, 최고의 성과를 낸 학습 속도를 기록한 후 그보다 더 큰 값을 초기 학습 속도로 정하는 방법이 가장 바람직할 때가 많다.&lt;/p&gt;
+
+&lt;p&gt;최적화 알고리즘의 수렴 속도를 파악할 때 흔히 사용하는 측도는 $J(\theta) - min_{\theta}J(\theta)$로 정의되는 초과 오차이다. 현재 비용함수가 가능한 최소 비용보다 얼마나 큰지를 나타낸 값이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;f_grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sgd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;g1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;g1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;normal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;normal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;eta_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eta_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eta_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;constant_lr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;eta&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;constant_lr&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;d2l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show_trace_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d2l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sgd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_grad&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;epoch 50, x1: -0.150819, x2: -0.042994
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;\assets\built\images\post_images\deeplearning\sgd\output_5_1.svg&quot; alt=&quot;svg&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p323-332&lt;/p&gt;
+&lt;/blockquote&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>ilvnax24er</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="deeplearning" />
+      
+
+      
+        <summary type="html">Stochastic Gradient Descent</summary>
       
 
       
@@ -167,63 +313,6 @@ $OH = \frac{H + 2P - FH}{S} + 1$, $OW = \frac{W + 2P - FW}{s} + 1$&lt;/p&gt;
 
       
         <summary type="html">Convolutional Neural Network</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Deep Learning - Stochastic Gradient Descent</title>
-      <link href="https://ilvnax24er.github.io/Stochastic-Gradient-Descent" rel="alternate" type="text/html" title="Deep Learning - Stochastic Gradient Descent" />
-      <published>2021-08-24T00:00:00+09:00</published>
-      <updated>2021-08-24T00:00:00+09:00</updated>
-      <id>https://ilvnax24er.github.io/Stochastic-Gradient-Descent</id>
-      <content type="html" xml:base="https://ilvnax24er.github.io/Stochastic-Gradient-Descent">&lt;h1 id=&quot;stochastic-gradient-descent&quot;&gt;Stochastic Gradient Descent&lt;/h1&gt;
-
-&lt;p&gt;자료 분포로부터 독집적으로 추출한 $m$개의 견본으로 이루어진 미니배치의 평균 기울기를 취함으로써 훈련 집합 전체의 기울기의 불편추정량을 구할 수 있다. SGD 알고리즘의 핵심적인 매개변수는 학습 속도인데, 시간에 따라 학습 속도를 점차 줄일 필요가 있다. 왜냐하면 SGD의 기울기 추정에 의해 잡음이 도입되기 때문이다. 학습 과정에서 $m$개의 훈련 견본을 무작위로 추출하는 것이 하나의 잠음원으로 작용하는데, 이 잡음원은 알고리즘이 최솟값에 도달해도 사라지지 않는다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;SGD가 반드시 수렴할 충분조건&lt;/p&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;$\sum_{k=1}^{\infty} \epsilon_{k} = \infty$&lt;/li&gt;
-    &lt;li&gt;$\sum_{k=1}^{\infty} \epsilon_{k}^{2} &amp;lt; \infty$&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;실제 응용에서는 $\tau$번째 반복까지는 학습속도 $\epsilon$을 선형으로 감소하고, $\tau$ 반복 이후에는 $\epsilon$을 그대로 두는 방법이 흔히 쓰인다.&lt;/p&gt;
-
-&lt;p&gt;$\epsilon_{k} = (1 - \alpha)\epsilon_{0} + \alpha \epsilon_{\tau} (\alpha = \frac{k}{\tau})$&lt;/p&gt;
-
-&lt;p&gt;학습 속도를 시행착오를 통해서 결정할 수 있지만, 보통의 경우 목적함수를 시간의 함수로 간주해서 함수의 곡선을 보고 결정하는 것이 최선이다. 선형 감소 방식을 사용할 때 결정해야 할 매개변수는 $\epsilon_{0}$과 $\epsilon_{\tau}$ 그리고 $\tau$이다. 일반적으로 $\epsilon_{\tau}$는 $\epsilon_{0}$의 값의 약 1% 정도로 잡아야 한다. $\epsilon_{0}$을 설정할 때 초기 학습 속도가 너무 높으면 비용함수가 크게 증가할 때가 많아서 학습 곡선이 요동칠 수 있다. 학습 속도가 너무 낮으면 학습이 느리게 진행되며, 초기학습속도가 너무 낮으면 큰 비용에 머무를 위험이 있다. 일반적으로, 최적의 초기 학습 속도는 처음 약 100회 반복 이후에 최고의 성과를 내는 학습 속도보다 높다. 따라서 알고리즘을 여러 번 반복해서 성과를 측정하고, 최고의 성과를 낸 학습 속도를 기록한 후 그보다 더 큰 값을 초기 학습 속도로 정하는 방법이 가장 바람직할 때가 많다.&lt;/p&gt;
-
-&lt;p&gt;최적화 알고리즘의 수렴 속도를 파악할 때 흔히 사용하는 측도는 $J(\theta) - min_{\theta}J(\theta)$로 정의되는 초과 오차이다. 현재 비용함수가 가능한 최소 비용보다 얼마나 큰지를 나타낸 값이다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;참고 : 이안 굿펠로, 요수아 벤지오, 에런 쿠빌, &lt;strong&gt;『&lt;/strong&gt;심층학습&lt;strong&gt;』&lt;/strong&gt;, Jpub(2018), p323-332&lt;/p&gt;
-&lt;/blockquote&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>ilvnax24er</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="deeplearning" />
-      
-
-      
-        <summary type="html">Stochastic Gradient Descent</summary>
       
 
       
